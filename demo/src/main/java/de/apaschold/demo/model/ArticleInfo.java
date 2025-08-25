@@ -1,0 +1,108 @@
+package de.apaschold.demo.model;
+
+public class ArticleInfo {
+    //0. constants
+
+    //1. attributes
+    private ArticleType articleType;
+    private String title;
+    private String author;
+    private String journal;
+    private String journalShortForm;
+    private int volume;
+    private int issue;
+    private int year;
+    private String doi;
+
+    //2. constructors
+    public ArticleInfo(ArticleType type, String title, String author, String journal, String journalShortForm, int volume, int issue, int year, String doi) {
+        this.articleType = type;
+        this.title = title;
+        this.author = author;
+        this.journal = journal;
+        this.journalShortForm = journalShortForm;
+        this.volume = volume;
+        this.issue = issue;
+        this.year = year;
+        this.doi = doi;
+    }
+
+    //3. getter and setter methods
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getJournal() {
+        return journal;
+    }
+
+    public void setJournal(String journal) {
+        this.journal = journal;
+    }
+
+    public String getJournalShortForm() {
+        return journalShortForm;
+    }
+
+    public void setJournalShortForm(String journalShortForm) {
+        this.journalShortForm = journalShortForm;
+    }
+
+    public int getVolume() {
+        return volume;
+    }
+
+    public void setVolume(int volume) {
+        this.volume = volume;
+    }
+
+    public int getIssue() {
+        return issue;
+    }
+
+    public void setIssue(int issue) {
+        this.issue = issue;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public String getDoi() {
+        return doi;
+    }
+
+    public void setDoi(String doi) {
+        this.doi = doi;
+    }
+
+    @Override
+    public String toString() {
+        return "ArticleInfo{" +
+                "title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", journal='" + journal + '\'' +
+                ", journalShortForm='" + journalShortForm + '\'' +
+                ", volume=" + volume +
+                ", issue=" + issue +
+                ", year=" + year +
+                ", doi='" + doi + '\'' +
+                '}';
+    }
+}
