@@ -13,6 +13,7 @@ public class ArticleInfo {
     private int issue;
     private int year;
     private String doi;
+    private String pdfFilePath;
 
     //2. constructors
     public ArticleInfo(ArticleType type, String title, String author, String journal, String journalShortForm, int volume, int issue, int year, String doi) {
@@ -28,6 +29,14 @@ public class ArticleInfo {
     }
 
     //3. getter and setter methods
+    public ArticleType getArticleType() {
+        return articleType;
+    }
+
+    public void setArticleType(ArticleType articleType) {
+        this.articleType = articleType;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -91,6 +100,16 @@ public class ArticleInfo {
     public void setDoi(String doi) {
         this.doi = doi;
     }
+
+    public String getPdfFilePath() {
+        return pdfFilePath;
+    }
+
+    public void setPdfFilePath(String pdfFilePath) {
+        this.pdfFilePath = pdfFilePath;
+    }
+
+    //4. other methods
 
     @Override
     public String toString() {
