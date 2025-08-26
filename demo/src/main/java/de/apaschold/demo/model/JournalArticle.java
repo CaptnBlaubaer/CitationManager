@@ -1,69 +1,24 @@
 package de.apaschold.demo.model;
 
-public class JournalArticle {
+public class JournalArticle extends Article {
     //0. constants
 
     //1. attributes
-    private ArticleType articleType;
-    private String title;
-    private String author;
-    private String journal;
     private String journalShortForm;
     private int volume;
     private int issue;
-    private int year;
     private String pages;
-    private String doi;
-    private String pdfFilePath;
 
     //2. constructors
     public JournalArticle(ArticleType type, String title, String author, String journal, String journalShortForm, int year, int volume, int issue, String pages, String doi, String pdfFilePath) {
-        this.articleType = type;
-        this.title = title;
-        this.author = author;
-        this.journal = journal;
+        super(type, title, author, journal, year, doi, pdfFilePath);
         this.journalShortForm = journalShortForm;
-        this.year = year;
         this.volume = volume;
         this.issue = issue;
         this.pages = pages;
-        this.doi = doi;
-        this.pdfFilePath = pdfFilePath;
     }
 
     //3. getter and setter methods
-    public ArticleType getArticleType() {
-        return articleType;
-    }
-
-    public void setArticleType(ArticleType articleType) {
-        this.articleType = articleType;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getJournal() {
-        return journal;
-    }
-
-    public void setJournal(String journal) {
-        this.journal = journal;
-    }
-
     public String getJournalShortForm() {
         return journalShortForm;
     }
@@ -88,36 +43,12 @@ public class JournalArticle {
         this.issue = issue;
     }
 
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
     public String getPages() {
         return pages;
     }
 
     public void setPages(String pages) {
         this.pages = pages;
-    }
-
-    public String getDoi() {
-        return doi;
-    }
-
-    public void setDoi(String doi) {
-        this.doi = doi;
-    }
-
-    public String getPdfFilePath() {
-        return pdfFilePath;
-    }
-
-    public void setPdfFilePath(String pdfFilePath) {
-        this.pdfFilePath = pdfFilePath;
     }
 
     //4. other methods
