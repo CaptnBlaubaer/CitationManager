@@ -17,7 +17,7 @@ public class JournalArticle {
     private String pdfFilePath;
 
     //2. constructors
-    public JournalArticle(ArticleType type, String title, String author, String journal, String journalShortForm, int year, int volume, int issue, String pages, String doi) {
+    public JournalArticle(ArticleType type, String title, String author, String journal, String journalShortForm, int year, int volume, int issue, String pages, String doi, String pdfFilePath) {
         this.articleType = type;
         this.title = title;
         this.author = author;
@@ -28,6 +28,7 @@ public class JournalArticle {
         this.issue = issue;
         this.pages = pages;
         this.doi = doi;
+        this.pdfFilePath = pdfFilePath;
     }
 
     //3. getter and setter methods
@@ -95,6 +96,14 @@ public class JournalArticle {
         this.year = year;
     }
 
+    public String getPages() {
+        return pages;
+    }
+
+    public void setPages(String pages) {
+        this.pages = pages;
+    }
+
     public String getDoi() {
         return doi;
     }
@@ -116,14 +125,17 @@ public class JournalArticle {
     @Override
     public String toString() {
         return "ArticleInfo{" +
-                "title='" + title + '\'' +
+                "type='" + articleType + '\'' +
+                ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", journal='" + journal + '\'' +
                 ", journalShortForm='" + journalShortForm + '\'' +
+                ", year=" + year +
                 ", volume=" + volume +
                 ", issue=" + issue +
-                ", year=" + year +
+                ", pages=" + pages +
                 ", doi='" + doi + '\'' +
+                ", url='" + pdfFilePath + '\'' +
                 '}';
     }
 }

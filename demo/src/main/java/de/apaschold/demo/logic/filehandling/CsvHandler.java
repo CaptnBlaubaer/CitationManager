@@ -1,16 +1,14 @@
 package de.apaschold.demo.logic.filehandling;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CsvHandler {
     //0. constants
     private static final String CSV_SEPARATOR = ";";
-    private static final String FILE_PATH = "src/main/resources/de/apaschold/demo/data/articles.csv";
+    private static final String FILE_PATH = "demo/src/main/resources/de/apaschold/demo/data/articles.csv";
 
     //1. attributes
     private static CsvHandler instance;
@@ -33,7 +31,7 @@ public class CsvHandler {
      *
      * @return a list of strings containing the lines of the file
      */
-    public List<String> readCSVFile() {
+    public List<String> readArticleInfosCsvFile() {
         List<String> articlesInList = new ArrayList<>();
 
         File file = new File(FILE_PATH);
@@ -50,6 +48,7 @@ public class CsvHandler {
                     eof = true;
                 } else {
                     articlesInList.add(fileLine);
+                    System.out.println(ArticleFactory.createArticleFromCsvLine(fileLine));
                 }
             }
 
@@ -59,6 +58,24 @@ public class CsvHandler {
         }
 
         return articlesInList;
+    }
+
+    /**
+     * <h2>writeArticleInfosInCsv</h2>
+     * Writes a list of article information to a CSV file.
+     *
+     * @param articlesInList the list of article information to write to the file
+     */
+    public void writeArticleInfosInCsv(List<String> articlesInList) {
+
+        try (FileWriter writer = new FileWriter(FILE_PATH, StandardCharsets.UTF_8)) {
+            for (String articles : articlesInList) {
+                writer.write(articles + "\n");
+            }
+        } catch (IOException e) {
+            System.err.println("Error saving to File: " + FILE_PATH);
+            e.printStackTrace();
+        }
     }
 
 }
