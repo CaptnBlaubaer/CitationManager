@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<TabPane prefHeight="200.0" prefWidth="200.0"  xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         fx:controller="de.apaschold.demo.gui.JournalArticleViewController">
+    <tabs>
+        <Tab text="Article Info">
+            <content>
+                <VBox alignment="TOP_LEFT" spacing="10.0" style="-fx-padding: 10px;">
+                    <Label fx:id="title" style="-fx-font-size: 12;"/>
+                    <Label fx:id="authors" style="-fx-font-size: 12;"/>
+                    <Label fx:id="journal" style="-fx-font-size: 12;"/>
+                    <Label fx:id="journalShortForm" style="-fx-font-size: 12;"/>
+                    <Label fx:id="year" style="-fx-font-size: 12;"/>
+                    <Label fx:id="volume" style="-fx-font-size: 12;"/>
+                    <Label fx:id="issue" style="-fx-font-size: 12;"/>
+                    <Label fx:id="pages" style="-fx-font-size: 12;"/>
+                    <Label fx:id="doi" style="-fx-font-size: 12;"/>
+                </VBox>
+            </content>
+        </Tab>
+        <Tab text="Edit">
+            <content>
+                <VBox alignment="TOP_LEFT" spacing="10.0" style="-fx-padding: 10px;">
+                    <TextField fx:id="titleChange" style="-fx-font-size: 12;"/>
+                    <TextArea fx:id="authorsChange" style="-fx-font-size: 12;"/>
+                    <TextField fx:id="journalChange" style="-fx-font-size: 12;"/>
+                    <TextField fx:id="journalShortFormChange" style="-fx-font-size: 12;"/>
+                    <TextField fx:id="yearChange" style="-fx-font-size: 12;"/>
+                    <TextField fx:id="volumeChange" style="-fx-font-size: 12;"/>
+                    <TextField fx:id="issueChange" style="-fx-font-size: 12;"/>
+                    <TextField fx:id="pagesChange" style="-fx-font-size: 12;"/>
+                    <TextField fx:id="doiChange" style="-fx-font-size: 12;"/>
+                    <Button text="Save Changes" onAction="#saveChanges"/>
+                </VBox>
+            </content>
+        </Tab>
+        <Tab text="Attached Files">
+            <content>
+                <VBox alignment="TOP_LEFT" spacing="10.0" style="-fx-padding: 10px;">
+                </VBox>
+            </content>
+        </Tab>
+        <Tab text="PDF Preview">
+            <content>
+                <VBox alignment="TOP_LEFT" spacing="10.0" style="-fx-padding: 10px;">
+                </VBox>
+            </content>
+        </Tab>
+
+    </tabs>
+
+
+</TabPane>
+

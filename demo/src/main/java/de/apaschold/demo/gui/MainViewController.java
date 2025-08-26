@@ -1,18 +1,22 @@
 package de.apaschold.demo.gui;
 
+import de.apaschold.demo.HelloApplication;
 import de.apaschold.demo.model.Article;
 import de.apaschold.demo.model.JournalArticle;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.Parent;
+import javafx.scene.control.*;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 public class MainViewController implements Initializable {
     //0. constants
+    private static final String GENERAL_FXML_PATH = "file://C:/Users/Hein/Desktop/Programmierstuff/JAva/CitationManager/demo/src/main/resources/de/apaschold/demo/";
 
     //1. attributes
 
@@ -29,23 +33,10 @@ public class MainViewController implements Initializable {
     private TableColumn<Article, Integer> yearColumn;
 
     @FXML
-    private Label journalArticleTitle;
+    private Parent journalArticleView;
     @FXML
-    private Label journalArticleAuthors;
-    @FXML
-    private Label journalArticleJournal;
-    @FXML
-    private Label journalArticleJournalShortForm;
-    @FXML
-    private Label journalArticleYear;
-    @FXML
-    private Label journalArticleVolume;
-    @FXML
-    private Label journalArticleIssue;
-    @FXML
-    private Label journalArticlePages;
-    @FXML
-    private Label journalArticleDoi;
+    private JournalArticleViewController journalArticleViewController;
+
 
     //3. constructors/initialize method
     @Override
@@ -54,9 +45,10 @@ public class MainViewController implements Initializable {
     }
 
     //4. FXML methods
+    //new FXMLLoader(HelloApplication.class.getResource("main-view.fxml"))
 
     //5. other methods
-    private void populateTable(){
+    protected void populateTable(){
         List<Article> articles = GuiController.getInstance().getArticles();
 
         if (!articles.isEmpty()){
@@ -77,7 +69,7 @@ public class MainViewController implements Initializable {
     private ChangeListener<Article> getSelectionListener(){
         return (observable, oldArticle, newArticle) -> {
             switch (newArticle.getArticleType()){
-                case JOURNAL_ARTICLE -> selectJournalArticle((JournalArticle) newArticle);
+                case JOURNAL_ARTICLE -> journalArticleViewController.selectJournalArticle((JournalArticle) newArticle);
                 case BOOK -> System.out.println("Book selected: " + newArticle.getTitle());
                 case BOOK_CHAPTER -> System.out.println("Book Chapter selected: " + newArticle.getTitle());
                 default -> System.out.println("Unknown article type selected.");
@@ -85,15 +77,5 @@ public class MainViewController implements Initializable {
         };
     }
 
-    private void selectJournalArticle(JournalArticle journalArticle){
-        this.journalArticleTitle.setText(journalArticle.getTitle());
-        this.journalArticleAuthors.setText(journalArticle.getAuthor().replace(", ", "\n"));
-        this.journalArticleJournal.setText(journalArticle.getJournal());
-        this.journalArticleJournalShortForm.setText(journalArticle.getJournalShortForm());
-        this.journalArticleYear.setText(String.valueOf(journalArticle.getYear()));
-        this.journalArticleVolume.setText(journalArticle.getVolume()+"");
-        this.journalArticleIssue.setText(journalArticle.getIssue()+"");
-        this.journalArticlePages.setText(journalArticle.getPages());
-        this.journalArticleDoi.setText(journalArticle.getDoi());
-    }
+
 }

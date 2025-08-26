@@ -17,9 +17,8 @@
        </HBox>
    </bottom>
    <center>
-      <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <SplitPane fx:id="articleDisplay" dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-
             <TableView fx:id="articlesTable"
                        prefHeight="200.0"
                        prefWidth="750.0">
@@ -30,41 +29,7 @@
                     <TableColumn prefWidth="80.0" text="Year" fx:id="yearColumn"/>
                 </columns>
             </TableView>
-
-            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
-                    <tabs>
-                      <Tab text="Article Info">
-                        <content>
-                          <VBox spacing="10.0">
-                              <Label fx:id="journalArticleTitle"/>
-                              <Label fx:id="journalArticleAuthors"/>
-                              <Label fx:id="journalArticleJournal"/>
-                              <Label fx:id="journalArticleJournalShortForm"/>
-                              <Label fx:id="journalArticleYear"/>
-                              <Label fx:id="journalArticleVolume"/>
-                              <Label fx:id="journalArticleIssue"/>
-                              <Label fx:id="journalArticlePages"/>
-                              <Label fx:id="journalArticleDoi"/>
-                          </VBox>
-                        </content>
-                      </Tab>
-                        <Tab text="Edit">
-                            <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                            </content>
-                        </Tab>
-                        <Tab text="PDF Preview">
-                            <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                            </content>
-                        </Tab>
-                        <Tab text="Attached Files">
-                            <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                            </content>
-                        </Tab>
-                    </tabs>
-            </TabPane>
+            <fx:include fx:id="journalArticleView" source="journal-article-view.fxml"/>
         </items>
       </SplitPane>
    </center>
