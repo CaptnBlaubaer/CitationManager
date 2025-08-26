@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #E0E0E0" BorderPane.alignment="CENTER" />
+   </top>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </left>
+   <bottom>
+       <HBox alignment="TOP_CENTER" prefHeight="20.0" prefWidth="200.0" spacing="20.0" style="-fx-background-color: #E0E0E0; -fx-padding: 5px;" BorderPane.alignment="CENTER">
+           <Label text="Citation Manager 2025 v0.1" />
+           <Label text=" Author: André Paschold" />
+       </HBox>
+   </bottom>
+   <center>
+      <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+
+            <TableView fx:id="articlesTable"
+                       prefHeight="200.0"
+                       prefWidth="750.0">
+                <columns>
+                    <TableColumn prefWidth="300.0" text="Title" fx:id="titleColumn"/>
+                    <TableColumn prefWidth="200.0" text="Author" fx:id="authorColumn"/>
+                    <TableColumn prefWidth="200.0" text="Journal" fx:id="journalColumn"/>
+                    <TableColumn prefWidth="80.0" text="Year" fx:id="yearColumn"/>
+                </columns>
+            </TableView>
+
+            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Article Info">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                      </Tab>
+                        <Tab text="Edit">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            </content>
+                        </Tab>
+                        <Tab text="PDF Preview">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            </content>
+                        </Tab>
+                        <Tab text="Attached Files">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            </content>
+                        </Tab>
+                    </tabs>
+            </TabPane>
+        </items>
+      </SplitPane>
+   </center>
+   <right>
+      <VBox prefHeight="200.0" prefWidth="20.0" BorderPane.alignment="CENTER" />
+   </right>
+</BorderPane>

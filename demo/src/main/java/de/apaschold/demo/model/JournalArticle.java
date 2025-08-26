@@ -1,6 +1,6 @@
 package de.apaschold.demo.model;
 
-public class ArticleInfo {
+public class JournalArticle {
     //0. constants
 
     //1. attributes
@@ -12,19 +12,21 @@ public class ArticleInfo {
     private int volume;
     private int issue;
     private int year;
+    private String pages;
     private String doi;
     private String pdfFilePath;
 
     //2. constructors
-    public ArticleInfo(ArticleType type, String title, String author, String journal, String journalShortForm, int volume, int issue, int year, String doi) {
+    public JournalArticle(ArticleType type, String title, String author, String journal, String journalShortForm, int year, int volume, int issue, String pages, String doi) {
         this.articleType = type;
         this.title = title;
         this.author = author;
         this.journal = journal;
         this.journalShortForm = journalShortForm;
+        this.year = year;
         this.volume = volume;
         this.issue = issue;
-        this.year = year;
+        this.pages = pages;
         this.doi = doi;
     }
 

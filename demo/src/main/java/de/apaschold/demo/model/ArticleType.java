@@ -1,7 +1,7 @@
 package de.apaschold.demo.model;
 
 public enum ArticleType {
-    JORUNAL,
+    JOURNAL_ARTICLE,
     BOOK,
     BOOK_SECTION,
     REPORT,

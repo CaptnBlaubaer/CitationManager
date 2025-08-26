@@ -1,11 +1,14 @@
 package de.apaschold.demo.gui;
 
 import de.apaschold.demo.HelloApplication;
+import de.apaschold.demo.model.JournalArticle;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GuiController {
     //0. constants
@@ -13,9 +16,11 @@ public class GuiController {
     //1. attributes
     private static GuiController instance;
     private Stage mainStage;
+    private List<JournalArticle> articles;
 
     //2. constructors
     private GuiController() {
+        this.articles = new ArrayList<>();
     }
 
     public static synchronized GuiController getInstance() {
@@ -32,10 +37,14 @@ public class GuiController {
 
     //4. open view methods
     public void loadMainMenu() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1680, 960);
         this.mainStage.setTitle("Citation Manager");
         this.mainStage.setScene(scene);
         this.mainStage.show();
+    }
+
+    public void loadArticles(){
+
     }
 }
