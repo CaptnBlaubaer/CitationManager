@@ -1,13 +1,13 @@
 package de.apaschold.demo.gui;
 
 import de.apaschold.demo.HelloApplication;
-import de.apaschold.demo.model.JournalArticle;
+import de.apaschold.demo.logic.filehandling.CsvHandler;
+import de.apaschold.demo.model.Article;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GuiController {
@@ -16,11 +16,11 @@ public class GuiController {
     //1. attributes
     private static GuiController instance;
     private Stage mainStage;
-    private List<JournalArticle> articles;
+    private List<Article> articles;
 
     //2. constructors
     private GuiController() {
-        this.articles = new ArrayList<>();
+        loadArticles();
     }
 
     public static synchronized GuiController getInstance() {
@@ -35,6 +35,10 @@ public class GuiController {
         this.mainStage = mainStage;
     }
 
+    public List<Article> getArticles() {
+        return articles;
+    }
+
     //4. open view methods
     public void loadMainMenu() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main-view.fxml"));
@@ -45,6 +49,6 @@ public class GuiController {
     }
 
     public void loadArticles(){
-
+        this.articles = CsvHandler.getInstance().readArticleInfosCsvFile();
     }
 }

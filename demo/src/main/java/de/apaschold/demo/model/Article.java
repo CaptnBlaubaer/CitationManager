@@ -1,5 +1,10 @@
 package de.apaschold.demo.model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public abstract class Article {
     //0. constants
 
@@ -24,60 +29,41 @@ public abstract class Article {
     }
 
     //3. getter and setter methods
-    public ArticleType getArticleType() {
-        return articleType;
-    }
+    public ArticleType getArticleType() { return articleType;}
 
-    public void setArticleType(ArticleType articleType) {
-        this.articleType = articleType;
-    }
+    public void setArticleType(ArticleType articleType) { this.articleType = articleType;}
 
-    public String getTitle() {
-        return title;
-    }
+    public String getTitle() { return title;}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public void setTitle(String title) { this.title = title;}
 
-    public String getAuthor() {
-        return author;
-    }
+    public String getAuthor() { return author;}
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
+    public void setAuthor(String author) { this.author = author;}
 
-    public String getJournal() {
-        return journal;
-    }
+    public String getJournal() { return journal;}
 
-    public void setJournal(String journal) {
-        this.journal = journal;
-    }
+    public void setJournal(String journal) { this.journal = journal;}
 
-    public int getYear() {
-        return year;
-    }
+    public int getYear() { return year;}
 
-    public void setYear(int year) {
-        this.year = year;
-    }
+    public void setYear(int year) { this.year = year;}
 
+    public String getDoi() { return doi;}
 
-    public String getDoi() {
-        return doi;
-    }
+    public void setDoi(String doi) { this.doi = doi;}
 
-    public void setDoi(String doi) {
-        this.doi = doi;
-    }
+    public String getPdfFilePath() { return pdfFilePath;}
 
-    public String getPdfFilePath() {
-        return pdfFilePath;
-    }
+    public void setPdfFilePath(String pdfFilePath) { this.pdfFilePath = pdfFilePath;}
 
-    public void setPdfFilePath(String pdfFilePath) {
-        this.pdfFilePath = pdfFilePath;
-    }
+    //Property getters for TableView
+    public StringProperty titleProperty() { return new SimpleStringProperty(title);}
+
+    public StringProperty authorsProperty() { return new SimpleStringProperty(author);}
+
+    public StringProperty journalProperty() { return new SimpleStringProperty(journal);}
+
+    public IntegerProperty yearProperty() { return new SimpleIntegerProperty(year);}
+
 }

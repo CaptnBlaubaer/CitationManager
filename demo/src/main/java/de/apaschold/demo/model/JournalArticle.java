@@ -69,4 +69,18 @@ public class JournalArticle extends Article {
                 ", url='" + pdfFilePath + '\'' +
                 '}';
     }
+
+    public String toCsvString(){
+        return articleType + ";" +
+                title + ";" +
+                author.replace(", ", "@") + ";" +
+                journal + ";" +
+                journalShortForm + ";" +
+                year + ";" +
+                volume + ";" +
+                issue + ";" +
+                pages + ";" +
+                doi + ";" +
+                pdfFilePath;
+    }
 }

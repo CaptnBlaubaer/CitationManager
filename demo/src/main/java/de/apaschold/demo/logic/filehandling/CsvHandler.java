@@ -1,5 +1,8 @@
 package de.apaschold.demo.logic.filehandling;
 
+import de.apaschold.demo.model.Article;
+import de.apaschold.demo.model.JournalArticle;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -31,8 +34,8 @@ public class CsvHandler {
      *
      * @return a list of strings containing the lines of the file
      */
-    public List<String> readArticleInfosCsvFile() {
-        List<String> articlesInList = new ArrayList<>();
+    public List<Article> readArticleInfosCsvFile() {
+        List<Article> articlesInList = new ArrayList<>();
 
         File file = new File(FILE_PATH);
 
@@ -47,8 +50,9 @@ public class CsvHandler {
                 if (fileLine == null) {
                     eof = true;
                 } else {
-                    articlesInList.add(fileLine);
-                    System.out.println(ArticleFactory.createArticleFromCsvLine(fileLine));
+                    JournalArticle journalArticle = ArticleFactory.createArticleFromCsvLine(fileLine);
+                    articlesInList.add(journalArticle);
+
                 }
             }
 

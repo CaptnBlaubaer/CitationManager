@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.apaschold.demo.gui.MainViewController">
    <top>
       <HBox prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #E0E0E0" BorderPane.alignment="CENTER" />
    </top>
@@ -25,7 +25,7 @@
                        prefWidth="750.0">
                 <columns>
                     <TableColumn prefWidth="300.0" text="Title" fx:id="titleColumn"/>
-                    <TableColumn prefWidth="200.0" text="Author" fx:id="authorColumn"/>
+                    <TableColumn prefWidth="200.0" text="Author" fx:id="authorsColumn"/>
                     <TableColumn prefWidth="200.0" text="Journal" fx:id="journalColumn"/>
                     <TableColumn prefWidth="80.0" text="Year" fx:id="yearColumn"/>
                 </columns>
@@ -35,7 +35,17 @@
                     <tabs>
                       <Tab text="Article Info">
                         <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          <VBox spacing="10.0">
+                              <Label fx:id="journalArticleTitle"/>
+                              <Label fx:id="journalArticleAuthors"/>
+                              <Label fx:id="journalArticleJournal"/>
+                              <Label fx:id="journalArticleJournalShortForm"/>
+                              <Label fx:id="journalArticleYear"/>
+                              <Label fx:id="journalArticleVolume"/>
+                              <Label fx:id="journalArticleIssue"/>
+                              <Label fx:id="journalArticlePages"/>
+                              <Label fx:id="journalArticleDoi"/>
+                          </VBox>
                         </content>
                       </Tab>
                         <Tab text="Edit">
