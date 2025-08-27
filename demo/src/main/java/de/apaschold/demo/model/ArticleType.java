@@ -3,7 +3,7 @@ package de.apaschold.demo.model;
 public enum ArticleType {
     JOURNAL_ARTICLE ("Journal Article"),
     BOOK ("Book"),
-    BOOK_CHAPTER ("Book Chapter"),
+    BOOK_SECTION("Book Chapter"),
     WEBSITE ("Website"),
     THESIS ("Thesis");
 
@@ -21,7 +21,7 @@ public enum ArticleType {
         } else if (bibTexArticleType.equals("@book")){
             returnType = BOOK;
         } else if (bibTexArticleType.equals("@inbook")){
-            returnType = BOOK_CHAPTER;
+            returnType = BOOK_SECTION;
         } else if (bibTexArticleType.equals("@phdthesis")){
             returnType = THESIS;
         }

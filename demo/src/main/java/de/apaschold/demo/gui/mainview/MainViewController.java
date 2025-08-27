@@ -97,14 +97,14 @@ public class MainViewController implements Initializable {
     public void populateArticleView(){
         Article selectedArticle = GuiController.getInstance().getSelectedArticle();
 
-        String fxmlFile = "";
+        String fxmlFile = switch (selectedArticle.getArticleType()){
+            case JOURNAL_ARTICLE -> "journal-article-subview.fxml";
+            case BOOK_SECTION -> "book-section-subview.fxml";
+            case BOOK -> "book-subview.fxml";
+            default -> "";
+        };
 
-        switch (selectedArticle.getArticleType()){
-            case JOURNAL_ARTICLE -> fxmlFile = "journal-article-subview.fxml";
-            case BOOK -> fxmlFile = "book-subview.fxml";
-            //case "Conference Paper" -> showConferencePaperView();
-            default -> System.out.println("Unknown article type: " + selectedArticle.getArticleType());
-        }
+        System.out.println(fxmlFile);
 
         if(!fxmlFile.isEmpty()) {
             try {
