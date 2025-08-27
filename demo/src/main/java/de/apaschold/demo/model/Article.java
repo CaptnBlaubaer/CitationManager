@@ -66,4 +66,8 @@ public abstract class Article {
 
     public IntegerProperty yearProperty() { return new SimpleIntegerProperty(year);}
 
+    //4. other methods
+    public String toCsvString(){
+        return "";
+    }
 }

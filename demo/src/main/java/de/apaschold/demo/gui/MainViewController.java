@@ -1,6 +1,7 @@
 package de.apaschold.demo.gui;
 
 import de.apaschold.demo.HelloApplication;
+import de.apaschold.demo.logic.filehandling.CsvHandler;
 import de.apaschold.demo.model.Article;
 import de.apaschold.demo.model.JournalArticle;
 import javafx.beans.value.ChangeListener;
@@ -45,7 +46,10 @@ public class MainViewController implements Initializable {
     }
 
     //4. FXML methods
-    //new FXMLLoader(HelloApplication.class.getResource("main-view.fxml"))
+    @FXML
+    protected void saveArticlesToCsv() {
+        GuiController.getInstance().saveArticlesToCsv();
+    }
 
     //5. other methods
     protected void populateTable(){

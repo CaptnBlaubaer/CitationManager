@@ -51,4 +51,8 @@ public class GuiController {
     public void loadArticles(){
         this.articles = CsvHandler.getInstance().readArticleInfosCsvFile();
     }
+
+    public void saveArticlesToCsv(){
+        CsvHandler.getInstance().writeArticlesToCsv(this.articles);
+    }
 }

@@ -70,16 +70,18 @@ public class CsvHandler {
      *
      * @param articlesInList the list of article information to write to the file
      */
-    public void writeArticleInfosInCsv(List<String> articlesInList) {
+    public void writeArticlesToCsv(List<Article> articlesInList) {
 
         try (FileWriter writer = new FileWriter(FILE_PATH, StandardCharsets.UTF_8)) {
-            for (String articles : articlesInList) {
-                writer.write(articles + "\n");
+            for (Article article : articlesInList) {
+                writer.write(article.toCsvString() + "\n");
             }
         } catch (IOException e) {
             System.err.println("Error saving to File: " + FILE_PATH);
             e.printStackTrace();
         }
+
+
     }
 
 }
