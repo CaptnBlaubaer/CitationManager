@@ -1,16 +1,22 @@
 package de.apaschold.demo.gui.mainview;
 
+import de.apaschold.demo.additionals.MyLittleHelpers;
+import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.model.JournalArticle;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-public class JournalArticleViewController {
+import java.io.IOException;
+import java.net.URL;
+
+public class JournalArticleViewController implements Initializable {
     //0. constants
 
     //1. attributes
-    private JournalArticle article;
+    private JournalArticle journalArticle;
 
     //2. FXML elements
     @FXML
@@ -52,55 +58,49 @@ public class JournalArticleViewController {
     private TextField doiChange;
 
     //3. constructors/initialize method
+    @Override
+    public void initialize(URL location, java.util.ResourceBundle resources) {
+        this.journalArticle = (JournalArticle) GuiController.getInstance().getSelectedArticle();
+
+        populateJournalArticleView();
+    }
 
     //4. FXML methods
     @FXML
-    private void saveChanges(){
-        if (this.article != null){
-            this.article.setTitle(this.titleChange.getText());
-            this.article.setAuthor(this.authorsChange.getText().replace("\n", ", "));
-            this.article.setJournal(this.journalChange.getText());
-            this.article.setJournalShortForm(this.journalShortFormChange.getText());
-            try {
-                this.article.setYear(Integer.parseInt(this.yearChange.getText()));
-            } catch (NumberFormatException e){
-                this.article.setYear(0);
-            }
-            try {
-                this.article.setVolume(Integer.parseInt(this.volumeChange.getText()));
-            } catch (NumberFormatException e){
-                this.article.setVolume(0);
-            }
-            try {
-                this.article.setIssue(Integer.parseInt(this.issueChange.getText()));
-            } catch (NumberFormatException e){
-                this.article.setIssue(0);
-            }
-            this.article.setPages(this.pagesChange.getText());
-            this.article.setDoi(this.doiChange.getText());
+    private void saveChanges() throws IOException {
+        if (this.journalArticle != null){
+            this.journalArticle.setTitle( this.titleChange.getText());
+            this.journalArticle.setAuthor( this.authorsChange.getText().replace("\n", ", "));
+            this.journalArticle.setJournal( this.journalChange.getText());
+            this.journalArticle.setJournalShortForm( this.journalShortFormChange.getText());
+
+            this.journalArticle.setYear( MyLittleHelpers.convertStringInputToInteger(this.yearChange.getText()));
+            this.journalArticle.setVolume( MyLittleHelpers.convertStringInputToInteger(this.volumeChange.getText()));
+            this.journalArticle.setIssue( MyLittleHelpers.convertStringInputToInteger(this.issueChange.getText()));
+
+            this.journalArticle.setPages(this.pagesChange.getText());
+            this.journalArticle.setDoi(this.doiChange.getText());
 
             //update the labels in the article overview
-            selectJournalArticle(this.article);
+            GuiController.getInstance().loadMainMenu();
         }
     }
 
     //5. other methods
-    public void selectJournalArticle(JournalArticle journalArticle){
-        this.article = journalArticle;
-
+    public void populateJournalArticleView(){
         String yearAsString = "-";
-        if (this.article.getYear() != 0){
-            yearAsString = String.valueOf(this.article.getYear());
+        if (this.journalArticle.getYear() != 0){
+            yearAsString = String.valueOf(this.journalArticle.getYear());
         }
 
         String volumeAsString = "-";
-        if (this.article.getVolume() != 0){
-            volumeAsString = String.valueOf(this.article.getVolume());
+        if (this.journalArticle.getVolume() != 0){
+            volumeAsString = String.valueOf(this.journalArticle.getVolume());
         }
 
         String issueAsString = "-";
-        if (this.article.getIssue() != 0){
-            issueAsString = String.valueOf(this.article.getIssue());
+        if (this.journalArticle.getIssue() != 0){
+            issueAsString = String.valueOf(this.journalArticle.getIssue());
         }
 
         //populate the labels in the article overview
@@ -112,26 +112,26 @@ public class JournalArticleViewController {
     }
 
     private void populateArticleOverviewTab(String yearAsString, String volumeAsString, String issueAsString) {
-        this.title.setText(this.article.getTitle());
-        this.authors.setText(this.article.getAuthor().replace(", ", "\n"));
-        this.journal.setText(this.article.getJournal());
-        this.journalShortForm.setText(this.article.getJournalShortForm());
+        this.title.setText(this.journalArticle.getTitle());
+        this.authors.setText(this.journalArticle.getAuthor().replace(", ", "\n"));
+        this.journal.setText(this.journalArticle.getJournal());
+        this.journalShortForm.setText(this.journalArticle.getJournalShortForm());
         this.year.setText(yearAsString);
         this.volume.setText(volumeAsString);
         this.issue.setText(issueAsString);
-        this.pages.setText(this.article.getPages());
-        this.doi.setText(this.article.getDoi());
+        this.pages.setText(this.journalArticle.getPages());
+        this.doi.setText(this.journalArticle.getDoi());
     }
 
     private void populateArticleEditTab(String yearAsString,String volumeAsString,String issueAsString) {
-        this.titleChange.setText(this.article.getTitle());
-        this.authorsChange.setText(this.article.getAuthor().replace(", ", "\n"));
-        this.journalChange.setText(this.article.getJournal());
-        this.journalShortFormChange.setText(this.article.getJournalShortForm());
+        this.titleChange.setText(this.journalArticle.getTitle());
+        this.authorsChange.setText(this.journalArticle.getAuthor().replace(", ", "\n"));
+        this.journalChange.setText(this.journalArticle.getJournal());
+        this.journalShortFormChange.setText(this.journalArticle.getJournalShortForm());
         this.yearChange.setText(yearAsString);
         this.volumeChange.setText(volumeAsString);
         this.issueChange.setText(issueAsString);
-        this.pagesChange.setText(this.article.getPages());
-        this.doiChange.setText(this.article.getDoi());
+        this.pagesChange.setText(this.journalArticle.getPages());
+        this.doiChange.setText(this.journalArticle.getDoi());
     }
 }

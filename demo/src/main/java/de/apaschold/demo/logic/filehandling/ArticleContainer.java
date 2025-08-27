@@ -8,7 +8,7 @@ public class ArticleContainer {
     //0. constants
 
     //1. attributes
-    private static List<Article> articles;
+    private final List<Article> articles;
 
     //2. constructors
     public ArticleContainer() {

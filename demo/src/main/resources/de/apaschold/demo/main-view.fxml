@@ -7,11 +7,15 @@
    <top>
       <HBox prefHeight="20.0" prefWidth="200.0" style="-fx-background-color: #E0E0E0" BorderPane.alignment="CENTER">
         <Button text="Save" onAction="#saveArticlesToCsv" prefHeight="20.0" />
-          <Button text="Add new article" onAction="#addNewArticle" prefHeight="20.0" />
+
+
       </HBox>
    </top>
    <left>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" alignment="CENTER_LEFT" spacing="20.0">
+          <Button text="Update library" onAction="#updateLibrary" prefHeight="20.0" />
+          <Button text="Add new article" onAction="#addNewArticle" prefHeight="20.0" />
+      </VBox>
    </left>
    <bottom>
        <HBox alignment="TOP_CENTER" prefHeight="20.0" prefWidth="200.0" spacing="20.0" style="-fx-background-color: #E0E0E0; -fx-padding: 5px;" BorderPane.alignment="CENTER">
@@ -32,7 +36,7 @@
                     <TableColumn prefWidth="80.0" text="Year" fx:id="yearColumn"/>
                 </columns>
             </TableView>
-            <fx:include fx:id="journalArticleView" source="journal-article-view.fxml"/>
+            <BorderPane fx:id="articleView"/>
         </items>
       </SplitPane>
    </center>

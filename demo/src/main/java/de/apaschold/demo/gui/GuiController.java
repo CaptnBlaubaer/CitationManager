@@ -16,7 +16,8 @@ public class GuiController {
     //1. attributes
     private static GuiController instance;
     private Stage mainStage;
-    private ArticleContainer articles;
+    private final ArticleContainer articles;
+    private Article selectedArticle;
 
     //2. constructors
     private GuiController() {
@@ -43,6 +44,12 @@ public class GuiController {
         return articles;
     }
 
+    public Article getSelectedArticle() { return selectedArticle;}
+
+    public void setSelectedArticle(Article selectedArticle) { this.selectedArticle = selectedArticle;}
+
+
+
     //4. open view methods
     public void loadMainMenu() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main-view.fxml"));
@@ -55,13 +62,12 @@ public class GuiController {
     public void loadAddNewArticleView() {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("add-new-article-view.fxml"));
         try {
-            Scene scene = new Scene(fxmlLoader.load(), 300, 400);
+            Scene scene = new Scene(fxmlLoader.load(), 320, 500);
             Stage newArticleStage = new Stage();
             newArticleStage.setTitle("Add New Article");
             newArticleStage.setScene(scene);
             newArticleStage.showAndWait();
 
-            // Refresh articles after the add new article window is closed
         } catch (IOException e) {
             e.printStackTrace();
         }

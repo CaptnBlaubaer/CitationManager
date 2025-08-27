@@ -1,6 +1,6 @@
 package de.apaschold.demo.gui.addnewarticleview;
 
-import de.apaschold.demo.MyLittleHelpers;
+import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.model.ArticleType;
 import de.apaschold.demo.model.JournalArticle;

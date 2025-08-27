@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <VBox xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="de.apaschold.demo.gui.addnewarticleview.AddNewArticleView"
-            prefHeight="400.0" prefWidth="600.0" spacing="10.0" alignment="TOP_CENTER">
+            prefHeight="600.0" prefWidth="300.0" spacing="10.0" alignment="TOP_CENTER">
 
     <ComboBox fx:id="newArticleType" style="-fx-font-size: 12;"/>
-    <TextField fx:id="newTitle" style="-fx-font-size: 12;" promptText="Article title"/>
-    <TextArea fx:id="newAuthors" style="-fx-font-size: 12;" promptText="Author names"/>
-    <TextField fx:id="newJournal" style="-fx-font-size: 12;" promptText="Journal"/>
-    <TextField fx:id="newJournalShortForm" style="-fx-font-size: 12;" promptText="Journal abbreviation"/>
-    <TextField fx:id="newYear" style="-fx-font-size: 12;" promptText="Year"/>
-    <TextField fx:id="newVolume" style="-fx-font-size: 12;" promptText="Volume"/>
-    <TextField fx:id="newIssue" style="-fx-font-size: 12;" promptText="Issue"/>
-    <TextField fx:id="newPages" style="-fx-font-size: 12;" promptText="Pages"/>
-    <TextField fx:id="newDoi" style="-fx-font-size: 12;" promptText="DOI"/>
-    <Button text="Save Changes" onAction="#saveNewArticle"/>
+    <TextField fx:id="newTitle" maxWidth="300.0" style="-fx-font-size: 12;" promptText="Article title"/>
+    <TextArea fx:id="newAuthors" maxWidth="300.0" maxHeight="100.0" style="-fx-font-size: 12;" promptText="Author names"/>
+    <TextField fx:id="newJournal" maxWidth="300.0" style="-fx-font-size: 12;" promptText="Journal"/>
+    <TextField fx:id="newJournalShortForm" maxWidth="300.0" style="-fx-font-size: 12;" promptText="Journal abbreviation"/>
+    <TextField fx:id="newYear" maxWidth="300.0" style="-fx-font-size: 12;" promptText="Year"/>
+    <TextField fx:id="newVolume" maxWidth="300.0" style="-fx-font-size: 12;" promptText="Volume"/>
+    <TextField fx:id="newIssue" maxWidth="300.0" style="-fx-font-size: 12;" promptText="Issue"/>
+    <TextField fx:id="newPages" maxWidth="300.0" style="-fx-font-size: 12;" promptText="Pages"/>
+    <TextField fx:id="newDoi" maxWidth="300.0" style="-fx-font-size: 12;" promptText="DOI"/>
+    <Button text="Save Changes" maxWidth="300.0" onAction="#saveNewArticle"/>
 </VBox>

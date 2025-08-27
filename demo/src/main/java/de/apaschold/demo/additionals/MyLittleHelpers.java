@@ -1,4 +1,4 @@
-package de.apaschold.demo;
+package de.apaschold.demo.additionals;
 
 public class MyLittleHelpers {
 
