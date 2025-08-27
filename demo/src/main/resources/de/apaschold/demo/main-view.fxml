@@ -30,7 +30,7 @@
                 <columns>
                     <TableColumn prefWidth="300.0" text="Title" fx:id="titleColumn"/>
                     <TableColumn prefWidth="200.0" text="Author" fx:id="authorsColumn"/>
-                    <TableColumn prefWidth="200.0" text="Journal" fx:id="journalColumn"/>
+                    <TableColumn prefWidth="200.0" text="Journal/Publisher" fx:id="journalColumn"/>
                     <TableColumn prefWidth="80.0" text="Year" fx:id="yearColumn"/>
                 </columns>
             </TableView>

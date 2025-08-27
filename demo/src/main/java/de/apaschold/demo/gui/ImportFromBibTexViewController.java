@@ -35,8 +35,10 @@ public class ImportFromBibTexViewController {
         String[] separatedImports = bibTexText.replace("@", "!!!!!@").split("!!!!!");
 
         for (String singleImport : separatedImports) {
-            Article importedArticle = ArticleFactory.createArticleFromBibTex(singleImport);
-            GuiController.getInstance().getArticleContainer().addArticle(importedArticle);
+            if (!singleImport.isEmpty()) {
+                Article importedArticle = ArticleFactory.createArticleFromBibTex(singleImport);
+                GuiController.getInstance().getArticleContainer().addArticle(importedArticle);
+            }
         }
     }
 }

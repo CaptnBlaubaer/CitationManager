@@ -50,8 +50,8 @@ public class CsvHandler {
                 if (fileLine == null) {
                     eof = true;
                 } else {
-                    JournalArticle journalArticle = ArticleFactory.createJournalArticleFromCsvLine(fileLine);
-                    articlesInList.add(journalArticle);
+                    Article articleFromCsv = ArticleFactory.createArticleFromCsvLine(fileLine);
+                    articlesInList.add(articleFromCsv);
 
                 }
             }

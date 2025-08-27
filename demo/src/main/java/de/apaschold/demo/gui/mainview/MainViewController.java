@@ -3,7 +3,6 @@ package de.apaschold.demo.gui.mainview;
 import de.apaschold.demo.HelloApplication;
 import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.model.Article;
-import de.apaschold.demo.model.JournalArticle;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 
 public class MainViewController implements Initializable {
@@ -35,9 +33,6 @@ public class MainViewController implements Initializable {
 
     @FXML
     private BorderPane articleView;
-    @FXML
-    private JournalArticleViewController journalArticleViewController;
-
 
     //3. constructors/initialize method
     @Override
@@ -105,8 +100,8 @@ public class MainViewController implements Initializable {
         String fxmlFile = "";
 
         switch (selectedArticle.getArticleType()){
-            case JOURNAL_ARTICLE -> fxmlFile = "journal-article-view.fxml";
-            //case "Book" -> showBookView();
+            case JOURNAL_ARTICLE -> fxmlFile = "journal-article-subview.fxml";
+            case BOOK -> fxmlFile = "book-subview.fxml";
             //case "Conference Paper" -> showConferencePaperView();
             default -> System.out.println("Unknown article type: " + selectedArticle.getArticleType());
         }

@@ -18,6 +18,12 @@ public enum ArticleType {
 
         if (bibTexArticleType.equals("@article")){
             returnType = JOURNAL_ARTICLE;
+        } else if (bibTexArticleType.equals("@book")){
+            returnType = BOOK;
+        } else if (bibTexArticleType.equals("@inbook")){
+            returnType = BOOK_CHAPTER;
+        } else if (bibTexArticleType.equals("@phdthesis")){
+            returnType = THESIS;
         }
 
         return returnType;

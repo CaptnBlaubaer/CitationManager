@@ -12,7 +12,7 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URL;
 
-public class JournalArticleViewController implements Initializable {
+public class JournalArticleSubViewController implements Initializable {
     //0. constants
 
     //1. attributes

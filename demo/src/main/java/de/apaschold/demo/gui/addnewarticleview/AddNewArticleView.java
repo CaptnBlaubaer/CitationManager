@@ -53,7 +53,6 @@ public class AddNewArticleView implements Initializable {
         int newIssueAsInteger= MyLittleHelpers.convertStringInputToInteger(this.newIssue.getText());
 
         JournalArticle newArticle = new JournalArticle(
-                this.newArticleType.getValue(),
                 this.newTitle.getText(),
                 this.newAuthors.getText(),
                 this.newJournal.getText(),

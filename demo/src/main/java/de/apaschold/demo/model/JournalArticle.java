@@ -10,10 +10,12 @@ public class JournalArticle extends Article {
     private String pages;
 
     //2. constructors
-    public JournalArticle(){}
+    public JournalArticle(){
+        super.setArticleType(ArticleType.JOURNAL_ARTICLE);
+    }
 
-    public JournalArticle(ArticleType type, String title, String author, String journal, String journalShortForm, int year, int volume, int issue, String pages, String doi, String pdfFilePath) {
-        super(type, title, author, journal, year, doi, pdfFilePath);
+    public JournalArticle(String title, String author, String journal, String journalShortForm, int year, int volume, int issue, String pages, String doi, String pdfFilePath) {
+        super(ArticleType.JOURNAL_ARTICLE, title, author, journal, year, doi, pdfFilePath);
         this.journalShortForm = journalShortForm;
         this.volume = volume;
         this.issue = issue;
