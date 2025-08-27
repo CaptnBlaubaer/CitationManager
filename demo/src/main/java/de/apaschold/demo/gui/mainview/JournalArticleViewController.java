@@ -20,6 +20,8 @@ public class JournalArticleViewController implements Initializable {
 
     //2. FXML elements
     @FXML
+    private Label articleType;
+    @FXML
     private Label title;
     @FXML
     private Label authors;
@@ -112,20 +114,21 @@ public class JournalArticleViewController implements Initializable {
     }
 
     private void populateArticleOverviewTab(String yearAsString, String volumeAsString, String issueAsString) {
-        this.title.setText(this.journalArticle.getTitle());
-        this.authors.setText(this.journalArticle.getAuthor().replace(", ", "\n"));
-        this.journal.setText(this.journalArticle.getJournal());
-        this.journalShortForm.setText(this.journalArticle.getJournalShortForm());
-        this.year.setText(yearAsString);
-        this.volume.setText(volumeAsString);
-        this.issue.setText(issueAsString);
-        this.pages.setText(this.journalArticle.getPages());
-        this.doi.setText(this.journalArticle.getDoi());
+        this.articleType.setText("Type: " + this.journalArticle.getArticleType().getDescription());
+        this.title.setText("Title: " + this.journalArticle.getTitle());
+        this.authors.setText("Authors: " + this.journalArticle.getAuthor().replace("; ", "\n"));
+        this.journal.setText("Journal: " + this.journalArticle.getJournal());
+        this.journalShortForm.setText("Journal abbreviation: " + this.journalArticle.getJournalShortForm());
+        this.year.setText("Year: " + yearAsString);
+        this.volume.setText("Volume: " + volumeAsString);
+        this.issue.setText("Issue: " + issueAsString);
+        this.pages.setText("Pages: " + this.journalArticle.getPages());
+        this.doi.setText("DOI: " + this.journalArticle.getDoi());
     }
 
     private void populateArticleEditTab(String yearAsString,String volumeAsString,String issueAsString) {
         this.titleChange.setText(this.journalArticle.getTitle());
-        this.authorsChange.setText(this.journalArticle.getAuthor().replace(", ", "\n"));
+        this.authorsChange.setText(this.journalArticle.getAuthor().replace("; ", "\n"));
         this.journalChange.setText(this.journalArticle.getJournal());
         this.journalShortFormChange.setText(this.journalArticle.getJournalShortForm());
         this.yearChange.setText(yearAsString);

@@ -1,7 +1,7 @@
 package de.apaschold.demo.gui;
 
 import de.apaschold.demo.HelloApplication;
-import de.apaschold.demo.logic.filehandling.ArticleContainer;
+import de.apaschold.demo.logic.ArticleContainer;
 import de.apaschold.demo.model.Article;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -48,8 +48,6 @@ public class GuiController {
 
     public void setSelectedArticle(Article selectedArticle) { this.selectedArticle = selectedArticle;}
 
-
-
     //4. open view methods
     public void loadMainMenu() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main-view.fxml"));
@@ -65,6 +63,20 @@ public class GuiController {
             Scene scene = new Scene(fxmlLoader.load(), 320, 500);
             Stage newArticleStage = new Stage();
             newArticleStage.setTitle("Add New Article");
+            newArticleStage.setScene(scene);
+            newArticleStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadImportFromBibTexView() {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("import-from-bibtex-view.fxml"));
+        try {
+            Scene scene = new Scene(fxmlLoader.load(), 320, 250);
+            Stage newArticleStage = new Stage();
+            newArticleStage.setTitle("Import from BibTex");
             newArticleStage.setScene(scene);
             newArticleStage.showAndWait();
 

@@ -1,5 +1,6 @@
 package de.apaschold.demo.logic.filehandling;
 
+import de.apaschold.demo.logic.ArticleFactory;
 import de.apaschold.demo.model.Article;
 import de.apaschold.demo.model.JournalArticle;
 
@@ -49,7 +50,7 @@ public class CsvHandler {
                 if (fileLine == null) {
                     eof = true;
                 } else {
-                    JournalArticle journalArticle = ArticleFactory.createArticleFromCsvLine(fileLine);
+                    JournalArticle journalArticle = ArticleFactory.createJournalArticleFromCsvLine(fileLine);
                     articlesInList.add(journalArticle);
 
                 }

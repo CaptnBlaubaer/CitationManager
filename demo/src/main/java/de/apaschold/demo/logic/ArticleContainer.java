@@ -1,5 +1,6 @@
-package de.apaschold.demo.logic.filehandling;
+package de.apaschold.demo.logic;
 
+import de.apaschold.demo.logic.filehandling.CsvHandler;
 import de.apaschold.demo.model.Article;
 
 import java.util.List;

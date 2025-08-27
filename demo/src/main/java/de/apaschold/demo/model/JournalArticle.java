@@ -10,6 +10,8 @@ public class JournalArticle extends Article {
     private String pages;
 
     //2. constructors
+    public JournalArticle(){}
+
     public JournalArticle(ArticleType type, String title, String author, String journal, String journalShortForm, int year, int volume, int issue, String pages, String doi, String pdfFilePath) {
         super(type, title, author, journal, year, doi, pdfFilePath);
         this.journalShortForm = journalShortForm;
@@ -73,7 +75,7 @@ public class JournalArticle extends Article {
     public String toCsvString(){
         return articleType + ";" +
                 title + ";" +
-                author.replace(", ", "@") + ";" +
+                author.replace("; ", " and ") + ";" +
                 journal + ";" +
                 journalShortForm + ";" +
                 year + ";" +

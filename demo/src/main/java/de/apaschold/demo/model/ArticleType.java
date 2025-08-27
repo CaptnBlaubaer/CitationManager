@@ -12,4 +12,14 @@ public enum ArticleType {
     ArticleType(String description) { this.description = description;}
 
     public String getDescription() { return description;}
+
+    public static ArticleType getArticleTypeFromBibTexImport(String bibTexArticleType){
+        ArticleType returnType = null;
+
+        if (bibTexArticleType.equals("@article")){
+            returnType = JOURNAL_ARTICLE;
+        }
+
+        return returnType;
+    }
 }

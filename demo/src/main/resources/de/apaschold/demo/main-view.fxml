@@ -7,14 +7,12 @@
    <top>
       <HBox prefHeight="20.0" prefWidth="200.0" style="-fx-background-color: #E0E0E0" BorderPane.alignment="CENTER">
         <Button text="Save" onAction="#saveArticlesToCsv" prefHeight="20.0" />
-
-
       </HBox>
    </top>
    <left>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" alignment="CENTER_LEFT" spacing="20.0">
-          <Button text="Update library" onAction="#updateLibrary" prefHeight="20.0" />
           <Button text="Add new article" onAction="#addNewArticle" prefHeight="20.0" />
+          <Button text="Import BibTex" onAction="#importFromBibTex" prefHeight="20.0"/>
       </VBox>
    </left>
    <bottom>

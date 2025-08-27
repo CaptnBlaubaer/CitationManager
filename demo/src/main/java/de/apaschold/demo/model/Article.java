@@ -18,6 +18,8 @@ public abstract class Article {
     protected String pdfFilePath;
 
     //2. constructors
+    public Article() {}
+
     public Article(ArticleType type, String title, String author, String journal, int year, String doi, String pdfFilePath) {
         this.articleType = type;
         this.title = title;

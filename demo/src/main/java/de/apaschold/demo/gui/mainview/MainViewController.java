@@ -18,7 +18,6 @@ import java.util.List;
 
 public class MainViewController implements Initializable {
     //0. constants
-    private static final String GENERAL_FXML_PATH = "C:/Users/Hein/Desktop/Programmierstuff/JAva/CitationManager/demo/target/classes//de/apaschold/demo/";
 
     //1. attributes
 
@@ -66,7 +65,10 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    protected void updateLibrary(){
+    protected void importFromBibTex(){
+        GuiController.getInstance().loadImportFromBibTexView();
+
+        // Refresh the table to show the newly imported article
         populateTable();
     }
 
@@ -100,22 +102,25 @@ public class MainViewController implements Initializable {
     public void populateArticleView(){
         Article selectedArticle = GuiController.getInstance().getSelectedArticle();
 
+        String fxmlFile = "";
+
         switch (selectedArticle.getArticleType()){
-            case JOURNAL_ARTICLE -> showJournalArticleView();
+            case JOURNAL_ARTICLE -> fxmlFile = "journal-article-view.fxml";
             //case "Book" -> showBookView();
             //case "Conference Paper" -> showConferencePaperView();
             default -> System.out.println("Unknown article type: " + selectedArticle.getArticleType());
         }
-    }
 
-    public void showJournalArticleView() {
-        try {
-            Parent journalArticleView = FXMLLoader.load(HelloApplication.class.getResource("journal-article-view.fxml"));
-            this.articleView.setCenter(journalArticleView);
-        } catch (IOException e){
-            e.printStackTrace();
+        if(!fxmlFile.isEmpty()) {
+            try {
+                Parent articleDetailsView = FXMLLoader.load(HelloApplication.class.getResource(fxmlFile));
+                this.articleView.setCenter(articleDetailsView);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
+
 
 
 }
