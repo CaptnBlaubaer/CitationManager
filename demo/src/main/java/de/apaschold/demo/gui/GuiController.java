@@ -1,7 +1,7 @@
 package de.apaschold.demo.gui;
 
 import de.apaschold.demo.HelloApplication;
-import de.apaschold.demo.logic.filehandling.CsvHandler;
+import de.apaschold.demo.logic.filehandling.ArticleContainer;
 import de.apaschold.demo.model.Article;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,11 +16,11 @@ public class GuiController {
     //1. attributes
     private static GuiController instance;
     private Stage mainStage;
-    private List<Article> articles;
+    private ArticleContainer articles;
 
     //2. constructors
     private GuiController() {
-        loadArticles();
+        this.articles = new ArticleContainer();
     }
 
     public static synchronized GuiController getInstance() {
@@ -35,7 +35,11 @@ public class GuiController {
         this.mainStage = mainStage;
     }
 
-    public List<Article> getArticles() {
+    public List<Article> getArticleList() {
+        return articles.getArticles();
+    }
+
+    public ArticleContainer getArticleContainer() {
         return articles;
     }
 
@@ -48,11 +52,18 @@ public class GuiController {
         this.mainStage.show();
     }
 
-    public void loadArticles(){
-        this.articles = CsvHandler.getInstance().readArticleInfosCsvFile();
-    }
+    public void loadAddNewArticleView() {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("add-new-article-view.fxml"));
+        try {
+            Scene scene = new Scene(fxmlLoader.load(), 300, 400);
+            Stage newArticleStage = new Stage();
+            newArticleStage.setTitle("Add New Article");
+            newArticleStage.setScene(scene);
+            newArticleStage.showAndWait();
 
-    public void saveArticlesToCsv(){
-        CsvHandler.getInstance().writeArticlesToCsv(this.articles);
+            // Refresh articles after the add new article window is closed
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

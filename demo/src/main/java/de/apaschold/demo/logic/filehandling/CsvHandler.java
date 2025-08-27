@@ -10,7 +10,6 @@ import java.util.List;
 
 public class CsvHandler {
     //0. constants
-    private static final String CSV_SEPARATOR = ";";
     private static final String FILE_PATH = "demo/src/main/resources/de/apaschold/demo/data/articles.csv";
 
     //1. attributes

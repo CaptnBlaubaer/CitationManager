@@ -9,10 +9,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
-/*TODO create model class article
-  TODO create overview Window
-  TODO create CSV storage for article information
+/*TODO create model for other article types (book, web, etc.)
   TODO create view to open and article pdf files
+  TODO create view to add new articles
+  TODO obtain String representation of article types in add ne article view
  */
 
 

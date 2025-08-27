@@ -1,18 +1,14 @@
-package de.apaschold.demo.gui;
+package de.apaschold.demo.gui.mainview;
 
-import de.apaschold.demo.HelloApplication;
-import de.apaschold.demo.logic.filehandling.CsvHandler;
+import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.model.Article;
 import de.apaschold.demo.model.JournalArticle;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 
 public class MainViewController implements Initializable {
@@ -48,12 +44,17 @@ public class MainViewController implements Initializable {
     //4. FXML methods
     @FXML
     protected void saveArticlesToCsv() {
-        GuiController.getInstance().saveArticlesToCsv();
+        GuiController.getInstance().getArticleContainer().saveArticlesToCsv();
+    }
+
+    @FXML
+    protected void addNewArticle() {
+        GuiController.getInstance().loadAddNewArticleView();
     }
 
     //5. other methods
     protected void populateTable(){
-        List<Article> articles = GuiController.getInstance().getArticles();
+        List<Article> articles = GuiController.getInstance().getArticleList();
 
         if (!articles.isEmpty()){
             this.articlesTable.getItems().clear();

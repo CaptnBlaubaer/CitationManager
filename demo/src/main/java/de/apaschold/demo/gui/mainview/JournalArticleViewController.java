@@ -1,4 +1,4 @@
-package de.apaschold.demo.gui;
+package de.apaschold.demo.gui.mainview;
 
 import de.apaschold.demo.model.JournalArticle;
 import javafx.fxml.FXML;
@@ -87,26 +87,51 @@ public class JournalArticleViewController {
     //5. other methods
     public void selectJournalArticle(JournalArticle journalArticle){
         this.article = journalArticle;
+
+        String yearAsString = "-";
+        if (this.article.getYear() != 0){
+            yearAsString = String.valueOf(this.article.getYear());
+        }
+
+        String volumeAsString = "-";
+        if (this.article.getVolume() != 0){
+            volumeAsString = String.valueOf(this.article.getVolume());
+        }
+
+        String issueAsString = "-";
+        if (this.article.getIssue() != 0){
+            issueAsString = String.valueOf(this.article.getIssue());
+        }
+
         //populate the labels in the article overview
-        this.title.setText(journalArticle.getTitle());
-        this.authors.setText(journalArticle.getAuthor().replace(", ", "\n"));
-        this.journal.setText(journalArticle.getJournal());
-        this.journalShortForm.setText(journalArticle.getJournalShortForm());
-        this.year.setText(String.valueOf(journalArticle.getYear()));
-        this.volume.setText(String.valueOf(journalArticle.getVolume()));
-        this.issue.setText(String.valueOf(journalArticle.getIssue()));
-        this.pages.setText(journalArticle.getPages());
-        this.doi.setText(journalArticle.getDoi());
+        populateArticleOverviewTab(yearAsString, volumeAsString, issueAsString);
 
         //populate the textfields in the article edit view
-        this.titleChange.setText(journalArticle.getTitle());
-        this.authorsChange.setText(journalArticle.getAuthor().replace(", ", "\n"));
-        this.journalChange.setText(journalArticle.getJournal());
-        this.journalShortFormChange.setText(journalArticle.getJournalShortForm());
-        this.yearChange.setText(String.valueOf(journalArticle.getYear()));
-        this.volumeChange.setText(String.valueOf(journalArticle.getVolume()));
-        this.issueChange.setText(String.valueOf(journalArticle.getIssue()));
-        this.pagesChange.setText(journalArticle.getPages());
-        this.doiChange.setText(journalArticle.getDoi());
+        populateArticleEditTab(yearAsString, volumeAsString, issueAsString);
+
+    }
+
+    private void populateArticleOverviewTab(String yearAsString, String volumeAsString, String issueAsString) {
+        this.title.setText(this.article.getTitle());
+        this.authors.setText(this.article.getAuthor().replace(", ", "\n"));
+        this.journal.setText(this.article.getJournal());
+        this.journalShortForm.setText(this.article.getJournalShortForm());
+        this.year.setText(yearAsString);
+        this.volume.setText(volumeAsString);
+        this.issue.setText(issueAsString);
+        this.pages.setText(this.article.getPages());
+        this.doi.setText(this.article.getDoi());
+    }
+
+    private void populateArticleEditTab(String yearAsString,String volumeAsString,String issueAsString) {
+        this.titleChange.setText(this.article.getTitle());
+        this.authorsChange.setText(this.article.getAuthor().replace(", ", "\n"));
+        this.journalChange.setText(this.article.getJournal());
+        this.journalShortFormChange.setText(this.article.getJournalShortForm());
+        this.yearChange.setText(yearAsString);
+        this.volumeChange.setText(volumeAsString);
+        this.issueChange.setText(issueAsString);
+        this.pagesChange.setText(this.article.getPages());
+        this.doiChange.setText(this.article.getDoi());
     }
 }

@@ -6,7 +6,7 @@
 
 <TabPane prefHeight="200.0" prefWidth="200.0"  xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
-         fx:controller="de.apaschold.demo.gui.JournalArticleViewController">
+         fx:controller="de.apaschold.demo.gui.mainview.JournalArticleViewController">
     <tabs>
         <Tab text="Article Info">
             <content>
