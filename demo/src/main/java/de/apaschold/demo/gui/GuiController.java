@@ -1,8 +1,8 @@
 package de.apaschold.demo.gui;
 
 import de.apaschold.demo.HelloApplication;
-import de.apaschold.demo.logic.ArticleContainer;
-import de.apaschold.demo.model.Article;
+import de.apaschold.demo.logic.ArticleLibrary;
+import de.apaschold.demo.model.ArticleReference;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -16,12 +16,12 @@ public class GuiController {
     //1. attributes
     private static GuiController instance;
     private Stage mainStage;
-    private final ArticleContainer articles;
-    private Article selectedArticle;
+    private final ArticleLibrary articles;
+    private ArticleReference selectedArticle;
 
     //2. constructors
     private GuiController() {
-        this.articles = new ArticleContainer();
+        this.articles = new ArticleLibrary();
     }
 
     public static synchronized GuiController getInstance() {
@@ -36,17 +36,17 @@ public class GuiController {
         this.mainStage = mainStage;
     }
 
-    public List<Article> getArticleList() {
+    public List<ArticleReference> getArticleList() {
         return articles.getArticles();
     }
 
-    public ArticleContainer getArticleContainer() {
+    public ArticleLibrary getArticleLibrary() {
         return articles;
     }
 
-    public Article getSelectedArticle() { return selectedArticle;}
+    public ArticleReference getSelectedArticle() { return selectedArticle;}
 
-    public void setSelectedArticle(Article selectedArticle) { this.selectedArticle = selectedArticle;}
+    public void setSelectedArticle(ArticleReference selectedArticle) { this.selectedArticle = selectedArticle;}
 
     //4. open view methods
     public void loadMainMenu() throws IOException {

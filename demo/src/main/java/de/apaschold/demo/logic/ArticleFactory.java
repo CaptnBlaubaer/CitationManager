@@ -29,12 +29,12 @@ public class ArticleFactory {
 
     //3. factory methods
     //methods for csv
-    public static Article createArticleFromCsvLine(String csvLine){
+    public static ArticleReference createArticleReferenceFromCsvLine(String csvLine){
         String[] separatedCsvLine = csvLine.split(";");
 
         ArticleType type = ArticleType.valueOf(separatedCsvLine[0]);
 
-        Article newArticle = switch (type) {
+        ArticleReference newArticle = switch (type) {
             case JOURNAL_ARTICLE -> createJournalArticleFromCsvLine(separatedCsvLine);
             case BOOK -> createBookFromCsvLine(separatedCsvLine);
             case BOOK_SECTION ->  createBookSectionFromCsvLine(separatedCsvLine);
@@ -88,7 +88,7 @@ public class ArticleFactory {
         return new BookSection(title, authors, bookTitle, editor, journal, year, volume, pages, doi, pdfFilePath);
     }
 
-    private static Article createPhdThesisFromCsvLine(String[] separatedCsvLine) {
+    private static ArticleReference createPhdThesisFromCsvLine(String[] separatedCsvLine) {
         String title = separatedCsvLine[1];
         String authors = separatedCsvLine[2].replace(" and ", "; ");
         int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[3]);
@@ -97,7 +97,7 @@ public class ArticleFactory {
         return new PhdThesis(title, authors, year, doi, pdfFilePath);
     }
 
-    private static Article createPatentFromCsvLine(String[] separatedCsvLine) {
+    private static ArticleReference createPatentFromCsvLine(String[] separatedCsvLine) {
         String title = separatedCsvLine[1];
         String authors = separatedCsvLine[2].replace(" and ", "; ");
         int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[3]);
@@ -107,7 +107,7 @@ public class ArticleFactory {
     }
 
 
-    private static Article createUnpublishedFromCsvLine(String[] separatedCsvLine) {
+    private static ArticleReference createUnpublishedFromCsvLine(String[] separatedCsvLine) {
         String title = separatedCsvLine[1];
         String authors = separatedCsvLine[2].replace(" and ", "; ");
         int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[3]);
@@ -117,14 +117,14 @@ public class ArticleFactory {
 
 
     //methods for BibTex
-    public static Article createArticleFromBibTex(String bibTexText){
+    public static ArticleReference createArticleFromBibTex(String bibTexText){
         String[] articleTypeAndDetails = bibTexText.split("\\{", 2); //
 
         ArticleType importedArticleType = ArticleType.getArticleTypeFromBibTexImport(articleTypeAndDetails[0]);
 
         String[] articleDetails = articleTypeAndDetails[1].split("\n");
 
-        Article importedArticle = switch (importedArticleType) {
+        ArticleReference importedArticle = switch (importedArticleType) {
             case JOURNAL_ARTICLE -> createJournalArticleFromBibTex(articleDetails);
             case BOOK -> createBookFromBibTex(articleDetails);
             case BOOK_SECTION -> createBookSectionFromBibTex(articleDetails);
@@ -137,7 +137,7 @@ public class ArticleFactory {
         return importedArticle;
     }
 
-    private static Article createJournalArticleFromBibTex(String[] articleDetails) {
+    private static ArticleReference createJournalArticleFromBibTex(String[] articleDetails) {
         JournalArticle importedJournalArticle = new JournalArticle();
 
         for (String rawDetail : articleDetails){
@@ -173,7 +173,7 @@ public class ArticleFactory {
         return importedJournalArticle;
     }
 
-    private static Article createBookFromBibTex(String[] articleDetails) {
+    private static ArticleReference createBookFromBibTex(String[] articleDetails) {
         Book importedBook = new Book();
 
         for (String rawDetail : articleDetails){
@@ -203,7 +203,7 @@ public class ArticleFactory {
         return importedBook;
     }
 
-    private static Article createBookSectionFromBibTex(String[] articleDetails) {
+    private static ArticleReference createBookSectionFromBibTex(String[] articleDetails) {
         BookSection importedBookSection = new BookSection();
 
         for (String rawDetail : articleDetails){
@@ -243,7 +243,7 @@ public class ArticleFactory {
     }
 
 
-    private static Article createPhdThesisFromBibTex(String[] articleDetails) {
+    private static ArticleReference createPhdThesisFromBibTex(String[] articleDetails) {
         PhdThesis importedPhdThesis = new PhdThesis();
 
         for (String rawDetail : articleDetails){
@@ -267,7 +267,7 @@ public class ArticleFactory {
         return importedPhdThesis;
     }
 
-    private static Article createPatentFromBibTex(String[] articleDetails) {
+    private static ArticleReference createPatentFromBibTex(String[] articleDetails) {
         Patent importedPatent = new Patent();
 
         for (String rawDetail : articleDetails){
@@ -291,7 +291,7 @@ public class ArticleFactory {
         return importedPatent;
     }
 
-    private static Article createUnpublishedFromBibTex(String[] articleDetails) {
+    private static ArticleReference createUnpublishedFromBibTex(String[] articleDetails) {
         Unpublished importedUnpublished = new Unpublished();
 
         for (String rawDetail : articleDetails){

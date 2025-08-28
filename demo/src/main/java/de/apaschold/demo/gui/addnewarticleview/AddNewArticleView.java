@@ -65,7 +65,7 @@ public class AddNewArticleView implements Initializable {
                 "null"
         );
 
-        GuiController.getInstance().getArticleContainer().addArticle(newArticle);
+        GuiController.getInstance().getArticleLibrary().addArticle(newArticle);
 
         Stage stage = (Stage) newArticleType.getScene().getWindow();
         stage.close();

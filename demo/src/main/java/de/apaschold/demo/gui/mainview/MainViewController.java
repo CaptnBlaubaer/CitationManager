@@ -1,8 +1,9 @@
 package de.apaschold.demo.gui.mainview;
 
 import de.apaschold.demo.HelloApplication;
+import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.gui.GuiController;
-import de.apaschold.demo.model.Article;
+import de.apaschold.demo.model.ArticleReference;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,15 +22,15 @@ public class MainViewController implements Initializable {
 
     //2. FXML elements
     @FXML
-    private TableView<Article> articlesTable;
+    private TableView<ArticleReference> articlesTable;
     @FXML
-    private TableColumn<Article, String> titleColumn;
+    private TableColumn<ArticleReference, String> titleColumn;
     @FXML
-    private TableColumn<Article, String> authorsColumn;
+    private TableColumn<ArticleReference, String> authorsColumn;
     @FXML
-    private TableColumn<Article, String> journalColumn;
+    private TableColumn<ArticleReference, String> journalColumn;
     @FXML
-    private TableColumn<Article, Integer> yearColumn;
+    private TableColumn<ArticleReference, Integer> yearColumn;
 
     @FXML
     private BorderPane articleView;
@@ -48,7 +49,7 @@ public class MainViewController implements Initializable {
     //4. FXML methods
     @FXML
     protected void saveArticlesToCsv() {
-        GuiController.getInstance().getArticleContainer().saveArticlesToCsv();
+        GuiController.getInstance().getArticleLibrary().saveToCsv();
     }
 
     @FXML
@@ -67,9 +68,14 @@ public class MainViewController implements Initializable {
         populateTable();
     }
 
+    @FXML
+    protected void exportToBibTex(){
+        GuiController.getInstance().getArticleLibrary().exportToBibTex();
+    }
+
     //5. other methods
     protected void populateTable(){
-        List<Article> articles = GuiController.getInstance().getArticleList();
+        List<ArticleReference> articles = GuiController.getInstance().getArticleList();
 
         if (!articles.isEmpty()){
             this.articlesTable.getItems().clear();
@@ -80,13 +86,13 @@ public class MainViewController implements Initializable {
             this.journalColumn.setCellValueFactory(cellData -> cellData.getValue().journalProperty());
             this.yearColumn.setCellValueFactory(cellData -> cellData.getValue().yearProperty().asObject());
         } else {
-            System.out.println("No articles found to display in the table.");
+            this.articlesTable.setPlaceholder(new Label( AppTexts.TABLE_VIEW_PLACEHOLDER));
         }
 
         this.articlesTable.getSelectionModel().selectedItemProperty().addListener(getSelectionListener());
     }
 
-    private ChangeListener<Article> getSelectionListener(){
+    private ChangeListener<ArticleReference> getSelectionListener(){
         return (observable, oldArticle, newArticle) -> {
             GuiController.getInstance().setSelectedArticle(newArticle);
 
@@ -95,7 +101,7 @@ public class MainViewController implements Initializable {
     }
 
     public void populateArticleView(){
-        Article selectedArticle = GuiController.getInstance().getSelectedArticle();
+        ArticleReference selectedArticle = GuiController.getInstance().getSelectedArticle();
 
         String fxmlFile = switch (selectedArticle.getArticleType()){
             case JOURNAL_ARTICLE -> "main-journal-article-subview.fxml";

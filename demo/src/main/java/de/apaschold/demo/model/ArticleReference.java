@@ -1,11 +1,12 @@
 package de.apaschold.demo.model;
 
+import de.apaschold.demo.additionals.AppTexts;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public abstract class Article {
+public abstract class ArticleReference {
     //0. constants
 
     //1. attributes
@@ -18,9 +19,16 @@ public abstract class Article {
     protected String pdfFilePath;
 
     //2. constructors
-    public Article() {}
+    public ArticleReference() {
+        this.title = AppTexts.PLACEHOLDER;
+        this.author = AppTexts.PLACEHOLDER;
+        this.journal = AppTexts.PLACEHOLDER;
+        this.year = AppTexts.NUMBER_PLACEHOLDER;
+        this.doi = AppTexts.PLACEHOLDER;
+        this.pdfFilePath = AppTexts.PLACEHOLDER;
+    }
 
-    public Article(ArticleType type, String title, String author, String journal, int year, String doi, String pdfFilePath) {
+    public ArticleReference(ArticleType type, String title, String author, String journal, int year, String doi, String pdfFilePath) {
         this.articleType = type;
         this.title = title;
         this.author = author;
@@ -69,7 +77,17 @@ public abstract class Article {
     public IntegerProperty yearProperty() { return new SimpleIntegerProperty(year);}
 
     //4. other methods
-    public String toCsvString(){
-        return "";
+    public String toCsvString(){ return "";}
+
+    public String exportAsBibTexString(){ return "";}
+
+    public String createBibTexReference(){
+        String firstAuthor = this.author.split(" and ")[0];
+        String firstAuthorLastName = firstAuthor.split(", ")[0];
+        char firstAuthorPreNameFirstCharacter = firstAuthor.split(", ")[1].charAt(0);
+        String publishedYear = this.year + "";
+        String journalWithoutWhitespace = this.journal.replaceAll(" ","").replaceAll("\\.","");
+
+        return firstAuthorLastName + firstAuthorPreNameFirstCharacter + publishedYear + journalWithoutWhitespace;
     }
 }

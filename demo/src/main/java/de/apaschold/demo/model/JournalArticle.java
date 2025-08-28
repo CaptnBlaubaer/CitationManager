@@ -1,6 +1,8 @@
 package de.apaschold.demo.model;
 
-public class JournalArticle extends Article {
+import de.apaschold.demo.additionals.AppTexts;
+
+public class JournalArticle extends ArticleReference {
     //0. constants
 
     //1. attributes
@@ -12,6 +14,10 @@ public class JournalArticle extends Article {
     //2. constructors
     public JournalArticle(){
         super.setArticleType(ArticleType.JOURNAL_ARTICLE);
+        this.journalShortForm = AppTexts.PLACEHOLDER;
+        this.volume = AppTexts.NUMBER_PLACEHOLDER;
+        this.issue = AppTexts.NUMBER_PLACEHOLDER;
+        this.pages = AppTexts.PLACEHOLDER;
     }
 
     public JournalArticle(String title, String author, String journal, String journalShortForm, int year, int volume, int issue, String pages, String doi, String pdfFilePath) {
@@ -86,5 +92,21 @@ public class JournalArticle extends Article {
                 pages + ";" +
                 doi + ";" +
                 pdfFilePath;
+    }
+
+    @Override
+    public String exportAsBibTexString(){
+        String bibTexReference = createBibTexReference();
+
+        return String.format(AppTexts.JOURNAL_ARTICLE_BIB_TEX_EXPORT_PROMPT,
+                bibTexReference,
+                this.author,
+                this.title,
+                this.journal,
+                this.volume,
+                this.issue,
+                this.pages,
+                this.doi,
+                this.year);
     }
 }

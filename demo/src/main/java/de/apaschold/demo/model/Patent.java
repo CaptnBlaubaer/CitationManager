@@ -1,6 +1,8 @@
 package de.apaschold.demo.model;
 
-public class Patent extends Article{
+import de.apaschold.demo.additionals.AppTexts;
+
+public class Patent extends ArticleReference {
     //0. constants
 
     //1. attributes
@@ -8,7 +10,6 @@ public class Patent extends Article{
     //2. constructors
     public Patent(){
         super.setArticleType(ArticleType.PATENT);
-        super.setJournal(" - ");
     }
 
     public Patent(String title, String author, int year, String doi, String pdfFilePath) {
@@ -29,6 +30,7 @@ public class Patent extends Article{
                 '}';
     }
 
+    @Override
     public String toCsvString(){
         return articleType + ";" +
                 title + ";" +
@@ -36,5 +38,17 @@ public class Patent extends Article{
                 year + ";" +
                 doi + ";" +
                 pdfFilePath;
+    }
+
+    @Override
+    public String exportAsBibTexString(){
+        String bibTexReference = createBibTexReference();
+
+        return String.format(AppTexts.PATENT_BIB_TEX_EXPORT_PROMPT,
+                bibTexReference,
+                this.author,
+                this.title,
+                this.doi,
+                this.year);
     }
 }

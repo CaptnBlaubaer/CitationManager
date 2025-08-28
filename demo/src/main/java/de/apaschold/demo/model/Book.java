@@ -1,6 +1,8 @@
 package de.apaschold.demo.model;
 
-public class Book extends Article {
+import de.apaschold.demo.additionals.AppTexts;
+
+public class Book extends ArticleReference {
     //0. constants
 
     //1. attributes
@@ -9,6 +11,7 @@ public class Book extends Article {
     //2. constructors
     public Book(){
         super.setArticleType(ArticleType.BOOK);
+        this.volume = AppTexts.NUMBER_PLACEHOLDER;
     }
 
     public Book(String title, String author, String journal, int year, int volume, String doi, String pdfFilePath) {
@@ -37,6 +40,7 @@ public class Book extends Article {
                 '}';
     }
 
+    @Override
     public String toCsvString(){
         return articleType + ";" +
                 title + ";" +
@@ -46,5 +50,18 @@ public class Book extends Article {
                 volume + ";" +
                 doi + ";" +
                 pdfFilePath;
+    }
+
+    @Override
+    public String exportAsBibTexString(){
+        String bibTexReference = createBibTexReference();
+
+        return String.format(AppTexts.BOOK_BIB_TEX_EXPORT_PROMPT,
+                bibTexReference,
+                this.author,
+                this.title,
+                this.journal,
+                this.doi,
+                this.year);
     }
 }

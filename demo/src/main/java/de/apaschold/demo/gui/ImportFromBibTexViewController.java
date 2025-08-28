@@ -1,7 +1,7 @@
 package de.apaschold.demo.gui;
 
 import de.apaschold.demo.logic.ArticleFactory;
-import de.apaschold.demo.model.Article;
+import de.apaschold.demo.model.ArticleReference;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
@@ -36,8 +36,8 @@ public class ImportFromBibTexViewController {
 
         for (String singleImport : separatedImports) {
             if (!singleImport.isEmpty()) {
-                Article importedArticle = ArticleFactory.createArticleFromBibTex(singleImport);
-                GuiController.getInstance().getArticleContainer().addArticle(importedArticle);
+                ArticleReference importedArticle = ArticleFactory.createArticleFromBibTex(singleImport);
+                GuiController.getInstance().getArticleLibrary().addArticle(importedArticle);
             }
         }
     }

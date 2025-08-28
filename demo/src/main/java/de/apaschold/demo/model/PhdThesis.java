@@ -1,6 +1,8 @@
 package de.apaschold.demo.model;
 
-public class PhdThesis extends Article{
+import de.apaschold.demo.additionals.AppTexts;
+
+public class PhdThesis extends ArticleReference {
     //0. constants
 
     //1. attributes
@@ -8,7 +10,6 @@ public class PhdThesis extends Article{
     //2. constructors
     public PhdThesis(){
         super.setArticleType(ArticleType.THESIS);
-        super.setJournal(" - ");
     }
 
     public PhdThesis(String title, String author, int year, String doi, String pdfFilePath) {
@@ -29,6 +30,7 @@ public class PhdThesis extends Article{
                 '}';
     }
 
+    @Override
     public String toCsvString(){
         return articleType + ";" +
                 title + ";" +
@@ -36,5 +38,17 @@ public class PhdThesis extends Article{
                 year + ";" +
                 doi + ";" +
                 pdfFilePath;
+    }
+
+    @Override
+    public String exportAsBibTexString(){
+        String bibTexReference = createBibTexReference();
+
+        return String.format(AppTexts.THESIS_BIB_TEX_EXPORT_PROMPT,
+                bibTexReference,
+                this.author,
+                this.title,
+                this.doi,
+                this.year);
     }
 }
