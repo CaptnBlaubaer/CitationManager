@@ -40,6 +40,7 @@ public class ArticleFactory {
             case BOOK_SECTION ->  createBookSectionFromCsvLine(separatedCsvLine);
             case THESIS -> createPhdThesisFromCsvLine(separatedCsvLine);
             case PATENT -> createPatentFromCsvLine(separatedCsvLine);
+            case UNPUBLISHED -> createUnpublishedFromCsvLine(separatedCsvLine);
             default -> null;
         };
 
@@ -105,6 +106,16 @@ public class ArticleFactory {
         return new Patent(title, authors, year, doi, pdfFilePath);
     }
 
+
+    private static Article createUnpublishedFromCsvLine(String[] separatedCsvLine) {
+        String title = separatedCsvLine[1];
+        String authors = separatedCsvLine[2].replace(" and ", "; ");
+        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[3]);
+        String pdfFilePath = separatedCsvLine[4];
+        return new Unpublished (title, authors, year, pdfFilePath);
+    }
+
+
     //methods for BibTex
     public static Article createArticleFromBibTex(String bibTexText){
         String[] articleTypeAndDetails = bibTexText.split("\\{", 2); //
@@ -119,6 +130,7 @@ public class ArticleFactory {
             case BOOK_SECTION -> createBookSectionFromBibTex(articleDetails);
             case THESIS -> createPhdThesisFromBibTex(articleDetails);
             case PATENT -> createPatentFromBibTex(articleDetails);
+            case UNPUBLISHED -> createUnpublishedFromBibTex(articleDetails);
             default -> null;
         };
 
@@ -277,5 +289,26 @@ public class ArticleFactory {
         }
 
         return importedPatent;
+    }
+
+    private static Article createUnpublishedFromBibTex(String[] articleDetails) {
+        Unpublished importedUnpublished = new Unpublished();
+
+        for (String rawDetail : articleDetails){
+            String refinedDetail = rawDetail.replace(BIBTEX_LINE_END_PROMPT,"").strip();
+
+            if(rawDetail.contains(BIBTEX_TITLE_PROMPT)){
+                refinedDetail = refinedDetail.replace(BIBTEX_TITLE_PROMPT,"");
+                importedUnpublished.setTitle(refinedDetail);
+            } else if (rawDetail.contains(BIBTEX_AUTHOR_PROMPT)){
+                refinedDetail = refinedDetail.replace(BIBTEX_AUTHOR_PROMPT,"").replace(" and ","; ");
+                importedUnpublished.setAuthor(refinedDetail);
+            }   else if (rawDetail.contains(BIBTEX_YEAR_PROMPT)){
+                refinedDetail = refinedDetail.replace(BIBTEX_YEAR_PROMPT,"");
+                importedUnpublished.setYear( MyLittleHelpers.convertStringInputToInteger(refinedDetail));
+            }
+        }
+
+        return importedUnpublished;
     }
 }

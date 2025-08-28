@@ -1,48 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-        <?import javafx.scene.control.*?>
-        <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
 
 <TabPane prefHeight="200.0" prefWidth="200.0"  xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
-         fx:controller="de.apaschold.demo.gui.mainview.PatentSubViewController">
+         fx:controller="de.apaschold.demo.gui.mainview.UnpublishedSubViewController">
     <tabs>
         <Tab text="Article Info">
             <content>
-                <VBox alignment="TOP_LEFT" spacing="10.0" style="-fx-padding: 10px;">
+                <VBox spacing="10.0" style="-fx-padding: 10px;">
                     <Label fx:id="articleType" style="-fx-font-size: 12;"/>
                     <Label fx:id="title" style="-fx-font-size: 12;"/>
                     <Label fx:id="authors" style="-fx-font-size: 12;"/>
                     <Label fx:id="year" style="-fx-font-size: 12;"/>
-                    <Label fx:id="url" style="-fx-font-size: 12;"/>
                 </VBox>
             </content>
         </Tab>
         <Tab text="Edit">
             <content>
-                <VBox alignment="TOP_LEFT" spacing="10.0" style="-fx-padding: 10px;">
+                <VBox spacing="10.0" style="-fx-padding: 10px;">
                     <Label text="Title"/>
                     <TextField fx:id="titleChange" style="-fx-font-size: 12;"/>
                     <Label text="Author(s)"/>
                     <TextArea fx:id="authorsChange" style="-fx-font-size: 12;"/>
                     <Label text="Year"/>
                     <TextField fx:id="yearChange" style="-fx-font-size: 12;"/>
-                    <Label text="URL"/>
-                    <TextField fx:id="urlChange" style="-fx-font-size: 12;"/>
                     <Button text="Save Changes" onAction="#saveChanges"/>
                 </VBox>
             </content>
         </Tab>
         <Tab text="Attached Files">
             <content>
-                <VBox alignment="TOP_LEFT" spacing="10.0" style="-fx-padding: 10px;">
+                <VBox spacing="10.0" style="-fx-padding: 10px;">
                 </VBox>
             </content>
         </Tab>
         <Tab text="PDF Preview">
             <content>
-                <VBox alignment="TOP_LEFT" spacing="10.0" style="-fx-padding: 10px;">
+                <VBox spacing="10.0" style="-fx-padding: 10px;">
                 </VBox>
             </content>
         </Tab>

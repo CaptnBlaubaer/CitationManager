@@ -6,43 +6,34 @@
 
 <TabPane prefHeight="200.0" prefWidth="200.0"  xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
-         fx:controller="de.apaschold.demo.gui.mainview.JournalArticleSubViewController">
+         fx:controller="de.apaschold.demo.gui.mainview.BookSubViewController">
     <tabs>
         <Tab text="Article Info">
             <content>
-                <VBox alignment="TOP_LEFT" spacing="10.0" style="-fx-padding: 10px;">
+                <VBox spacing="10.0" style="-fx-padding: 10px;">
                     <Label fx:id="articleType" style="-fx-font-size: 12;"/>
                     <Label fx:id="title" style="-fx-font-size: 12;"/>
                     <Label fx:id="authors" style="-fx-font-size: 12;"/>
-                    <Label fx:id="journal" style="-fx-font-size: 12;"/>
-                    <Label fx:id="journalShortForm" style="-fx-font-size: 12;"/>
+                    <Label fx:id="publisher" style="-fx-font-size: 12;"/>
                     <Label fx:id="year" style="-fx-font-size: 12;"/>
                     <Label fx:id="volume" style="-fx-font-size: 12;"/>
-                    <Label fx:id="issue" style="-fx-font-size: 12;"/>
-                    <Label fx:id="pages" style="-fx-font-size: 12;"/>
                     <Label fx:id="doi" style="-fx-font-size: 12;"/>
                 </VBox>
             </content>
         </Tab>
         <Tab text="Edit">
             <content>
-                <VBox alignment="TOP_LEFT" spacing="10.0" style="-fx-padding: 10px;">
+                <VBox spacing="10.0" style="-fx-padding: 10px;">
                     <Label text="Title"/>
                     <TextField fx:id="titleChange" style="-fx-font-size: 12;"/>
                     <Label text="Author(s)"/>
                     <TextArea fx:id="authorsChange" style="-fx-font-size: 12;"/>
-                    <Label text="Journal"/>
-                    <TextField fx:id="journalChange" style="-fx-font-size: 12;"/>
-                    <Label text="Journal abbreviation"/>
-                    <TextField fx:id="journalShortFormChange" style="-fx-font-size: 12;"/>
+                    <Label text="Publisher"/>
+                    <TextField fx:id="publisherChange" style="-fx-font-size: 12;"/>
                     <Label text="Year"/>
                     <TextField fx:id="yearChange" style="-fx-font-size: 12;"/>
                     <Label text="Volume"/>
                     <TextField fx:id="volumeChange" style="-fx-font-size: 12;"/>
-                    <Label text="Issue"/>
-                    <TextField fx:id="issueChange" style="-fx-font-size: 12;"/>
-                    <Label text="Pages"/>
-                    <TextField fx:id="pagesChange" style="-fx-font-size: 12;"/>
                     <Label text="DOI"/>
                     <TextField fx:id="doiChange" style="-fx-font-size: 12;"/>
                     <Button text="Save Changes" onAction="#saveChanges"/>
@@ -51,13 +42,13 @@
         </Tab>
         <Tab text="Attached Files">
             <content>
-                <VBox alignment="TOP_LEFT" spacing="10.0" style="-fx-padding: 10px;">
+                <VBox spacing="10.0" style="-fx-padding: 10px;">
                 </VBox>
             </content>
         </Tab>
         <Tab text="PDF Preview">
             <content>
-                <VBox alignment="TOP_LEFT" spacing="10.0" style="-fx-padding: 10px;">
+                <VBox spacing="10.0" style="-fx-padding: 10px;">
                 </VBox>
             </content>
         </Tab>

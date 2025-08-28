@@ -3,10 +3,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.geometry.Insets?>
 <VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="de.apaschold.demo.gui.addnewarticleview.AddNewArticleView"
-            prefHeight="600.0" prefWidth="300.0" spacing="10.0" alignment="TOP_CENTER">
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="de.apaschold.demo.gui.addnewarticleview.AddNewArticleView"
+      prefHeight="600.0" prefWidth="300.0" spacing="10.0" alignment="TOP_CENTER" style="-fx-background-color: #FFDFCC">
 
     <ComboBox fx:id="newArticleType" style="-fx-font-size: 12;"/>
     <TextField fx:id="newTitle" maxWidth="300.0" style="-fx-font-size: 12;" promptText="Article title"/>
@@ -19,4 +20,8 @@
     <TextField fx:id="newPages" maxWidth="300.0" style="-fx-font-size: 12;" promptText="Pages"/>
     <TextField fx:id="newDoi" maxWidth="300.0" style="-fx-font-size: 12;" promptText="DOI"/>
     <Button text="Save Changes" maxWidth="300.0" onAction="#saveNewArticle"/>
+
+    <padding>
+        <Insets top="5.0" />
+    </padding>
 </VBox>

@@ -6,13 +6,13 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.apaschold.demo.gui.mainview.MainViewController">
    <top>
       <HBox prefHeight="20.0" prefWidth="200.0" style="-fx-background-color: #E0E0E0" BorderPane.alignment="CENTER">
-        <Button text="Save" onAction="#saveArticlesToCsv" prefHeight="20.0" />
+        <Button onAction="#saveArticlesToCsv" prefHeight="20.0" text="Save" />
       </HBox>
    </top>
    <left>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" alignment="CENTER_LEFT" spacing="20.0">
-          <Button text="Add new article" onAction="#addNewArticle" prefHeight="20.0" />
-          <Button text="Import BibTex" onAction="#importFromBibTex" prefHeight="20.0"/>
+      <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="20.0" style="-fx-background-color: #FFA770" BorderPane.alignment="CENTER" >
+          <Button onAction="#addNewArticle" prefHeight="20.0" text="Add new article" />
+          <Button onAction="#importFromBibTex" prefHeight="20.0" text="Import BibTex" />
       </VBox>
    </left>
    <bottom>
@@ -22,23 +22,21 @@
        </HBox>
    </bottom>
    <center>
-      <SplitPane fx:id="articleDisplay" dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER" style="-fx-background-color: #FFDFCC">
         <items>
-            <TableView fx:id="articlesTable"
-                       prefHeight="200.0"
-                       prefWidth="750.0">
+            <TableView fx:id="articlesTable" prefHeight="200.0" prefWidth="750.0" style="-fx-background-color: #FFDFCC">
                 <columns>
-                    <TableColumn prefWidth="300.0" text="Title" fx:id="titleColumn"/>
-                    <TableColumn prefWidth="200.0" text="Author" fx:id="authorsColumn"/>
-                    <TableColumn prefWidth="200.0" text="Journal/Publisher" fx:id="journalColumn"/>
-                    <TableColumn prefWidth="80.0" text="Year" fx:id="yearColumn"/>
+                    <TableColumn fx:id="titleColumn" prefWidth="300.0" text="Title" />
+                    <TableColumn fx:id="authorsColumn" prefWidth="200.0" text="Author" />
+                    <TableColumn fx:id="journalColumn" prefWidth="200.0" text="Journal/Publisher" />
+                    <TableColumn fx:id="yearColumn" text="Year" />
                 </columns>
             </TableView>
-            <BorderPane fx:id="articleView"/>
+            <BorderPane fx:id="articleView" />
         </items>
       </SplitPane>
    </center>
    <right>
-      <VBox prefHeight="200.0" prefWidth="20.0" BorderPane.alignment="CENTER" />
+      <VBox prefHeight="200.0" prefWidth="20.0" BorderPane.alignment="CENTER" style="-fx-background-color: #FFA770"/>
    </right>
 </BorderPane>

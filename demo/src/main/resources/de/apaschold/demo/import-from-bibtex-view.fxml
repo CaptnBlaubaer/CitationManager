@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="de.apaschold.demo.gui.ImportFromBibTexViewController"
-            prefHeight="250.0" prefWidth="300.0" spacing="10.0" alignment="TOP_CENTER">
+<VBox alignment="TOP_CENTER" prefHeight="250.0" prefWidth="300.0" spacing="10.0" style="-fx-background-color: #FFDFCC" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.apaschold.demo.gui.ImportFromBibTexViewController">
     <TextArea fx:id="bibTexInput" maxWidth="300.0" prefHeight="200.0" promptText="BibTexCode" />
 
-    <Button text="Add to library" onAction="#importButtonClick" prefHeight="20.0"/>
+    <Button onAction="#importButtonClick" prefHeight="20.0" text="Add to library" />
+
+    <padding>
+      <Insets top="5.0" />
+   </padding>
 </VBox>

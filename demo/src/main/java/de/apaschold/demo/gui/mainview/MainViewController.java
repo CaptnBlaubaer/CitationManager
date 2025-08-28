@@ -98,11 +98,12 @@ public class MainViewController implements Initializable {
         Article selectedArticle = GuiController.getInstance().getSelectedArticle();
 
         String fxmlFile = switch (selectedArticle.getArticleType()){
-            case JOURNAL_ARTICLE -> "journal-article-subview.fxml";
-            case BOOK_SECTION -> "book-section-subview.fxml";
-            case BOOK -> "book-subview.fxml";
-            case THESIS -> "phd-thesis-subview.fxml";
-            case PATENT -> "patent-subview.fxml";
+            case JOURNAL_ARTICLE -> "main-journal-article-subview.fxml";
+            case BOOK_SECTION -> "main-book-section-subview.fxml";
+            case BOOK -> "main-book-subview.fxml";
+            case THESIS -> "main-phd-thesis-subview.fxml";
+            case PATENT -> "main-patent-subview.fxml";
+            case UNPUBLISHED -> "main-unpublished-subview.fxml";
             default -> "";
         };
 
