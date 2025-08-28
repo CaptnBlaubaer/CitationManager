@@ -3,8 +3,7 @@ package de.apaschold.demo.logic;
 import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.model.*;
 
-//TODO Create methods for book, book section, phd thesis
-//TODO rename booksection variable (importedJournalArticle)
+//TODO Create methods for patent and unpublished
 
 
 public class ArticleFactory {
@@ -20,6 +19,7 @@ public class ArticleFactory {
     private static final String BIBTEX_PAGES_PROMPT = "pages={";
     private static final String BIBTEX_YEAR_PROMPT = "year={";
     private static final String BIBTEX_DOI_PROMPT = "DOI={";
+    private static final String BIBTEX_URL_PROMPT = "url={";
     private static final String BIBTEX_LINE_END_PROMPT = "},";
 
     //1. attributes
@@ -28,6 +28,7 @@ public class ArticleFactory {
     private ArticleFactory(){}
 
     //3. factory methods
+    //methods for csv
     public static Article createArticleFromCsvLine(String csvLine){
         String[] separatedCsvLine = csvLine.split(";");
 
@@ -38,6 +39,7 @@ public class ArticleFactory {
             case BOOK -> createBookFromCsvLine(separatedCsvLine);
             case BOOK_SECTION ->  createBookSectionFromCsvLine(separatedCsvLine);
             case THESIS -> createPhdThesisFromCsvLine(separatedCsvLine);
+            case PATENT -> createPatentFromCsvLine(separatedCsvLine);
             default -> null;
         };
 
@@ -54,9 +56,9 @@ public class ArticleFactory {
         int issue = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[7]);
         String pages = separatedCsvLine[8];
         String doi = separatedCsvLine[9];
-        String url = separatedCsvLine[10];
+        String pdfFilePath = separatedCsvLine[10];
 
-        return new JournalArticle(title, authors, journal, journalShortForm, year, volume, issue, pages, doi, url);
+        return new JournalArticle(title, authors, journal, journalShortForm, year, volume, issue, pages, doi, pdfFilePath);
     }
 
     private static Book createBookFromCsvLine(String[] separatedCsvLine){
@@ -66,8 +68,8 @@ public class ArticleFactory {
         int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[4]);
         int volume = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[5]);
         String doi = separatedCsvLine[6];
-        String url = separatedCsvLine[7];
-        return new Book(title, authors, journal, year, volume, doi, url);
+        String pdfFilePath = separatedCsvLine[7];
+        return new Book(title, authors, journal, year, volume, doi, pdfFilePath);
     }
 
     private static BookSection createBookSectionFromCsvLine(String[] separatedCsvLine){
@@ -80,9 +82,9 @@ public class ArticleFactory {
         int volume = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[7]);
         String pages = separatedCsvLine[8];
         String doi = separatedCsvLine[9];
-        String url = separatedCsvLine[10];
+        String pdfFilePath = separatedCsvLine[10];
 
-        return new BookSection(title, authors, bookTitle, editor, journal, year, volume, pages, doi, url);
+        return new BookSection(title, authors, bookTitle, editor, journal, year, volume, pages, doi, pdfFilePath);
     }
 
     private static Article createPhdThesisFromCsvLine(String[] separatedCsvLine) {
@@ -90,10 +92,20 @@ public class ArticleFactory {
         String authors = separatedCsvLine[2].replace(" and ", "; ");
         int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[3]);
         String doi = separatedCsvLine[4];
-        String url = separatedCsvLine[5];
-        return new PhdThesis(title, authors, year, doi, url);
+        String pdfFilePath = separatedCsvLine[5];
+        return new PhdThesis(title, authors, year, doi, pdfFilePath);
     }
 
+    private static Article createPatentFromCsvLine(String[] separatedCsvLine) {
+        String title = separatedCsvLine[1];
+        String authors = separatedCsvLine[2].replace(" and ", "; ");
+        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[3]);
+        String doi = separatedCsvLine[4];
+        String pdfFilePath = separatedCsvLine[5];
+        return new Patent(title, authors, year, doi, pdfFilePath);
+    }
+
+    //methods for BibTex
     public static Article createArticleFromBibTex(String bibTexText){
         String[] articleTypeAndDetails = bibTexText.split("\\{", 2); //
 
@@ -106,6 +118,7 @@ public class ArticleFactory {
             case BOOK -> createBookFromBibTex(articleDetails);
             case BOOK_SECTION -> createBookSectionFromBibTex(articleDetails);
             case THESIS -> createPhdThesisFromBibTex(articleDetails);
+            case PATENT -> createPatentFromBibTex(articleDetails);
             default -> null;
         };
 
@@ -179,42 +192,42 @@ public class ArticleFactory {
     }
 
     private static Article createBookSectionFromBibTex(String[] articleDetails) {
-        BookSection importedJournalArticle = new BookSection();
+        BookSection importedBookSection = new BookSection();
 
         for (String rawDetail : articleDetails){
             String refinedDetail = rawDetail.replace(BIBTEX_LINE_END_PROMPT,"").strip();
 
             if(rawDetail.contains(BIBTEX_BOOK_TITLE_PROMPT)){
                 refinedDetail = refinedDetail.replace(BIBTEX_BOOK_TITLE_PROMPT,"");
-                importedJournalArticle.setBookTitle(refinedDetail);
+                importedBookSection.setBookTitle(refinedDetail);
             } else if (rawDetail.contains(BIBTEX_AUTHOR_PROMPT)){
                 refinedDetail = refinedDetail.replace(BIBTEX_AUTHOR_PROMPT,"").replace(" and ","; ");
-                importedJournalArticle.setAuthor(refinedDetail);
+                importedBookSection.setAuthor(refinedDetail);
             } else if (rawDetail.contains(BIBTEX_TITLE_PROMPT)){
                 refinedDetail = refinedDetail.replace(BIBTEX_TITLE_PROMPT,"");
-                importedJournalArticle.setTitle(refinedDetail);
+                importedBookSection.setTitle(refinedDetail);
             } else if (rawDetail.contains(BIBTEX_EDITOR_PROMPT)) {
                 refinedDetail = refinedDetail.replace(BIBTEX_EDITOR_PROMPT, "").replace(" and ", "; ");
-                importedJournalArticle.setEditor(refinedDetail);
+                importedBookSection.setEditor(refinedDetail);
             }else if (rawDetail.contains(BIBTEX_PUBLISHER_PROMPT)){
                 refinedDetail = refinedDetail.replace(BIBTEX_PUBLISHER_PROMPT,"");
-                importedJournalArticle.setJournal(refinedDetail);
+                importedBookSection.setJournal(refinedDetail);
             } else if (rawDetail.contains(BIBTEX_VOLUME_PROMPT)){
                 refinedDetail = refinedDetail.replace(BIBTEX_VOLUME_PROMPT,"");
-                importedJournalArticle.setVolume( MyLittleHelpers.convertStringInputToInteger(refinedDetail));
+                importedBookSection.setVolume( MyLittleHelpers.convertStringInputToInteger(refinedDetail));
             }  else if (rawDetail.contains(BIBTEX_YEAR_PROMPT)){
                 refinedDetail = refinedDetail.replace(BIBTEX_YEAR_PROMPT,"");
-                importedJournalArticle.setYear( MyLittleHelpers.convertStringInputToInteger(refinedDetail));
+                importedBookSection.setYear( MyLittleHelpers.convertStringInputToInteger(refinedDetail));
             } else if (rawDetail.contains(BIBTEX_PAGES_PROMPT)){
                 refinedDetail = refinedDetail.replace(BIBTEX_PAGES_PROMPT,"");
-                importedJournalArticle.setPages(refinedDetail);
+                importedBookSection.setPages(refinedDetail);
             } else if (rawDetail.contains(BIBTEX_DOI_PROMPT)){
                 refinedDetail = refinedDetail.replace(BIBTEX_DOI_PROMPT,"");
-                importedJournalArticle.setDoi(refinedDetail);
+                importedBookSection.setDoi(refinedDetail);
             }
         }
 
-        return importedJournalArticle;
+        return importedBookSection;
     }
 
 
@@ -237,9 +250,32 @@ public class ArticleFactory {
                 refinedDetail = refinedDetail.replace(BIBTEX_DOI_PROMPT,"");
                 importedPhdThesis.setDoi(refinedDetail);
             }
-
         }
 
         return importedPhdThesis;
+    }
+
+    private static Article createPatentFromBibTex(String[] articleDetails) {
+        Patent importedPatent = new Patent();
+
+        for (String rawDetail : articleDetails){
+            String refinedDetail = rawDetail.replace(BIBTEX_LINE_END_PROMPT,"").strip();
+
+            if(rawDetail.contains(BIBTEX_TITLE_PROMPT)){
+                refinedDetail = refinedDetail.replace(BIBTEX_TITLE_PROMPT,"");
+                importedPatent.setTitle(refinedDetail);
+            } else if (rawDetail.contains(BIBTEX_AUTHOR_PROMPT)){
+                refinedDetail = refinedDetail.replace(BIBTEX_AUTHOR_PROMPT,"").replace(" and ","; ");
+                importedPatent.setAuthor(refinedDetail);
+            }   else if (rawDetail.contains(BIBTEX_YEAR_PROMPT)){
+                refinedDetail = refinedDetail.replace(BIBTEX_YEAR_PROMPT,"");
+                importedPatent.setYear( MyLittleHelpers.convertStringInputToInteger(refinedDetail));
+            } else if (rawDetail.contains(BIBTEX_URL_PROMPT)){
+                refinedDetail = refinedDetail.replace(BIBTEX_URL_PROMPT,"");
+                importedPatent.setDoi(refinedDetail);
+            }
+        }
+
+        return importedPatent;
     }
 }

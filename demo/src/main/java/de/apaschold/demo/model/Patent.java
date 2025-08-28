@@ -1,18 +1,18 @@
 package de.apaschold.demo.model;
 
-public class PhdThesis extends Article{
+public class Patent extends Article{
     //0. constants
 
     //1. attributes
 
     //2. constructors
-    public PhdThesis(){
-        super.setArticleType(ArticleType.THESIS);
+    public Patent(){
+        super.setArticleType(ArticleType.PATENT);
         super.setJournal(" - ");
     }
 
-    public PhdThesis(String title, String author, int year, String doi, String pdfFilePath) {
-        super(ArticleType.THESIS, title, author, " - ", year, doi, pdfFilePath);
+    public Patent(String title, String author, int year, String doi, String pdfFilePath) {
+        super(ArticleType.PATENT, title, author, " - ", year, doi, pdfFilePath);
     }
 
     //4. other methods

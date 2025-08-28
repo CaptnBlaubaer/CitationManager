@@ -102,6 +102,7 @@ public class MainViewController implements Initializable {
             case BOOK_SECTION -> "book-section-subview.fxml";
             case BOOK -> "book-subview.fxml";
             case THESIS -> "phd-thesis-subview.fxml";
+            case PATENT -> "patent-subview.fxml";
             default -> "";
         };
 

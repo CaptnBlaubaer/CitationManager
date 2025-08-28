@@ -70,7 +70,7 @@ public class JournalArticle extends Article {
                 ", issue=" + issue +
                 ", pages=" + pages +
                 ", doi='" + doi + '\'' +
-                ", url='" + pdfFilePath + '\'' +
+                ", pdfFilePath='" + pdfFilePath + '\'' +
                 '}';
     }
 

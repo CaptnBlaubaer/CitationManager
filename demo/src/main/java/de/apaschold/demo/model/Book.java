@@ -33,7 +33,7 @@ public class Book extends Article {
                 ", year=" + year +
                 ", volume=" + volume +
                 ", doi='" + doi + '\'' +
-                ", url='" + pdfFilePath + '\'' +
+                ", pdfFilePath='" + pdfFilePath + '\'' +
                 '}';
     }
 

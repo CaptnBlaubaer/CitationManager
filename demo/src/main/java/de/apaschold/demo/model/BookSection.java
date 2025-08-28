@@ -47,14 +47,14 @@ public class BookSection extends Article {
                 "type='" + articleType + '\'' +
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
-                ", book title='" + bookTitle + "\'" +
+                ", book title='" + bookTitle + '\'' +
                 ", editor='" + editor + '\'' +
                 ", publisher='" + journal + '\'' +
                 ", year=" + year +
                 ", volume=" + volume +
                 ", pages=" + pages +
                 ", doi='" + doi + '\'' +
-                ", url='" + pdfFilePath + '\'' +
+                ", pdfFilePath='" + pdfFilePath + '\'' +
                 '}';
     }
 
