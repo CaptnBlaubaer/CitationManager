@@ -5,7 +5,9 @@ public enum ArticleType {
     BOOK ("Book"),
     BOOK_SECTION("Book Chapter"),
     WEBSITE ("Website"),
-    THESIS ("Thesis");
+    THESIS ("Thesis"),
+    PATENT ("Patent"),
+    UNPUBLISHED ("Unpublished");
 
     private final String description;
 
@@ -24,6 +26,10 @@ public enum ArticleType {
             returnType = BOOK_SECTION;
         } else if (bibTexArticleType.equals("@phdthesis")){
             returnType = THESIS;
+        } else if (bibTexArticleType.equals("@misc")){
+            returnType = PATENT;
+        } else if (bibTexArticleType.equals("@unpublished")){
+            returnType = UNPUBLISHED;
         }
 
         return returnType;

@@ -101,10 +101,9 @@ public class MainViewController implements Initializable {
             case JOURNAL_ARTICLE -> "journal-article-subview.fxml";
             case BOOK_SECTION -> "book-section-subview.fxml";
             case BOOK -> "book-subview.fxml";
+            case THESIS -> "phd-thesis-subview.fxml";
             default -> "";
         };
-
-        System.out.println(fxmlFile);
 
         if(!fxmlFile.isEmpty()) {
             try {

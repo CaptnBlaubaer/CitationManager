@@ -26,7 +26,7 @@ public class BookSectionSubViewController implements Initializable {
     @FXML
     private Label authors;
     @FXML
-    private Label booktitle;
+    private Label bookTitle;
     @FXML
     private Label editors;
     @FXML
@@ -45,7 +45,7 @@ public class BookSectionSubViewController implements Initializable {
     @FXML
     private TextArea authorsChange;
     @FXML
-    private TextField booktitleChange;
+    private TextField bookTitleChange;
     @FXML
     private TextArea editorsChange;
     @FXML
@@ -73,7 +73,7 @@ public class BookSectionSubViewController implements Initializable {
         if (this.bookSection != null){
             this.bookSection.setTitle( this.titleChange.getText());
             this.bookSection.setAuthor( this.authorsChange.getText().replace("\n", ", "));
-            this.bookSection.setTitle( this.booktitleChange.getText());
+            this.bookSection.setTitle( this.bookTitleChange.getText());
             this.bookSection.setAuthor( this.editorsChange.getText().replace("\n", ", "));
             this.bookSection.setJournal( this.publisherChange.getText());
 
@@ -112,7 +112,7 @@ public class BookSectionSubViewController implements Initializable {
         this.articleType.setText("Type: " + this.bookSection.getArticleType().getDescription());
         this.title.setText("Title: " + this.bookSection.getTitle());
         this.authors.setText("Authors: " + this.bookSection.getAuthor().replace("; ", "\n"));
-        this.booktitle.setText("Title: " + this.bookSection.getBooktitle());
+        this.bookTitle.setText("Title: " + this.bookSection.getBookTitle());
         this.editors.setText("Authors: " + this.bookSection.getEditor().replace("; ", "\n"));
         this.publisher.setText("Journal: " + this.bookSection.getJournal());
         this.year.setText("Year: " + yearAsString);
@@ -124,7 +124,7 @@ public class BookSectionSubViewController implements Initializable {
     private void populateArticleEditTab(String yearAsString,String volumeAsString) {
         this.titleChange.setText(this.bookSection.getTitle());
         this.authorsChange.setText(this.bookSection.getAuthor().replace("; ", "\n"));
-        this.booktitleChange.setText("Title: " + this.bookSection.getBooktitle());
+        this.bookTitleChange.setText("Title: " + this.bookSection.getBookTitle());
         this.editorsChange.setText("Authors: " + this.bookSection.getEditor().replace("; ", "\n"));
         this.publisherChange.setText(this.bookSection.getJournal());
         this.yearChange.setText(yearAsString);

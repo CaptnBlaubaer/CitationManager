@@ -1,0 +1,96 @@
+package de.apaschold.demo.gui.mainview;
+
+import de.apaschold.demo.additionals.MyLittleHelpers;
+import de.apaschold.demo.gui.GuiController;
+import de.apaschold.demo.model.Book;
+import de.apaschold.demo.model.PhdThesis;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+
+import java.io.IOException;
+import java.net.URL;
+
+public class PhdThesisSubViewController implements Initializable {
+    //0. constants
+
+    //1. attributes
+    private PhdThesis phdThesis;
+
+    //2. FXML elements
+    @FXML
+    private Label articleType;
+    @FXML
+    private Label title;
+    @FXML
+    private Label authors;
+    @FXML
+    private Label year;
+    @FXML
+    private Label doi;
+
+    @FXML
+    private TextField titleChange;
+    @FXML
+    private TextArea authorsChange;
+    @FXML
+    private TextField yearChange;
+    @FXML
+    private TextField doiChange;
+
+    //3. constructors/initialize method
+    @Override
+    public void initialize(URL location, java.util.ResourceBundle resources) {
+        this.phdThesis = (PhdThesis) GuiController.getInstance().getSelectedArticle();
+
+        populateBookSubView();
+    }
+
+    //4. FXML methods
+    @FXML
+    private void saveChanges() throws IOException {
+        if (this.phdThesis != null){
+            this.phdThesis.setTitle( this.titleChange.getText());
+            this.phdThesis.setAuthor( this.authorsChange.getText().replace("\n", ", "));
+
+            this.phdThesis.setYear( MyLittleHelpers.convertStringInputToInteger(this.yearChange.getText()));
+
+            this.phdThesis.setDoi(this.doiChange.getText());
+
+            //update the labels in the article overview
+            GuiController.getInstance().loadMainMenu();
+        }
+    }
+
+    //5. other methods
+    public void populateBookSubView(){
+        String yearAsString = "-";
+        if (this.phdThesis.getYear() != 0){
+            yearAsString = String.valueOf(this.phdThesis.getYear());
+        }
+
+        //populate the labels in the article overview
+        populateArticleOverviewTab(yearAsString);
+
+        //populate the textfields in the article edit view
+        populateArticleEditTab(yearAsString);
+
+    }
+
+    private void populateArticleOverviewTab(String yearAsString) {
+        this.articleType.setText("Type: " + this.phdThesis.getArticleType().getDescription());
+        this.title.setText("Title: " + this.phdThesis.getTitle());
+        this.authors.setText("Authors: " + this.phdThesis.getAuthor().replace("; ", "\n"));
+        this.year.setText("Year: " + yearAsString);
+        this.doi.setText("DOI: " + this.phdThesis.getDoi());
+    }
+
+    private void populateArticleEditTab(String yearAsString) {
+        this.titleChange.setText(this.phdThesis.getTitle());
+        this.authorsChange.setText(this.phdThesis.getAuthor().replace("; ", "\n"));
+        this.yearChange.setText(yearAsString);
+        this.doiChange.setText(this.phdThesis.getDoi());
+    }
+}

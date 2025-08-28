@@ -5,7 +5,7 @@ public class BookSection extends Article {
 
     //1. attributes
     private int volume;
-    private String booktitle;
+    private String bookTitle;
     private String editor;
     private String pages;
 
@@ -14,10 +14,10 @@ public class BookSection extends Article {
         super.setArticleType(ArticleType.BOOK_SECTION);
     }
 
-    public BookSection(String title, String author, String booktitle, String editor, String journal, int year, int volume, String pages, String doi, String pdfFilePath) {
+    public BookSection(String title, String author, String bookTitle, String editor, String journal, int year, int volume, String pages, String doi, String pdfFilePath) {
         super(ArticleType.BOOK_SECTION, title, author, journal, year, doi, pdfFilePath);
         this.volume = volume;
-        this.booktitle = booktitle;
+        this.bookTitle = bookTitle;
         this.editor = editor;
         this.pages = pages;
     }
@@ -27,9 +27,9 @@ public class BookSection extends Article {
 
     public void setVolume(int volume){ this.volume = volume;}
 
-    public String getBooktitle() { return booktitle;}
+    public String getBookTitle() { return bookTitle;}
 
-    public void setBooktitle(String booktitle) { this.booktitle = booktitle;}
+    public void setBookTitle(String bookTitle) { this.bookTitle = bookTitle;}
 
     public String getEditor() { return editor;}
 
@@ -47,7 +47,7 @@ public class BookSection extends Article {
                 "type='" + articleType + '\'' +
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
-                ", booktitle='" + booktitle + "\'" +
+                ", book title='" + bookTitle + "\'" +
                 ", editor='" + editor + '\'' +
                 ", publisher='" + journal + '\'' +
                 ", year=" + year +
@@ -62,7 +62,7 @@ public class BookSection extends Article {
         return articleType + ";" +
                 title + ";" +
                 author.replace("; ", " and ") + ";" +
-                booktitle + ";" +
+                bookTitle + ";" +
                 editor.replace("; ", " and ") + ";" +
                 journal + ";" +
                 year + ";" +
