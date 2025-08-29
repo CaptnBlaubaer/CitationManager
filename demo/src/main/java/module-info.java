@@ -1,6 +1,8 @@
 module de.apaschold.demo {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.web;
+    requires PDFViewerFX;
 
 
     opens de.apaschold.demo to javafx.fxml;

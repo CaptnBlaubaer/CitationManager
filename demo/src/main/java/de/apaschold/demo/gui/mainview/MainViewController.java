@@ -49,7 +49,7 @@ public class MainViewController implements Initializable {
     //4. FXML methods
     @FXML
     protected void saveArticlesToCsv() {
-        GuiController.getInstance().getArticleLibrary().saveToCsv();
+        GuiController.getInstance().saveActiveLibraryToCsv();
     }
 
     @FXML
@@ -71,7 +71,7 @@ public class MainViewController implements Initializable {
     @FXML
     protected void exportToBibTex(){
         try {
-            GuiController.getInstance().getArticleLibrary().exportToBibTex();
+            GuiController.getInstance().exportActiveLibraryToBibTex();
         } catch (NullPointerException e) {
             showAlertMessageEmptyLibrary();
         }

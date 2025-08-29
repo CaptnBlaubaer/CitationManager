@@ -11,13 +11,10 @@ public class ArticleLibrary {
 
     //1. attributes
     private final List<ArticleReference> articles;
-    private String activeLibraryFilePath;
 
     //2. constructors
-    public ArticleLibrary() {
-        this.activeLibraryFilePath = TextFileHandler.getInstance().loadLibraryFilePath();
-
-        this.articles = TextFileHandler.getInstance().importLibraryFromCsvFile(this.activeLibraryFilePath);
+    public ArticleLibrary(String activeLibraryFilePath) {
+        this.articles = TextFileHandler.getInstance().importLibraryFromCsvFile(activeLibraryFilePath);
     }
 
     //3. getter and setter methods
@@ -25,29 +22,15 @@ public class ArticleLibrary {
         return this.articles;
     }
 
-    public void setActiveLibraryFilePath(String activeLibraryFilePath) {
-        this.activeLibraryFilePath = activeLibraryFilePath;
-    }
-
     //4. other methods
-    public void saveToCsv(){
-        TextFileHandler.getInstance().exportLibraryToCsv(this.articles, activeLibraryFilePath);
-    }
-
-    public void exportToBibTex() throws NullPointerException{
+    public String generateStringForBibTex (){
         StringBuilder libraryAsBibTex = new StringBuilder();
 
         for(ArticleReference reference : this.articles) {
             libraryAsBibTex.append(reference.exportAsBibTexString()).append("\n\n");
         }
 
-        if(!this.articles.isEmpty()) {
-            String bibTexFilePath = activeLibraryFilePath.replace(".cml",".bib");
-
-            TextFileHandler.getInstance().exportLibraryToBibTex(libraryAsBibTex.toString(), bibTexFilePath);
-        } else {
-            throw new NullPointerException();
-        }
+        return libraryAsBibTex.toString();
     }
 
     public void addArticle(ArticleReference article){

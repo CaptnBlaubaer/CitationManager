@@ -40,6 +40,7 @@
         <Tab text="PDF Preview">
             <content>
                 <VBox spacing="10.0" style="-fx-padding: 10px;">
+                    <BorderPane fx:id="pdfViewer"/>
                 </VBox>
             </content>
         </Tab>

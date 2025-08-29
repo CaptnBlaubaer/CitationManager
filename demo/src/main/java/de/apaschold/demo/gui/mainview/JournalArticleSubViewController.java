@@ -1,13 +1,16 @@
 package de.apaschold.demo.gui.mainview;
 
+import com.dansoftware.pdfdisplayer.PDFDisplayer;
 import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.model.JournalArticle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -17,6 +20,7 @@ public class JournalArticleSubViewController implements Initializable {
 
     //1. attributes
     private JournalArticle journalArticle;
+    private PDFDisplayer displayer;
 
     //2. FXML elements
     @FXML
@@ -59,12 +63,20 @@ public class JournalArticleSubViewController implements Initializable {
     @FXML
     private TextField doiChange;
 
+    @FXML
+    private ComboBox<String> attachedFiles;
+    @FXML
+    private BorderPane pdfViewer;
+
     //3. constructors/initialize method
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
         this.journalArticle = (JournalArticle) GuiController.getInstance().getSelectedArticle();
 
         populateJournalArticleView();
+
+        this.displayer = new PDFDisplayer();
+        this.pdfViewer.setCenter(displayer.toNode());
     }
 
     //4. FXML methods

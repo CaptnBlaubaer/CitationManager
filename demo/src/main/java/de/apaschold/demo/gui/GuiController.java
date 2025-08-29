@@ -2,6 +2,7 @@ package de.apaschold.demo.gui;
 
 import de.apaschold.demo.HelloApplication;
 import de.apaschold.demo.logic.ArticleLibrary;
+import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import de.apaschold.demo.model.ArticleReference;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,12 +17,15 @@ public class GuiController {
     //1. attributes
     private static GuiController instance;
     private Stage mainStage;
-    private final ArticleLibrary articles;
+    private final ArticleLibrary library;
     private ArticleReference selectedArticle;
+    private String activeLibraryFilePath;
 
     //2. constructors
     private GuiController() {
-        this.articles = new ArticleLibrary();
+        this.activeLibraryFilePath = TextFileHandler.getInstance().loadLibraryFilePath();
+
+        this.library = new ArticleLibrary( this.activeLibraryFilePath);
     }
 
     public static synchronized GuiController getInstance() {
@@ -37,11 +41,11 @@ public class GuiController {
     }
 
     public List<ArticleReference> getArticleList() {
-        return articles.getArticles();
+        return library.getArticles();
     }
 
     public ArticleLibrary getArticleLibrary() {
-        return articles;
+        return library;
     }
 
     public ArticleReference getSelectedArticle() { return selectedArticle;}
@@ -83,5 +87,22 @@ public class GuiController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    //5. other
+    public void exportActiveLibraryToBibTex(){
+        String bibTexString = this.library.generateStringForBibTex();
+
+        if(!bibTexString.isEmpty()) {
+            String bibTexFilePath = this.activeLibraryFilePath.replace(".cml",".bib");
+
+            TextFileHandler.getInstance().exportLibraryToBibTex(bibTexString, bibTexFilePath);
+        } else {
+            throw new NullPointerException();
+        }
+    }
+
+    public void saveActiveLibraryToCsv(){
+        TextFileHandler.getInstance().exportLibraryToCsv(this.library.getArticles(), this.activeLibraryFilePath);
     }
 }
