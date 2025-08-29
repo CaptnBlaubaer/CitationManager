@@ -70,7 +70,11 @@ public class MainViewController implements Initializable {
 
     @FXML
     protected void exportToBibTex(){
-        GuiController.getInstance().getArticleLibrary().exportToBibTex();
+        try {
+            GuiController.getInstance().getArticleLibrary().exportToBibTex();
+        } catch (NullPointerException e) {
+            showAlertMessageEmptyLibrary();
+        }
     }
 
     //5. other methods
@@ -123,6 +127,11 @@ public class MainViewController implements Initializable {
         }
     }
 
-
+    private void showAlertMessageEmptyLibrary() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(AppTexts.ALERT_EMPTY_LIST_TITLE);
+        alert.setHeaderText(AppTexts.ALERT_EMPTY_LIST_HEADER);
+        alert.show();
+    }
 
 }

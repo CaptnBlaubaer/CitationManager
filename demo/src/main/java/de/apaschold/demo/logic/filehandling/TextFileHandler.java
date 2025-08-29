@@ -8,6 +8,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+
+//TODO save method for link of active library
+
 public class TextFileHandler {
     //0. constants
     private static final String DEFAULT_LIBRARY_FILE_PATH = "demo/src/main/resources/de/apaschold/demo/data/default-library.cml";
@@ -86,6 +89,12 @@ public class TextFileHandler {
         }
     }
 
+    /**
+     * <h2>loadLibraryFilePath</h2>
+     * <li>Reads the directory of the active library from active-library.txt</li>
+     *
+     * @return file path of active library
+     */
     public String loadLibraryFilePath(){
         String filePath = LOAD_LIBRARY_FILE_PATH;
 
@@ -104,5 +113,14 @@ public class TextFileHandler {
 
         return libraryFilePath;
     }
+
+    public void exportLibraryToBibTex(String libraryAsBibTex, String bibTexFilePath){
+        try (FileWriter writer = new FileWriter(bibTexFilePath, StandardCharsets.UTF_8)) {
+                writer.write( libraryAsBibTex);
+        } catch (IOException e) {
+            System.err.println("Error saving to File: " + bibTexFilePath);
+        }
+    }
+
 
 }

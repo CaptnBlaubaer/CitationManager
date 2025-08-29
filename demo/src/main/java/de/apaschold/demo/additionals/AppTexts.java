@@ -9,7 +9,7 @@ public class AppTexts {
             "\tauthor={%s},\n" +
             "\ttitle={%s},\n" +
             "\tjournal={%s},\n" +
-            "\tvolume{%d},\n" +
+            "\tvolume={%d},\n" +
             "\tnumber={%d},\n" +
             "\tpages={%s},\n" +
             "\tDOI={%s},\n" +
@@ -28,7 +28,7 @@ public class AppTexts {
             "\tbooktitel={%s},\n" +
             "\teditor={%s},\n" +
             "\tpublisher={%s},\n" +
-            "\tvolume{%d},\n" +
+            "\tvolume={%d},\n" +
             "\tpages={%s},\n" +
             "\tDOI={%s},\n" +
             "\tyear={%d},\n" +
@@ -53,6 +53,9 @@ public class AppTexts {
 
 
     public static final String TABLE_VIEW_PLACEHOLDER = "Active Library could not been found.";
+
+    public static final String ALERT_EMPTY_LIST_TITLE = "List is empty";
+    public static final String ALERT_EMPTY_LIST_HEADER= "The active list is empty.";
     //1. attributes
 
     //2. constructors

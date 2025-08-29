@@ -81,9 +81,17 @@ public abstract class ArticleReference {
 
     public String exportAsBibTexString(){ return "";}
 
+    /**
+     * <h2>createBibTexReference</h2>
+     * <li>generates reference code for BibTex-format</li>
+     *
+     * @return bibTex reference as "LastName + FirstNameFirstCharacter + Year + Journal/Publisher"
+     */
     public String createBibTexReference(){
         String firstAuthor = this.author.split(" and ")[0];
-        String firstAuthorLastName = firstAuthor.split(", ")[0];
+        //author names are in the Format "LastName, Prename"
+        //replaces white spaces in case of two or more LastNames (e.g. spanish authors)
+        String firstAuthorLastName = firstAuthor.split(", ")[0].replaceAll(" ","");
         char firstAuthorPreNameFirstCharacter = firstAuthor.split(", ")[1].charAt(0);
         String publishedYear = this.year + "";
         String journalWithoutWhitespace = this.journal.replaceAll(" ","").replaceAll("\\.","");

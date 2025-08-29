@@ -3,6 +3,7 @@ package de.apaschold.demo.logic;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import de.apaschold.demo.model.ArticleReference;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ArticleLibrary {
@@ -33,10 +34,19 @@ public class ArticleLibrary {
         TextFileHandler.getInstance().exportLibraryToCsv(this.articles, activeLibraryFilePath);
     }
 
-    public void exportToBibTex(){
+    public void exportToBibTex() throws NullPointerException{
         StringBuilder libraryAsBibTex = new StringBuilder();
-        for(ArticleReference reference : this.articles){
-            libraryAsBibTex.append(reference.exportAsBibTexString()).append("\n");
+
+        for(ArticleReference reference : this.articles) {
+            libraryAsBibTex.append(reference.exportAsBibTexString()).append("\n\n");
+        }
+
+        if(!this.articles.isEmpty()) {
+            String bibTexFilePath = activeLibraryFilePath.replace(".cml",".bib");
+
+            TextFileHandler.getInstance().exportLibraryToBibTex(libraryAsBibTex.toString(), bibTexFilePath);
+        } else {
+            throw new NullPointerException();
         }
     }
 
