@@ -26,7 +26,7 @@ public class PhdThesis extends ArticleReference {
                 ", author='" + author + '\'' +
                 ", year=" + year +
                 ", doi='" + doi + '\'' +
-                ", pdfFilePath='" + pdfFilePath + '\'' +
+                ", pdfFilePath='" + String.join(",",pdfFilePath) + '\'' +
                 '}';
     }
 
@@ -37,7 +37,7 @@ public class PhdThesis extends ArticleReference {
                 author.replace("; ", " and ") + ";" +
                 year + ";" +
                 doi + ";" +
-                pdfFilePath;
+                String.join(",",pdfFilePath);
     }
 
     @Override

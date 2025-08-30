@@ -36,7 +36,7 @@ public class Book extends ArticleReference {
                 ", year=" + year +
                 ", volume=" + volume +
                 ", doi='" + doi + '\'' +
-                ", pdfFilePath='" + pdfFilePath + '\'' +
+                ", pdfFilePath='" + String.join(",",pdfFilePath) + '\'' +
                 '}';
     }
 
@@ -49,7 +49,7 @@ public class Book extends ArticleReference {
                 year + ";" +
                 volume + ";" +
                 doi + ";" +
-                pdfFilePath;
+                String.join(",",pdfFilePath);
     }
 
     @Override

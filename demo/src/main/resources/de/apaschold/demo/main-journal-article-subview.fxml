@@ -50,19 +50,10 @@
         <Tab text="Attached Files">
             <content>
                 <VBox spacing="10.0" style="-fx-padding: 10px;">
-                    <ComboBox fx:id="attachedFiles" />
+                    <ComboBox fx:id="attachedFiles" onAction="#selectAttachedFile"/>
                     <BorderPane fx:id="pdfViewer"/>
                 </VBox>
             </content>
         </Tab>
-        <Tab text="PDF Preview">
-            <content>
-                <VBox spacing="10.0" style="-fx-padding: 10px;">
-                </VBox>
-            </content>
-        </Tab>
-
     </tabs>
-
-
 </TabPane>

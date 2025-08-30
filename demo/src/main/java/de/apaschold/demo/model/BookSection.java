@@ -60,7 +60,7 @@ public class BookSection extends ArticleReference {
                 ", volume=" + volume +
                 ", pages=" + pages +
                 ", doi='" + doi + '\'' +
-                ", pdfFilePath='" + pdfFilePath + '\'' +
+                ", pdfFilePath='" + String.join(",",pdfFilePath) + '\'' +
                 '}';
     }
 
@@ -76,7 +76,7 @@ public class BookSection extends ArticleReference {
                 volume + ";" +
                 pages + ";" +
                 doi + ";" +
-                pdfFilePath;
+                String.join(",",pdfFilePath);
     }
 
     @Override

@@ -52,6 +52,8 @@ public class GuiController {
 
     public void setSelectedArticle(ArticleReference selectedArticle) { this.selectedArticle = selectedArticle;}
 
+    public String getActiveLibraryFilePath() { return this.activeLibraryFilePath;}
+
     //4. open view methods
     public void loadMainMenu() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main-view.fxml"));

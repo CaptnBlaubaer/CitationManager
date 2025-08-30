@@ -25,7 +25,7 @@ public class Unpublished extends ArticleReference {
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", year=" + year +
-                ", pdfFilePath='" + pdfFilePath + '\'' +
+                ", pdfFilePath='" + String.join(",",pdfFilePath) + '\'' +
                 '}';
     }
 
@@ -35,7 +35,7 @@ public class Unpublished extends ArticleReference {
                 title + ";" +
                 author.replace("; ", " and ") + ";" +
                 year + ";" +
-                pdfFilePath;
+                String.join(",",pdfFilePath);
     }
 
     @Override

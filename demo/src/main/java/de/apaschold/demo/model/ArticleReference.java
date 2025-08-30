@@ -16,7 +16,7 @@ public abstract class ArticleReference {
     protected String journal;
     protected int year;
     protected String doi;
-    protected String pdfFilePath;
+    protected String[] pdfFilePath;
 
     //2. constructors
     public ArticleReference() {
@@ -25,7 +25,7 @@ public abstract class ArticleReference {
         this.journal = AppTexts.PLACEHOLDER;
         this.year = AppTexts.NUMBER_PLACEHOLDER;
         this.doi = AppTexts.PLACEHOLDER;
-        this.pdfFilePath = AppTexts.PLACEHOLDER;
+        this.pdfFilePath = AppTexts.PLACEHOLDER.split(",");
     }
 
     public ArticleReference(ArticleType type, String title, String author, String journal, int year, String doi, String pdfFilePath) {
@@ -35,7 +35,7 @@ public abstract class ArticleReference {
         this.journal = journal;
         this.year = year;
         this.doi = doi;
-        this.pdfFilePath = pdfFilePath;
+        this.pdfFilePath = pdfFilePath.split(",");
     }
 
     //3. getter and setter methods
@@ -63,9 +63,9 @@ public abstract class ArticleReference {
 
     public void setDoi(String doi) { this.doi = doi;}
 
-    public String getPdfFilePath() { return pdfFilePath;}
+    public String[] getPdfFilePaths() { return pdfFilePath;}
 
-    public void setPdfFilePath(String pdfFilePath) { this.pdfFilePath = pdfFilePath;}
+    public void setPdfFilePath(String[] pdfFilePath) { this.pdfFilePath = pdfFilePath;}
 
     //Property getters for TableView
     public StringProperty titleProperty() { return new SimpleStringProperty(title);}

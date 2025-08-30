@@ -76,7 +76,7 @@ public class JournalArticle extends ArticleReference {
                 ", issue=" + issue +
                 ", pages=" + pages +
                 ", doi='" + doi + '\'' +
-                ", pdfFilePath='" + pdfFilePath + '\'' +
+                ", pdfFilePath='" + String.join(",",pdfFilePath) + '\'' +
                 '}';
     }
 
@@ -91,7 +91,7 @@ public class JournalArticle extends ArticleReference {
                 issue + ";" +
                 pages + ";" +
                 doi + ";" +
-                pdfFilePath;
+                String.join(",",pdfFilePath);
     }
 
     @Override

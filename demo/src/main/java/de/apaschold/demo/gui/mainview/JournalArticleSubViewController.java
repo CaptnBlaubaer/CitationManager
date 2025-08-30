@@ -12,6 +12,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -100,6 +101,16 @@ public class JournalArticleSubViewController implements Initializable {
         }
     }
 
+    @FXML
+    private void selectAttachedFile() throws IOException{
+        String folderPath = GuiController.getInstance().getActiveLibraryFilePath()
+                .replaceAll("\\\\([a-zA-Z0-9-]+)\\.cml","\\\\"); //removes the file name
+
+        String filePath = folderPath + "pdf\\" + this.attachedFiles.getValue();
+
+        displayer.loadPDF(new File(filePath));
+    }
+
     //5. other methods
     public void populateJournalArticleView(){
         String yearAsString = "-";
@@ -123,6 +134,7 @@ public class JournalArticleSubViewController implements Initializable {
         //populate the textfields in the article edit view
         populateArticleEditTab(yearAsString, volumeAsString, issueAsString);
 
+        populatePDFViewerTab();
     }
 
     private void populateArticleOverviewTab(String yearAsString, String volumeAsString, String issueAsString) {
@@ -148,5 +160,9 @@ public class JournalArticleSubViewController implements Initializable {
         this.issueChange.setText(issueAsString);
         this.pagesChange.setText(this.journalArticle.getPages());
         this.doiChange.setText(this.journalArticle.getDoi());
+    }
+
+    private void populatePDFViewerTab(){
+        this.attachedFiles.getItems().setAll(this.journalArticle.getPdfFilePaths());
     }
 }
