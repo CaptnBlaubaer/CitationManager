@@ -50,8 +50,13 @@
         <Tab text="Attached Files">
             <content>
                 <VBox spacing="10.0" style="-fx-padding: 10px;">
-                    <ComboBox fx:id="attachedFiles" onAction="#selectAttachedFile"/>
-                    <BorderPane fx:id="pdfViewer"/>
+                    <HBox spacing="20.0" alignment="CENTER_LEFT">
+                        <ComboBox fx:id="attachedFiles" onAction="#selectAttachedFile" prefWidth="450.0"/>
+                        <Button text="Attach new file" prefHeight="20.0" prefWidth="100.0"/>
+                        <Button text="Delete file" prefHeight="20.0" prefWidth="100.0"/>
+                    </HBox>
+
+                    <BorderPane fx:id="pdfViewer" prefHeight="1000.0"/>
                 </VBox>
             </content>
         </Tab>

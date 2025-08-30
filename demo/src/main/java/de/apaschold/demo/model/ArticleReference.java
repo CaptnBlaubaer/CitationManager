@@ -6,6 +6,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.util.List;
+
 public abstract class ArticleReference {
     //0. constants
 
@@ -80,6 +82,10 @@ public abstract class ArticleReference {
     public String toCsvString(){ return "";}
 
     public String exportAsBibTexString(){ return "";}
+
+    public List<String> fillArticleDetailView(){
+        return null;
+    };
 
     /**
      * <h2>createBibTexReference</h2>

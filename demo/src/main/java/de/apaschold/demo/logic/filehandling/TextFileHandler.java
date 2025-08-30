@@ -8,13 +8,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-
-//TODO save method for link of active library
-
 public class TextFileHandler {
     //0. constants
     private static final String DEFAULT_LIBRARY_FILE_PATH = "demo/src/main/resources/de/apaschold/demo/data/default-library.cml";
-    private static final String LOAD_LIBRARY_FILE_PATH = "demo/src/main/resources/de/apaschold/demo/data/active-library.txt";
+    private static final String ACTIVE_LIBRARY_FILE_PATH = "demo/src/main/resources/de/apaschold/demo/data/active-library.txt";
 
     //1. attributes
     private static TextFileHandler instance;
@@ -96,7 +93,7 @@ public class TextFileHandler {
      * @return file path of active library
      */
     public String loadLibraryFilePath(){
-        String filePath = LOAD_LIBRARY_FILE_PATH;
+        String filePath = ACTIVE_LIBRARY_FILE_PATH;
 
         String libraryFilePath = "";
 
@@ -114,6 +111,30 @@ public class TextFileHandler {
         return libraryFilePath;
     }
 
+    public void saveNewActiveLibraryPath (String newFilePath){
+        try (FileWriter writer = new FileWriter(ACTIVE_LIBRARY_FILE_PATH, StandardCharsets.UTF_8)) {
+            writer.write(newFilePath);
+        } catch (IOException e) {
+            System.err.println("Error saving to File: " );
+        }
+    }
+
+    public void createEmptyLibrary(File newLibraryFile){
+
+        try (FileWriter writer = new FileWriter(newLibraryFile , StandardCharsets.UTF_8)) {
+            writer.write("");
+
+            String pdfDirectoryPath = newLibraryFile.getAbsolutePath().replace(".cml", "-pdfs");
+
+            File theDir = new File(pdfDirectoryPath);
+            if (!theDir.exists()){
+                theDir.mkdirs();
+            }
+        } catch (IOException e) {
+            System.err.println("Error saving to File: " );
+        }
+    }
+
     public void exportLibraryToBibTex(String libraryAsBibTex, String bibTexFilePath){
         try (FileWriter writer = new FileWriter(bibTexFilePath, StandardCharsets.UTF_8)) {
                 writer.write( libraryAsBibTex);
@@ -121,6 +142,4 @@ public class TextFileHandler {
             System.err.println("Error saving to File: " + bibTexFilePath);
         }
     }
-
-
 }

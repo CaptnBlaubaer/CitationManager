@@ -1,15 +1,19 @@
 package de.apaschold.demo.gui.mainview;
 
+import com.dansoftware.pdfdisplayer.PDFDisplayer;
 import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.model.Book;
 import de.apaschold.demo.model.PhdThesis;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -18,6 +22,7 @@ public class PhdThesisSubViewController implements Initializable {
 
     //1. attributes
     private PhdThesis phdThesis;
+    private PDFDisplayer displayer;
 
     //2. FXML elements
     @FXML
@@ -40,12 +45,20 @@ public class PhdThesisSubViewController implements Initializable {
     @FXML
     private TextField doiChange;
 
+    @FXML
+    private ComboBox<String> attachedFiles;
+    @FXML
+    private BorderPane pdfViewer;
+
     //3. constructors/initialize method
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
         this.phdThesis = (PhdThesis) GuiController.getInstance().getSelectedArticle();
 
         populateBookSubView();
+
+        this.displayer = new PDFDisplayer();
+        this.pdfViewer.setCenter(displayer.toNode());
     }
 
     //4. FXML methods
@@ -64,6 +77,16 @@ public class PhdThesisSubViewController implements Initializable {
         }
     }
 
+    @FXML
+    private void selectAttachedFile() throws IOException{
+        String folderPath = GuiController.getInstance().getActiveLibraryFilePath()
+                .replace(".cml","-pdfs\\"); //removes the file name
+
+        String filePath = folderPath + this.attachedFiles.getValue();
+
+        displayer.loadPDF(new File(filePath));
+    }
+
     //5. other methods
     public void populateBookSubView(){
         String yearAsString = "-";
@@ -77,6 +100,7 @@ public class PhdThesisSubViewController implements Initializable {
         //populate the textfields in the article edit view
         populateArticleEditTab(yearAsString);
 
+        populatePDFViewerTab();
     }
 
     private void populateArticleOverviewTab(String yearAsString) {
@@ -92,5 +116,9 @@ public class PhdThesisSubViewController implements Initializable {
         this.authorsChange.setText(this.phdThesis.getAuthor().replace("; ", "\n"));
         this.yearChange.setText(yearAsString);
         this.doiChange.setText(this.phdThesis.getDoi());
+    }
+
+    private void populatePDFViewerTab(){
+        this.attachedFiles.getItems().setAll(this.phdThesis.getPdfFilePaths());
     }
 }

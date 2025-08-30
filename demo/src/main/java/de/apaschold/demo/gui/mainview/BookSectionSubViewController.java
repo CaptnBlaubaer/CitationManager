@@ -1,14 +1,18 @@
 package de.apaschold.demo.gui.mainview;
 
+import com.dansoftware.pdfdisplayer.PDFDisplayer;
 import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.model.BookSection;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -17,6 +21,7 @@ public class BookSectionSubViewController implements Initializable {
 
     //1. attributes
     private BookSection bookSection;
+    private PDFDisplayer displayer;
 
     //2. FXML elements
     @FXML
@@ -59,12 +64,20 @@ public class BookSectionSubViewController implements Initializable {
     @FXML
     private TextField doiChange;
 
+    @FXML
+    private ComboBox<String> attachedFiles;
+    @FXML
+    private BorderPane pdfViewer;
+
     //3. constructors/initialize method
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
         this.bookSection = (BookSection) GuiController.getInstance().getSelectedArticle();
 
         populateJournalArticleView();
+
+        this.displayer = new PDFDisplayer();
+        this.pdfViewer.setCenter(displayer.toNode());
     }
 
     //4. FXML methods
@@ -88,6 +101,16 @@ public class BookSectionSubViewController implements Initializable {
         }
     }
 
+    @FXML
+    private void selectAttachedFile() throws IOException{
+        String folderPath = GuiController.getInstance().getActiveLibraryFilePath()
+                .replace(".cml","-pdfs\\"); //removes the file name
+
+        String filePath = folderPath + this.attachedFiles.getValue();
+
+        displayer.loadPDF(new File(filePath));
+    }
+
     //5. other methods
     public void populateJournalArticleView(){
         String yearAsString = "-";
@@ -106,6 +129,7 @@ public class BookSectionSubViewController implements Initializable {
         //populate the textfields in the article edit view
         populateArticleEditTab(yearAsString, volumeAsString);
 
+        populatePDFViewerTab();
     }
 
     private void populateArticleOverviewTab(String yearAsString, String volumeAsString) {
@@ -131,5 +155,9 @@ public class BookSectionSubViewController implements Initializable {
         this.volumeChange.setText(volumeAsString);
         this.pagesChange.setText(this.bookSection.getPages());
         this.doiChange.setText(this.bookSection.getDoi());
+    }
+
+    private void populatePDFViewerTab(){
+        this.attachedFiles.getItems().setAll(this.bookSection.getPdfFilePaths());
     }
 }

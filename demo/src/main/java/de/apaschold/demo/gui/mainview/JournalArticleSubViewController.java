@@ -104,9 +104,9 @@ public class JournalArticleSubViewController implements Initializable {
     @FXML
     private void selectAttachedFile() throws IOException{
         String folderPath = GuiController.getInstance().getActiveLibraryFilePath()
-                .replaceAll("\\\\([a-zA-Z0-9-]+)\\.cml","\\\\"); //removes the file name
+                .replace(".cml","-pdfs\\"); //removes the file name
 
-        String filePath = folderPath + "pdf\\" + this.attachedFiles.getValue();
+        String filePath = folderPath + this.attachedFiles.getValue();
 
         displayer.loadPDF(new File(filePath));
     }

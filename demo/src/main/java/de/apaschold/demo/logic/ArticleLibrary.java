@@ -3,7 +3,6 @@ package de.apaschold.demo.logic;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import de.apaschold.demo.model.ArticleReference;
 
-import java.io.IOException;
 import java.util.List;
 
 public class ArticleLibrary {
@@ -23,6 +22,10 @@ public class ArticleLibrary {
     }
 
     //4. other methods
+    public void clear(){
+        this.articles.clear();
+    }
+
     public String generateStringForBibTex (){
         StringBuilder libraryAsBibTex = new StringBuilder();
 

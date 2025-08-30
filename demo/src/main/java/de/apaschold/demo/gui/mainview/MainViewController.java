@@ -3,6 +3,7 @@ package de.apaschold.demo.gui.mainview;
 import de.apaschold.demo.HelloApplication;
 import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.gui.GuiController;
+import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import de.apaschold.demo.model.ArticleReference;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
@@ -11,7 +12,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -50,6 +54,13 @@ public class MainViewController implements Initializable {
     @FXML
     protected void saveArticlesToCsv() {
         GuiController.getInstance().saveActiveLibraryToCsv();
+    }
+
+    @FXML
+    protected void createNewLibrary() throws IOException {
+        GuiController.getInstance().loadCreateNewLibraryView();
+
+        this.articlesTable.getItems().clear();
     }
 
     @FXML

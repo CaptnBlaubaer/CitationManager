@@ -43,6 +43,8 @@
         <Tab text="Attached Files">
             <content>
                 <VBox spacing="10.0" style="-fx-padding: 10px;">
+                    <ComboBox fx:id="attachedFiles" onAction="#selectAttachedFile"/>
+                    <BorderPane fx:id="pdfViewer" prefHeight="1000.0"/>
                 </VBox>
             </content>
         </Tab>

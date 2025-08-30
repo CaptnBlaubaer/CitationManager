@@ -56,6 +56,11 @@ public class AppTexts {
 
     public static final String ALERT_EMPTY_LIST_TITLE = "List is empty";
     public static final String ALERT_EMPTY_LIST_HEADER= "The active list is empty.";
+    public static final String ALERT_INVALID_FILENAME_TITLE = "Invalid filename";
+    public static final String ALERT_INVALID_FILENAME_CONTENT = "Filename can't contain whitespace character and can't be empty";
+    public static final String ALERT_FILENAME_EXISTS_TITLE = "Filename already exists";
+    public static final String ALERT_FILENAME_EXISTS_CONTENT = "Filename already exists in this directory";
+
     //1. attributes
 
     //2. constructors

@@ -41,18 +41,20 @@ public class GuiController {
     }
 
     public List<ArticleReference> getArticleList() {
-        return library.getArticles();
+        return this.library.getArticles();
     }
 
     public ArticleLibrary getArticleLibrary() {
-        return library;
+        return this.library;
     }
 
-    public ArticleReference getSelectedArticle() { return selectedArticle;}
+    public ArticleReference getSelectedArticle() { return this.selectedArticle;}
 
     public void setSelectedArticle(ArticleReference selectedArticle) { this.selectedArticle = selectedArticle;}
 
     public String getActiveLibraryFilePath() { return this.activeLibraryFilePath;}
+
+    public void setActiveLibraryFilePath(String activeLibraryFilePath) { this.activeLibraryFilePath = activeLibraryFilePath;}
 
     //4. open view methods
     public void loadMainMenu() throws IOException {
@@ -85,6 +87,22 @@ public class GuiController {
             newArticleStage.setTitle("Import from BibTex");
             newArticleStage.setScene(scene);
             newArticleStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadCreateNewLibraryView() {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("create-new-library-view.fxml"));
+        try {
+            Scene scene = new Scene(fxmlLoader.load(), 300, 130);
+            Stage newArticleStage = new Stage();
+            newArticleStage.setTitle("Create empty library");
+            newArticleStage.setScene(scene);
+            newArticleStage.showAndWait();
+
+            this.library.clear();
 
         } catch (IOException e) {
             e.printStackTrace();

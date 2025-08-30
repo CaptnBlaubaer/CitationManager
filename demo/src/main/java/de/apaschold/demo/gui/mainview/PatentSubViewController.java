@@ -1,14 +1,18 @@
 package de.apaschold.demo.gui.mainview;
 
+import com.dansoftware.pdfdisplayer.PDFDisplayer;
 import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.model.Patent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -17,6 +21,7 @@ public class PatentSubViewController implements Initializable {
 
     //1. attributes
     private Patent patent;
+    private PDFDisplayer displayer;
 
     //2. FXML elements
     @FXML
@@ -39,12 +44,20 @@ public class PatentSubViewController implements Initializable {
     @FXML
     private TextField urlChange;
 
+    @FXML
+    private ComboBox<String> attachedFiles;
+    @FXML
+    private BorderPane pdfViewer;
+
     //3. constructors/initialize method
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
         this.patent = (Patent) GuiController.getInstance().getSelectedArticle();
 
         populateBookSubView();
+
+        this.displayer = new PDFDisplayer();
+        this.pdfViewer.setCenter(displayer.toNode());
     }
 
     //4. FXML methods
@@ -63,6 +76,17 @@ public class PatentSubViewController implements Initializable {
         }
     }
 
+
+    @FXML
+    private void selectAttachedFile() throws IOException{
+        String folderPath = GuiController.getInstance().getActiveLibraryFilePath()
+                .replace(".cml","-pdfs\\"); //removes the file name
+
+        String filePath = folderPath + this.attachedFiles.getValue();
+
+        displayer.loadPDF(new File(filePath));
+    }
+
     //5. other methods
     public void populateBookSubView(){
         String yearAsString = "-";
@@ -76,6 +100,7 @@ public class PatentSubViewController implements Initializable {
         //populate the textfields in the article edit view
         populateArticleEditTab(yearAsString);
 
+        populatePDFViewerTab();
     }
 
     private void populateArticleOverviewTab(String yearAsString) {
@@ -91,5 +116,9 @@ public class PatentSubViewController implements Initializable {
         this.authorsChange.setText(this.patent.getAuthor().replace("; ", "\n"));
         this.yearChange.setText(yearAsString);
         this.urlChange.setText(this.patent.getDoi());
+    }
+
+    private void populatePDFViewerTab(){
+        this.attachedFiles.getItems().setAll(this.patent.getPdfFilePaths());
     }
 }
