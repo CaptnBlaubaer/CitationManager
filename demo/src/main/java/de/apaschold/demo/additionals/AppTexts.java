@@ -4,6 +4,8 @@ public class AppTexts {
     //0. constants
     public static final String PLACEHOLDER = " - ";
     public static final int NUMBER_PLACEHOLDER = 0;
+    public static final String REGEX_REPLACE_CML_FILENAME = "\\\\[a-zA-Z0-9-]+\\.cml";
+
 
     public static final String JOURNAL_ARTICLE_BIB_TEX_EXPORT_PROMPT = "@article{%s,\n" +
             "\tauthor={%s},\n" +

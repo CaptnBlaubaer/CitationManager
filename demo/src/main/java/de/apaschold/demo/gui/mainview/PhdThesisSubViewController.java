@@ -3,7 +3,6 @@ package de.apaschold.demo.gui.mainview;
 import com.dansoftware.pdfdisplayer.PDFDisplayer;
 import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.GuiController;
-import de.apaschold.demo.model.Book;
 import de.apaschold.demo.model.PhdThesis;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

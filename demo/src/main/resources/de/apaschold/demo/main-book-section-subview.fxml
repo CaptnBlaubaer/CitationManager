@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<TabPane prefHeight="200.0" prefWidth="200.0"  xmlns="http://javafx.com/javafx"
+<TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
          fx:controller="de.apaschold.demo.gui.mainview.BookSectionSubViewController">
     <tabs>

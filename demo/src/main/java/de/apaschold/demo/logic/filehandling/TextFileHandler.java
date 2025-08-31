@@ -93,11 +93,9 @@ public class TextFileHandler {
      * @return file path of active library
      */
     public String loadLibraryFilePath(){
-        String filePath = ACTIVE_LIBRARY_FILE_PATH;
-
         String libraryFilePath = "";
 
-        File file = new File(filePath);
+        File file = new File(ACTIVE_LIBRARY_FILE_PATH);
 
         try(FileReader reader = new FileReader(file);
             BufferedReader in = new BufferedReader(reader)) {

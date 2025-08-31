@@ -39,6 +39,9 @@ public class MainViewController implements Initializable {
     @FXML
     private BorderPane articleView;
 
+    @FXML
+    private Label activeLibraryPath;
+
     //3. constructors/initialize method
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
@@ -48,11 +51,44 @@ public class MainViewController implements Initializable {
         if(GuiController.getInstance().getSelectedArticle() != null){
             populateArticleView();
         }
+
+        this.activeLibraryPath.setText(GuiController.getInstance().getActiveLibraryFilePath());
     }
 
     //4. FXML methods
     @FXML
-    protected void saveArticlesToCsv() {
+    protected void openLibrary(){
+        Stage stage = (Stage) this.articleView.getScene().getWindow();
+
+        String folderPath = GuiController.getInstance().getActiveLibraryFilePath().replaceAll("\\\\[a-zA-Z0-9-]+\\.cml","");
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File(folderPath));
+        fileChooser.setTitle("Choose library");
+        File chosenFile = fileChooser.showOpenDialog(stage);
+
+        //TODO load library from file functionality
+        if (chosenFile != null) {
+            String chosenLibaryPath = chosenFile.getAbsolutePath();
+
+            if(chosenLibaryPath.endsWith(".cml")) {
+                GuiController.getInstance().setActiveLibraryFilePath(chosenLibaryPath);
+                GuiController.getInstance().fillLibraryFromChosenFile(chosenLibaryPath);
+
+                TextFileHandler.getInstance().saveNewActiveLibraryPath(chosenLibaryPath);
+
+                populateTable();
+            } else{
+                //TODO invalid data was chosen
+            }
+        } else {
+            System.out.println("Hallo");
+            //TODO create information method
+        }
+    }
+
+    @FXML
+    protected void saveLibraryToCsv() {
         GuiController.getInstance().saveActiveLibraryToCsv();
     }
 
@@ -61,7 +97,11 @@ public class MainViewController implements Initializable {
         GuiController.getInstance().loadCreateNewLibraryView();
 
         this.articlesTable.getItems().clear();
+
+        this.activeLibraryPath.setText(GuiController.getInstance().getActiveLibraryFilePath());
     }
+
+
 
     @FXML
     protected void addNewArticle() {
@@ -92,8 +132,9 @@ public class MainViewController implements Initializable {
     protected void populateTable(){
         List<ArticleReference> articles = GuiController.getInstance().getArticleList();
 
+        this.articlesTable.getItems().clear();
+
         if (!articles.isEmpty()){
-            this.articlesTable.getItems().clear();
             this.articlesTable.getItems().addAll(articles);
 
             this.titleColumn.setCellValueFactory(cellData -> cellData.getValue().titleProperty());

@@ -125,4 +125,8 @@ public class GuiController {
     public void saveActiveLibraryToCsv(){
         TextFileHandler.getInstance().exportLibraryToCsv(this.library.getArticles(), this.activeLibraryFilePath);
     }
+
+    public void fillLibraryFromChosenFile(String activeLibraryFilePath){
+        this.library.fillLibraryFromFile(activeLibraryFilePath);
+    }
 }

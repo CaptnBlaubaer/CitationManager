@@ -9,11 +9,11 @@ public class ArticleLibrary {
     //0. constants
 
     //1. attributes
-    private final List<ArticleReference> articles;
+    private List<ArticleReference> articles;
 
     //2. constructors
     public ArticleLibrary(String activeLibraryFilePath) {
-        this.articles = TextFileHandler.getInstance().importLibraryFromCsvFile(activeLibraryFilePath);
+        fillLibraryFromFile(activeLibraryFilePath);
     }
 
     //3. getter and setter methods
@@ -38,5 +38,9 @@ public class ArticleLibrary {
 
     public void addArticle(ArticleReference article){
         this.articles.add(article);
+    }
+
+    public void fillLibraryFromFile(String activeLibraryFilePath){
+        this.articles = TextFileHandler.getInstance().importLibraryFromCsvFile(activeLibraryFilePath);
     }
 }

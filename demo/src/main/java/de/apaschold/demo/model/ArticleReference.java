@@ -83,10 +83,6 @@ public abstract class ArticleReference {
 
     public String exportAsBibTexString(){ return "";}
 
-    public List<String> fillArticleDetailView(){
-        return null;
-    };
-
     /**
      * <h2>createBibTexReference</h2>
      * <li>generates reference code for BibTex-format</li>

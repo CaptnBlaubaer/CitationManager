@@ -8,7 +8,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -30,7 +29,7 @@ public class NewLibraryViewController implements Initializable {
     //3.constructor/initialize method
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle){
-        this.folderPath = GuiController.getInstance().getActiveLibraryFilePath().replaceAll("\\\\[a-z]+\\.cml","");
+        this.folderPath = GuiController.getInstance().getActiveLibraryFilePath().replaceAll("\\\\[a-zA-Z0-9-]+\\.cml","");
 
         this.folderPathLabel.setText(this.folderPath);
     }
