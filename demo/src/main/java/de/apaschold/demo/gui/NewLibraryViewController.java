@@ -1,6 +1,7 @@
 package de.apaschold.demo.gui;
 
 import de.apaschold.demo.additionals.AppTexts;
+import de.apaschold.demo.logic.filehandling.FileHandler;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,7 +46,7 @@ public class NewLibraryViewController implements Initializable {
             File newLibraryFile = new File(filePath);
 
             if (!newLibraryFile.exists()) {
-                TextFileHandler.getInstance().createEmptyLibrary(newLibraryFile);
+                FileHandler.getInstance().createEmptyLibrary(newLibraryFile);
                 TextFileHandler.getInstance().saveNewActiveLibraryPath(filePath);
                 GuiController.getInstance().setActiveLibraryFilePath(filePath);
             } else {

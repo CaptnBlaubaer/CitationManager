@@ -118,22 +118,6 @@ public class TextFileHandler {
         }
     }
 
-    public void createEmptyLibrary(File newLibraryFile){
-
-        try (FileWriter writer = new FileWriter(newLibraryFile , StandardCharsets.UTF_8)) {
-            writer.write("");
-
-            String pdfDirectoryPath = newLibraryFile.getAbsolutePath().replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.FOLDER_EXTENSION);
-
-            File theDir = new File(pdfDirectoryPath);
-            if (!theDir.exists()){
-                theDir.mkdirs();
-            }
-        } catch (IOException e) {
-            System.err.println("Error saving to File: " );
-        }
-    }
-
     public void exportLibraryToBibTex(String libraryAsBibTex, String bibTexFilePath){
         try (FileWriter writer = new FileWriter(bibTexFilePath, StandardCharsets.UTF_8)) {
                 writer.write( libraryAsBibTex);

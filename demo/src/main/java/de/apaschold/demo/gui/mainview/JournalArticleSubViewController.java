@@ -5,6 +5,7 @@ import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.Alerts;
 import de.apaschold.demo.gui.GuiController;
+import de.apaschold.demo.logic.filehandling.FileHandler;
 import de.apaschold.demo.model.JournalArticle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -133,6 +134,7 @@ public class JournalArticleSubViewController implements Initializable {
             populatePDFViewerTab();
 
             //TODO copy attachment to library folder
+            FileHandler.getInstance().copySelectedAttachmentToPdfFolder(chosenFile);
         } else {
             Alerts.showInformationNoFileChoosen();
         }
@@ -147,6 +149,10 @@ public class JournalArticleSubViewController implements Initializable {
             attachmentNamesAsString = attachmentNamesAsString.replace(chosenAttachment,"");
 
             this.journalArticle.setPdfFilePath(attachmentNamesAsString.split(","));
+
+            populatePDFViewerTab();
+
+            FileHandler.getInstance().deleteSelectedAttachmentFromFolder(chosenAttachment);
         } else {
             Alerts.showInformationNoFileChoosen();
         }
