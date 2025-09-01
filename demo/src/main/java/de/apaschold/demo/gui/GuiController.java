@@ -1,6 +1,7 @@
 package de.apaschold.demo.gui;
 
 import de.apaschold.demo.HelloApplication;
+import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.logic.ArticleLibrary;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import de.apaschold.demo.model.ArticleReference;
@@ -114,7 +115,7 @@ public class GuiController {
         String bibTexString = this.library.generateStringForBibTex();
 
         if(!bibTexString.isEmpty()) {
-            String bibTexFilePath = this.activeLibraryFilePath.replace(".cml",".bib");
+            String bibTexFilePath = this.activeLibraryFilePath.replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.BIBTEX_FILE_FORMAT);
 
             TextFileHandler.getInstance().exportLibraryToBibTex(bibTexString, bibTexFilePath);
         } else {
@@ -127,6 +128,10 @@ public class GuiController {
     }
 
     public void fillLibraryFromChosenFile(String activeLibraryFilePath){
-        this.library.fillLibraryFromFile(activeLibraryFilePath);
+        this.library.importLibraryFromFile(activeLibraryFilePath);
+    }
+
+    public void deleteSelectedArticle() {
+        this.library.deleteArticle(this.selectedArticle);
     }
 }

@@ -1,6 +1,7 @@
 package de.apaschold.demo.gui.mainview;
 
 import com.dansoftware.pdfdisplayer.PDFDisplayer;
+import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.model.JournalArticle;
@@ -103,8 +104,9 @@ public class JournalArticleSubViewController implements Initializable {
 
     @FXML
     private void selectAttachedFile() throws IOException{
+        //replace file format by the folder extension
         String folderPath = GuiController.getInstance().getActiveLibraryFilePath()
-                .replace(".cml","-pdfs\\"); //removes the file name
+                .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.FOLDER_EXTENSION + "\\");
 
         String filePath = folderPath + this.attachedFiles.getValue();
 

@@ -1,6 +1,7 @@
 package de.apaschold.demo.gui.mainview;
 
 import com.dansoftware.pdfdisplayer.PDFDisplayer;
+import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.model.BookSection;
@@ -103,8 +104,9 @@ public class BookSectionSubViewController implements Initializable {
 
     @FXML
     private void selectAttachedFile() throws IOException{
+        //replace file format by the folder extension
         String folderPath = GuiController.getInstance().getActiveLibraryFilePath()
-                .replace(".cml","-pdfs\\"); //removes the file name
+                .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.FOLDER_EXTENSION + "\\");
 
         String filePath = folderPath + this.attachedFiles.getValue();
 
@@ -136,7 +138,7 @@ public class BookSectionSubViewController implements Initializable {
         this.articleType.setText("Type: " + this.bookSection.getArticleType().getDescription());
         this.title.setText("Title: " + this.bookSection.getTitle());
         this.authors.setText("Authors: " + this.bookSection.getAuthor().replace("; ", "\n"));
-        this.bookTitle.setText("Title: " + this.bookSection.getBookTitle());
+        this.bookTitle.setText("Book title: " + this.bookSection.getBookTitle());
         this.editors.setText("Authors: " + this.bookSection.getEditor().replace("; ", "\n"));
         this.publisher.setText("Journal: " + this.bookSection.getJournal());
         this.year.setText("Year: " + yearAsString);

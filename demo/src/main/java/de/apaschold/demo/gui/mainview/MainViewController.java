@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public class MainViewController implements Initializable {
     //0. constants
@@ -60,30 +61,27 @@ public class MainViewController implements Initializable {
     protected void openLibrary(){
         Stage stage = (Stage) this.articleView.getScene().getWindow();
 
-        String folderPath = GuiController.getInstance().getActiveLibraryFilePath().replaceAll("\\\\[a-zA-Z0-9-]+\\.cml","");
+        String folderPath = GuiController.getInstance().getActiveLibraryFilePath().replaceAll(AppTexts.REGEX_REPLACE_CML_FILENAME,"");
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(folderPath));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Citation Manager Library",
+                "*" + AppTexts.LIBRARY_FILE_FORMAT));
         fileChooser.setTitle("Choose library");
         File chosenFile = fileChooser.showOpenDialog(stage);
 
-        //TODO load library from file functionality
         if (chosenFile != null) {
-            String chosenLibaryPath = chosenFile.getAbsolutePath();
+            String chosenLibraryPath = chosenFile.getAbsolutePath();
+                GuiController.getInstance().setActiveLibraryFilePath(chosenLibraryPath);
+                GuiController.getInstance().fillLibraryFromChosenFile(chosenLibraryPath);
 
-            if(chosenLibaryPath.endsWith(".cml")) {
-                GuiController.getInstance().setActiveLibraryFilePath(chosenLibaryPath);
-                GuiController.getInstance().fillLibraryFromChosenFile(chosenLibaryPath);
-
-                TextFileHandler.getInstance().saveNewActiveLibraryPath(chosenLibaryPath);
+                TextFileHandler.getInstance().saveNewActiveLibraryPath(chosenLibraryPath);
 
                 populateTable();
-            } else{
-                //TODO invalid data was chosen
-            }
+
+                this.activeLibraryPath.setText(chosenLibraryPath);
         } else {
-            System.out.println("Hallo");
-            //TODO create information method
+            showInformationNoFileChoosen();
         }
     }
 
@@ -93,7 +91,7 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    protected void createNewLibrary() throws IOException {
+    protected void createNewLibrary(){
         GuiController.getInstance().loadCreateNewLibraryView();
 
         this.articlesTable.getItems().clear();
@@ -101,14 +99,26 @@ public class MainViewController implements Initializable {
         this.activeLibraryPath.setText(GuiController.getInstance().getActiveLibraryFilePath());
     }
 
-
-
     @FXML
     protected void addNewArticle() {
         GuiController.getInstance().loadAddNewArticleView();
 
         // Refresh the table to show the newly added article
         populateTable();
+    }
+
+    @FXML
+    protected void deleteSelectedArticle() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(AppTexts.CONFRIMATION_DELETE_ARTICLE_TITLE);
+        alert.setHeaderText(AppTexts.CONFIRMATION_DELETE_ARTICLE_CONTENT);
+        Optional<ButtonType> confirmDeletion = alert.showAndWait();
+
+        if (confirmDeletion.get() == ButtonType.OK){
+            GuiController.getInstance().deleteSelectedArticle();
+
+            populateTable();
+        }
     }
 
     @FXML
@@ -159,22 +169,24 @@ public class MainViewController implements Initializable {
     public void populateArticleView(){
         ArticleReference selectedArticle = GuiController.getInstance().getSelectedArticle();
 
-        String fxmlFile = switch (selectedArticle.getArticleType()){
-            case JOURNAL_ARTICLE -> "main-journal-article-subview.fxml";
-            case BOOK_SECTION -> "main-book-section-subview.fxml";
-            case BOOK -> "main-book-subview.fxml";
-            case THESIS -> "main-phd-thesis-subview.fxml";
-            case PATENT -> "main-patent-subview.fxml";
-            case UNPUBLISHED -> "main-unpublished-subview.fxml";
-            default -> "";
-        };
+        if (selectedArticle != null) {
+            String fxmlFile = switch (selectedArticle.getArticleType()) {
+                case JOURNAL_ARTICLE -> "main-journal-article-subview.fxml";
+                case BOOK_SECTION -> "main-book-section-subview.fxml";
+                case BOOK -> "main-book-subview.fxml";
+                case THESIS -> "main-phd-thesis-subview.fxml";
+                case PATENT -> "main-patent-subview.fxml";
+                case UNPUBLISHED -> "main-unpublished-subview.fxml";
+                default -> "";
+            };
 
-        if(!fxmlFile.isEmpty()) {
-            try {
-                Parent articleDetailsView = FXMLLoader.load(HelloApplication.class.getResource(fxmlFile));
-                this.articleView.setCenter(articleDetailsView);
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (!fxmlFile.isEmpty()) {
+                try {
+                    Parent articleDetailsView = FXMLLoader.load(HelloApplication.class.getResource(fxmlFile));
+                    this.articleView.setCenter(articleDetailsView);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -184,6 +196,14 @@ public class MainViewController implements Initializable {
         alert.setTitle(AppTexts.ALERT_EMPTY_LIST_TITLE);
         alert.setHeaderText(AppTexts.ALERT_EMPTY_LIST_HEADER);
         alert.show();
+    }
+
+    private void showInformationNoFileChoosen(){
+        Alert alert= new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(AppTexts.INFORMATION_NO_FILE_CHOSEN_TITLE);
+        alert.setHeaderText(AppTexts.INFORMATION_NO_FILE_CHOSEN_HEADER);
+        alert.show();
+
     }
 
 }

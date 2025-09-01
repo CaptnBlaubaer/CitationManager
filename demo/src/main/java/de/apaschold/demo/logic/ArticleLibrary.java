@@ -13,7 +13,7 @@ public class ArticleLibrary {
 
     //2. constructors
     public ArticleLibrary(String activeLibraryFilePath) {
-        fillLibraryFromFile(activeLibraryFilePath);
+        importLibraryFromFile(activeLibraryFilePath);
     }
 
     //3. getter and setter methods
@@ -21,11 +21,16 @@ public class ArticleLibrary {
         return this.articles;
     }
 
-    //4. other methods
-    public void clear(){
-        this.articles.clear();
+    //4. methods to modify list
+    public void clear(){ this.articles.clear();}
+
+    public void addArticle(ArticleReference article){
+        this.articles.add(article);
     }
 
+    public void deleteArticle(ArticleReference article){ this.articles.remove(article);}
+
+    //5. export/import methods
     public String generateStringForBibTex (){
         StringBuilder libraryAsBibTex = new StringBuilder();
 
@@ -36,11 +41,7 @@ public class ArticleLibrary {
         return libraryAsBibTex.toString();
     }
 
-    public void addArticle(ArticleReference article){
-        this.articles.add(article);
-    }
-
-    public void fillLibraryFromFile(String activeLibraryFilePath){
+    public void importLibraryFromFile(String activeLibraryFilePath){
         this.articles = TextFileHandler.getInstance().importLibraryFromCsvFile(activeLibraryFilePath);
     }
 }

@@ -1,5 +1,6 @@
 package de.apaschold.demo.logic.filehandling;
 
+import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.logic.ArticleFactory;
 import de.apaschold.demo.model.ArticleReference;
 
@@ -122,7 +123,7 @@ public class TextFileHandler {
         try (FileWriter writer = new FileWriter(newLibraryFile , StandardCharsets.UTF_8)) {
             writer.write("");
 
-            String pdfDirectoryPath = newLibraryFile.getAbsolutePath().replace(".cml", "-pdfs");
+            String pdfDirectoryPath = newLibraryFile.getAbsolutePath().replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.FOLDER_EXTENSION);
 
             File theDir = new File(pdfDirectoryPath);
             if (!theDir.exists()){

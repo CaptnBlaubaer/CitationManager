@@ -29,7 +29,7 @@ public class NewLibraryViewController implements Initializable {
     //3.constructor/initialize method
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle){
-        this.folderPath = GuiController.getInstance().getActiveLibraryFilePath().replaceAll("\\\\[a-zA-Z0-9-]+\\.cml","");
+        this.folderPath = GuiController.getInstance().getActiveLibraryFilePath().replaceAll(AppTexts.REGEX_REPLACE_CML_FILENAME,"");
 
         this.folderPathLabel.setText(this.folderPath);
     }
@@ -39,7 +39,7 @@ public class NewLibraryViewController implements Initializable {
     protected void createNewLibrary(){
         String fileName = this.newLibraryName.getText();
 
-        String filePath = folderPath + "\\" + fileName + ".cml";
+        String filePath = folderPath + "\\" + fileName + AppTexts.LIBRARY_FILE_FORMAT;
 
         if (!fileName.contains(" ") && !fileName.isEmpty()){
             File newLibraryFile = new File(filePath);
@@ -76,14 +76,14 @@ public class NewLibraryViewController implements Initializable {
     private void showAlertInavlidFileName() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(AppTexts.ALERT_INVALID_FILENAME_TITLE);
-        alert.setHeaderText(AppTexts.ALERT_INVALID_FILENAME_CONTENT);
+        alert.setHeaderText(AppTexts.ALERT_INVALID_FILENAME_HEADER);
         alert.show();
     }
 
     private void showAlertFileNameAlreadyExists() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(AppTexts.ALERT_FILENAME_EXISTS_TITLE);
-        alert.setHeaderText(AppTexts.ALERT_FILENAME_EXISTS_CONTENT);
+        alert.setHeaderText(AppTexts.ALERT_FILENAME_EXISTS_HEADER);
         alert.show();
     }
 }
