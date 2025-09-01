@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 public class GuiController {
@@ -133,5 +134,13 @@ public class GuiController {
 
     public void deleteSelectedArticle() {
         this.library.deleteArticle(this.selectedArticle);
+    }
+
+    public void addNewAttachmentToArticleReference(String newAttachmentName) {
+        String attachmentNamesAsString = String.join(",", this.selectedArticle.getPdfFilePaths());
+
+        attachmentNamesAsString += "," + newAttachmentName;
+
+        this.selectedArticle.setPdfFilePath(attachmentNamesAsString.split(","));
     }
 }

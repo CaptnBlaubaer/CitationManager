@@ -2,6 +2,7 @@ package de.apaschold.demo.gui.mainview;
 
 import de.apaschold.demo.HelloApplication;
 import de.apaschold.demo.additionals.AppTexts;
+import de.apaschold.demo.gui.Alerts;
 import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import de.apaschold.demo.model.ArticleReference;
@@ -81,7 +82,7 @@ public class MainViewController implements Initializable {
 
                 this.activeLibraryPath.setText(chosenLibraryPath);
         } else {
-            showInformationNoFileChoosen();
+            Alerts.showInformationNoFileChoosen();
         }
     }
 
@@ -109,10 +110,7 @@ public class MainViewController implements Initializable {
 
     @FXML
     protected void deleteSelectedArticle() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(AppTexts.CONFRIMATION_DELETE_ARTICLE_TITLE);
-        alert.setHeaderText(AppTexts.CONFIRMATION_DELETE_ARTICLE_CONTENT);
-        Optional<ButtonType> confirmDeletion = alert.showAndWait();
+        Optional<ButtonType> confirmDeletion = Alerts.showConfirmationDeleteArticle();
 
         if (confirmDeletion.get() == ButtonType.OK){
             GuiController.getInstance().deleteSelectedArticle();
@@ -134,7 +132,7 @@ public class MainViewController implements Initializable {
         try {
             GuiController.getInstance().exportActiveLibraryToBibTex();
         } catch (NullPointerException e) {
-            showAlertMessageEmptyLibrary();
+            Alerts.showAlertMessageEmptyLibrary();
         }
     }
 
@@ -190,20 +188,4 @@ public class MainViewController implements Initializable {
             }
         }
     }
-
-    private void showAlertMessageEmptyLibrary() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(AppTexts.ALERT_EMPTY_LIST_TITLE);
-        alert.setHeaderText(AppTexts.ALERT_EMPTY_LIST_HEADER);
-        alert.show();
-    }
-
-    private void showInformationNoFileChoosen(){
-        Alert alert= new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(AppTexts.INFORMATION_NO_FILE_CHOSEN_TITLE);
-        alert.setHeaderText(AppTexts.INFORMATION_NO_FILE_CHOSEN_HEADER);
-        alert.show();
-
-    }
-
 }

@@ -59,17 +59,16 @@ public class AppTexts {
 
     public static final String TABLE_VIEW_PLACEHOLDER = "Active Library could not been found.";
 
-    public static final String ALERT_EMPTY_LIST_TITLE = "List is empty";
-    public static final String ALERT_EMPTY_LIST_HEADER= "The active list is empty.";
+    public static final String ALERT_EMPTY_LIBRARY_TITLE = "Library is empty";
+    public static final String ALERT_EMPTY_LIBRARY_HEADER = "The active library is empty.";
     public static final String ALERT_INVALID_FILENAME_TITLE = "Invalid filename";
     public static final String ALERT_INVALID_FILENAME_HEADER = "Filename can't contain whitespace character and can't be empty";
     public static final String ALERT_FILENAME_EXISTS_TITLE = "Filename already exists";
     public static final String ALERT_FILENAME_EXISTS_HEADER = "Filename already exists in this directory";
     public static final String INFORMATION_NO_FILE_CHOSEN_TITLE = "No file chosen";
     public static final String INFORMATION_NO_FILE_CHOSEN_HEADER = "There was no file chosen";
-    public static final String CONFRIMATION_DELETE_ARTICLE_TITLE = "Delete selected article";
+    public static final String CONFIRMATION_DELETE_ARTICLE_TITLE = "Delete selected article";
     public static final String CONFIRMATION_DELETE_ARTICLE_CONTENT = "Do you want to delete selected article?\nOK to confirm";
-
     //1. attributes
 
     //2. constructors

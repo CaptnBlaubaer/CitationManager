@@ -49,10 +49,10 @@ public class NewLibraryViewController implements Initializable {
                 TextFileHandler.getInstance().saveNewActiveLibraryPath(filePath);
                 GuiController.getInstance().setActiveLibraryFilePath(filePath);
             } else {
-                showAlertFileNameAlreadyExists();
+                Alerts.showAlertFileNameAlreadyExists();
             }
         } else {
-            showAlertInavlidFileName();
+            Alerts.showAlertInvalidFileName();
         }
 
         Stage stage = (Stage) this.newLibraryName.getScene().getWindow();
@@ -73,17 +73,5 @@ public class NewLibraryViewController implements Initializable {
     }
 
     //5. other Methods
-    private void showAlertInavlidFileName() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(AppTexts.ALERT_INVALID_FILENAME_TITLE);
-        alert.setHeaderText(AppTexts.ALERT_INVALID_FILENAME_HEADER);
-        alert.show();
-    }
 
-    private void showAlertFileNameAlreadyExists() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(AppTexts.ALERT_FILENAME_EXISTS_TITLE);
-        alert.setHeaderText(AppTexts.ALERT_FILENAME_EXISTS_HEADER);
-        alert.show();
-    }
 }

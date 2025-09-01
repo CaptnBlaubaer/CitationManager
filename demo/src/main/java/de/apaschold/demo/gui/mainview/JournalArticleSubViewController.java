@@ -3,6 +3,7 @@ package de.apaschold.demo.gui.mainview;
 import com.dansoftware.pdfdisplayer.PDFDisplayer;
 import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.additionals.MyLittleHelpers;
+import de.apaschold.demo.gui.Alerts;
 import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.model.JournalArticle;
 import javafx.fxml.FXML;
@@ -12,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -111,6 +114,26 @@ public class JournalArticleSubViewController implements Initializable {
         String filePath = folderPath + this.attachedFiles.getValue();
 
         displayer.loadPDF(new File(filePath));
+    }
+
+    @FXML
+    private void addNewAttachmentToArticleReference(){
+        Stage stage = (Stage) this.pdfViewer.getScene().getWindow();
+
+        String folderPath = GuiController.getInstance().getActiveLibraryFilePath().replaceAll(AppTexts.REGEX_REPLACE_CML_FILENAME,"");
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File(folderPath));
+        fileChooser.setTitle("Choose attachement");
+        File chosenFile = fileChooser.showOpenDialog(stage);
+
+        if (chosenFile != null) {
+            GuiController.getInstance().addNewAttachmentToArticleReference(chosenFile.getName());
+
+            populatePDFViewerTab();
+        } else {
+            Alerts.showInformationNoFileChoosen();
+        }
     }
 
     //5. other methods
