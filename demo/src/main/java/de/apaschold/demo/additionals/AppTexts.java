@@ -6,7 +6,7 @@ public class AppTexts {
     public static final int NUMBER_PLACEHOLDER = 0;
     public static final String REGEX_REPLACE_CML_FILENAME = "\\\\[a-zA-Z0-9-]+\\.cml";
     public static final String LIBRARY_FILE_FORMAT = ".cml";
-    public static final String BIBTEX_FILE_FORMAT = ".cml";
+    public static final String BIBTEX_FILE_FORMAT = ".bib";
     public static final String FOLDER_EXTENSION = "-pdfs";
 
 

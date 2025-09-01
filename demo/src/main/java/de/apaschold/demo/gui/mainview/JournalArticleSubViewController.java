@@ -131,6 +131,22 @@ public class JournalArticleSubViewController implements Initializable {
             GuiController.getInstance().addNewAttachmentToArticleReference(chosenFile.getName());
 
             populatePDFViewerTab();
+
+            //TODO copy attachment to library folder
+        } else {
+            Alerts.showInformationNoFileChoosen();
+        }
+    }
+
+    @FXML
+    protected void deleteAttachment(){
+        String chosenAttachment = this.attachedFiles.getValue();
+
+        if (chosenAttachment != null){
+            String attachmentNamesAsString = String.join(",", this.journalArticle.getPdfFilePaths());
+            attachmentNamesAsString = attachmentNamesAsString.replace(chosenAttachment,"");
+
+            this.journalArticle.setPdfFilePath(attachmentNamesAsString.split(","));
         } else {
             Alerts.showInformationNoFileChoosen();
         }

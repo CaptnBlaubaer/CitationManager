@@ -53,7 +53,7 @@
                     <HBox spacing="20.0" alignment="CENTER_LEFT">
                         <ComboBox fx:id="attachedFiles" onAction="#selectAttachedFile" prefWidth="450.0"/>
                         <Button text="Attach new file" prefHeight="20.0" prefWidth="100.0" onAction="#addNewAttachmentToArticleReference"/>
-                        <Button text="Delete file" prefHeight="20.0" prefWidth="100.0"/>
+                        <Button text="Delete file" prefHeight="20.0" prefWidth="100.0" onAction="#deleteAttachment"/>
                     </HBox>
 
                     <BorderPane fx:id="pdfViewer" prefHeight="1000.0"/>
