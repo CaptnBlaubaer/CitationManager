@@ -2,17 +2,12 @@ package de.apaschold.demo.logic.filehandling;
 
 import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.gui.GuiController;
-import de.apaschold.demo.logic.ArticleFactory;
-import de.apaschold.demo.model.ArticleReference;
 
 import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class FileHandler {
     //0. constants
@@ -51,7 +46,7 @@ public class FileHandler {
         String activeLibraryFilePath = GuiController.getInstance().getActiveLibraryFilePath();
         String pdfFolderPath = activeLibraryFilePath.replace(AppTexts.LIBRARY_FILE_FORMAT,AppTexts.FOLDER_EXTENSION);
 
-        File attachmentToDelete = new File(pdfFolderPath + "\\" + chosenAttachment);
+        File attachmentToDelete = new File(pdfFolderPath + chosenAttachment);
         if (!attachmentToDelete.isDirectory()) {
             attachmentToDelete.delete();
         }
@@ -62,7 +57,7 @@ public class FileHandler {
         String pdfFolderPath = activeLibraryFilePath.replace(AppTexts.LIBRARY_FILE_FORMAT,AppTexts.FOLDER_EXTENSION);
 
         String chosenFileName = chosenFile.getName();
-        String destinationPath = pdfFolderPath + "\\" + chosenFileName;
+        String destinationPath = pdfFolderPath + chosenFileName;
 
         try {
             Files.copy(chosenFile.toPath(), new File(destinationPath).toPath(), StandardCopyOption.REPLACE_EXISTING);

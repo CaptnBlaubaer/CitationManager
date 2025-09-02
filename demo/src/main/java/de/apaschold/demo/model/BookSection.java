@@ -92,7 +92,7 @@ public class BookSection extends ArticleReference {
                 this.journal,
                 this.volume,
                 this.pages,
-                this.doi,
+                "https://doi.org/" + this.doi,
                 this.year);
     }
 }

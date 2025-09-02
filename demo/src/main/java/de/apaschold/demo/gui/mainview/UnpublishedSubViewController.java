@@ -62,7 +62,7 @@ public class UnpublishedSubViewController implements Initializable {
     private void saveChanges() throws IOException {
         if (this.unpublished != null){
             this.unpublished.setTitle( this.titleChange.getText());
-            this.unpublished.setAuthor( this.authorsChange.getText().replace("\n", ", "));
+            this.unpublished.setAuthors( this.authorsChange.getText().replace("\n", ", "));
 
             this.unpublished.setYear( MyLittleHelpers.convertStringInputToInteger(this.yearChange.getText()));
 
@@ -76,7 +76,7 @@ public class UnpublishedSubViewController implements Initializable {
     private void selectAttachedFile() throws IOException{
         //replace file format by the folder extension
         String folderPath = GuiController.getInstance().getActiveLibraryFilePath()
-                .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.FOLDER_EXTENSION + "\\");
+                .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.FOLDER_EXTENSION);
 
         String filePath = folderPath + this.attachedFiles.getValue();
 

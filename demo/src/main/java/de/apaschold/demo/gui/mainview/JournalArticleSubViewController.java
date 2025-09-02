@@ -6,6 +6,7 @@ import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.Alerts;
 import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.logic.filehandling.FileHandler;
+import de.apaschold.demo.logic.filehandling.WebHandler;
 import de.apaschold.demo.model.JournalArticle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -87,10 +89,28 @@ public class JournalArticleSubViewController implements Initializable {
 
     //4. FXML methods
     @FXML
+    private void checkForUpdates() throws IOException {
+        String pubMedString = this.journalArticle.createPubMedSearchTerm();
+
+        //returned String is %journal_title|year|||author_last_name|Art1|pub_med_id
+        String pubMedId = WebHandler.getInstance().getPubMedId(pubMedString).split("Art1\\|")[1];
+
+        if(!pubMedId.equals("NOT_FOUND")) {
+            JSONObject recordsFromPubMedId = WebHandler.getInstance().getRecordsFromPubMedId(pubMedId);
+            GuiController.getInstance().setReferenceChanges(recordsFromPubMedId);
+            GuiController.getInstance().loadReferenceUpdateView();
+
+            GuiController.getInstance().loadMainMenu();
+        } else {
+            Alerts.showInformationRecordNotFound();
+        }
+    }
+
+    @FXML
     private void saveChanges() throws IOException {
         if (this.journalArticle != null){
             this.journalArticle.setTitle( this.titleChange.getText());
-            this.journalArticle.setAuthor( this.authorsChange.getText().replace("\n", ", "));
+            this.journalArticle.setAuthors( this.authorsChange.getText().replace("\n", ", "));
             this.journalArticle.setJournal( this.journalChange.getText());
             this.journalArticle.setJournalShortForm( this.journalShortFormChange.getText());
 
@@ -110,7 +130,7 @@ public class JournalArticleSubViewController implements Initializable {
     private void selectAttachedFile() throws IOException{
         //replace file format by the folder extension
         String folderPath = GuiController.getInstance().getActiveLibraryFilePath()
-                .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.FOLDER_EXTENSION + "\\");
+                .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.FOLDER_EXTENSION);
 
         String filePath = folderPath + this.attachedFiles.getValue();
 
@@ -129,11 +149,20 @@ public class JournalArticleSubViewController implements Initializable {
         File chosenFile = fileChooser.showOpenDialog(stage);
 
         if (chosenFile != null) {
-            GuiController.getInstance().addNewAttachmentToArticleReference(chosenFile.getName());
+            String newAttachmentName = chosenFile.getName();
+
+            String attachmentNamesAsString = String.join(",", this.journalArticle.getPdfFilePaths());
+
+            if(!attachmentNamesAsString.equals(AppTexts.PLACEHOLDER)){
+                attachmentNamesAsString += "," + newAttachmentName;
+            } else {
+                attachmentNamesAsString = newAttachmentName;
+            }
+
+            this.journalArticle.setPdfFilePath(attachmentNamesAsString.split(","));
 
             populatePDFViewerTab();
 
-            //TODO copy attachment to library folder
             FileHandler.getInstance().copySelectedAttachmentToPdfFolder(chosenFile);
         } else {
             Alerts.showInformationNoFileChoosen();
@@ -156,6 +185,11 @@ public class JournalArticleSubViewController implements Initializable {
         } else {
             Alerts.showInformationNoFileChoosen();
         }
+    }
+
+    @FXML
+    protected void searchPdfFile(){
+        WebHandler.getInstance().searchForPdf( this.journalArticle.getDoi());
     }
 
     //5. other methods

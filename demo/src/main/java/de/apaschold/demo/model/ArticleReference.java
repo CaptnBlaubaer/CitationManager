@@ -6,8 +6,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.util.List;
-
 public abstract class ArticleReference {
     //0. constants
 
@@ -51,7 +49,7 @@ public abstract class ArticleReference {
 
     public String getAuthor() { return author;}
 
-    public void setAuthor(String author) { this.author = author;}
+    public void setAuthors(String author) { this.author = author;}
 
     public String getJournal() { return journal;}
 
@@ -63,7 +61,12 @@ public abstract class ArticleReference {
 
     public String getDoi() { return doi;}
 
-    public void setDoi(String doi) { this.doi = doi;}
+    public void setDoi(String doi) {
+        if(doi.contains("https://doi.org/")){
+            doi = doi.replace("https://doi.org/", "");
+        }
+        this.doi = doi;
+    }
 
     public String[] getPdfFilePaths() { return pdfFilePath;}
 

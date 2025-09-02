@@ -86,9 +86,9 @@ public class BookSectionSubViewController implements Initializable {
     private void saveChanges() throws IOException {
         if (this.bookSection != null){
             this.bookSection.setTitle( this.titleChange.getText());
-            this.bookSection.setAuthor( this.authorsChange.getText().replace("\n", ", "));
+            this.bookSection.setAuthors( this.authorsChange.getText().replace("\n", ", "));
             this.bookSection.setTitle( this.bookTitleChange.getText());
-            this.bookSection.setAuthor( this.editorsChange.getText().replace("\n", ", "));
+            this.bookSection.setAuthors( this.editorsChange.getText().replace("\n", ", "));
             this.bookSection.setJournal( this.publisherChange.getText());
 
             this.bookSection.setYear( MyLittleHelpers.convertStringInputToInteger(this.yearChange.getText()));
@@ -106,7 +106,7 @@ public class BookSectionSubViewController implements Initializable {
     private void selectAttachedFile() throws IOException{
         //replace file format by the folder extension
         String folderPath = GuiController.getInstance().getActiveLibraryFilePath()
-                .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.FOLDER_EXTENSION + "\\");
+                .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.FOLDER_EXTENSION);
 
         String filePath = folderPath + this.attachedFiles.getValue();
 
@@ -140,7 +140,7 @@ public class BookSectionSubViewController implements Initializable {
         this.authors.setText("Authors: " + this.bookSection.getAuthor().replace("; ", "\n"));
         this.bookTitle.setText("Book title: " + this.bookSection.getBookTitle());
         this.editors.setText("Authors: " + this.bookSection.getEditor().replace("; ", "\n"));
-        this.publisher.setText("Journal: " + this.bookSection.getJournal());
+        this.publisher.setText("Publisher: " + this.bookSection.getJournal());
         this.year.setText("Year: " + yearAsString);
         this.volume.setText("Volume: " + volumeAsString);
         this.pages.setText("Pages: " + this.bookSection.getPages());

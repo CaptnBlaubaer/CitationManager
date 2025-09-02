@@ -66,7 +66,7 @@ public class PatentSubViewController implements Initializable {
     private void saveChanges() throws IOException {
         if (this.patent != null){
             this.patent.setTitle( this.titleChange.getText());
-            this.patent.setAuthor( this.authorsChange.getText().replace("\n", ", "));
+            this.patent.setAuthors( this.authorsChange.getText().replace("\n", ", "));
 
             this.patent.setYear( MyLittleHelpers.convertStringInputToInteger(this.yearChange.getText()));
 
@@ -82,7 +82,7 @@ public class PatentSubViewController implements Initializable {
     private void selectAttachedFile() throws IOException{
         //replace file format by the folder extension
         String folderPath = GuiController.getInstance().getActiveLibraryFilePath()
-                .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.FOLDER_EXTENSION + "\\");
+                .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.FOLDER_EXTENSION);
 
         String filePath = folderPath + this.attachedFiles.getValue();
 

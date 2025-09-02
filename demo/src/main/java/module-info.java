@@ -3,6 +3,9 @@ module de.apaschold.demo {
     requires javafx.fxml;
     requires javafx.web;
     requires PDFViewerFX;
+    requires com.google.gson;
+    requires org.json;
+    requires java.sql;
 
 
     opens de.apaschold.demo to javafx.fxml;

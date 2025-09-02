@@ -8,10 +8,9 @@ import de.apaschold.demo.model.ArticleReference;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 public class GuiController {
@@ -23,6 +22,7 @@ public class GuiController {
     private final ArticleLibrary library;
     private ArticleReference selectedArticle;
     private String activeLibraryFilePath;
+    private JSONObject referenceChanges;
 
     //2. constructors
     private GuiController() {
@@ -59,6 +59,10 @@ public class GuiController {
 
     public void setActiveLibraryFilePath(String activeLibraryFilePath) { this.activeLibraryFilePath = activeLibraryFilePath;}
 
+    public JSONObject getReferenceChangesAsJsonObject(){ return this.referenceChanges;}
+
+    public void setReferenceChanges(JSONObject referenceChanges){ this.referenceChanges = referenceChanges;}
+
     //4. open view methods
     public void loadMainMenu() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main-view.fxml"));
@@ -74,6 +78,20 @@ public class GuiController {
             Scene scene = new Scene(fxmlLoader.load(), 320, 500);
             Stage newArticleStage = new Stage();
             newArticleStage.setTitle("Add New Article");
+            newArticleStage.setScene(scene);
+            newArticleStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadReferenceUpdateView() {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("reference-update-view.fxml"));
+        try {
+            Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
+            Stage newArticleStage = new Stage();
+            newArticleStage.setTitle("Reference update from PubMed");
             newArticleStage.setScene(scene);
             newArticleStage.showAndWait();
 
@@ -140,7 +158,11 @@ public class GuiController {
     public void addNewAttachmentToArticleReference(String newAttachmentName) {
         String attachmentNamesAsString = String.join(",", this.selectedArticle.getPdfFilePaths());
 
-        attachmentNamesAsString += "," + newAttachmentName;
+        if(!attachmentNamesAsString.equals(AppTexts.PLACEHOLDER)){
+            attachmentNamesAsString += "," + newAttachmentName;
+        } else {
+            attachmentNamesAsString = newAttachmentName;
+        }
 
         this.selectedArticle.setPdfFilePath(attachmentNamesAsString.split(","));
     }

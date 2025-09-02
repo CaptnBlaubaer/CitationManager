@@ -61,7 +61,7 @@ public class Book extends ArticleReference {
                 this.author,
                 this.title,
                 this.journal,
-                this.doi,
+                "https://doi.org/" + this.doi,
                 this.year);
     }
 }

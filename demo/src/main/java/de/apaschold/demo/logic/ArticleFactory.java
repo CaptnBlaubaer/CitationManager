@@ -148,7 +148,7 @@ public class ArticleFactory {
                 importedJournalArticle.setTitle(refinedDetail);
             } else if (rawDetail.contains(BIBTEX_AUTHOR_PROMPT)){
                 refinedDetail = refinedDetail.replace(BIBTEX_AUTHOR_PROMPT,"").replace(" and ","; ");
-                importedJournalArticle.setAuthor(refinedDetail);
+                importedJournalArticle.setAuthors(refinedDetail);
             } else if (rawDetail.contains(BIBTEX_JOURNAL_PROMPT)){
                 refinedDetail = refinedDetail.replace(BIBTEX_JOURNAL_PROMPT,"");
                 importedJournalArticle.setJournal(refinedDetail);
@@ -184,7 +184,7 @@ public class ArticleFactory {
                 importedBook.setTitle(refinedDetail);
             } else if (rawDetail.contains(BIBTEX_AUTHOR_PROMPT)){
                 refinedDetail = refinedDetail.replace(BIBTEX_AUTHOR_PROMPT,"").replace(" and ","; ");
-                importedBook.setAuthor(refinedDetail);
+                importedBook.setAuthors(refinedDetail);
             } else if (rawDetail.contains(BIBTEX_PUBLISHER_PROMPT)){
                 refinedDetail = refinedDetail.replace(BIBTEX_PUBLISHER_PROMPT,"");
                 importedBook.setJournal(refinedDetail);
@@ -214,7 +214,7 @@ public class ArticleFactory {
                 importedBookSection.setBookTitle(refinedDetail);
             } else if (rawDetail.contains(BIBTEX_AUTHOR_PROMPT)){
                 refinedDetail = refinedDetail.replace(BIBTEX_AUTHOR_PROMPT,"").replace(" and ","; ");
-                importedBookSection.setAuthor(refinedDetail);
+                importedBookSection.setAuthors(refinedDetail);
             } else if (rawDetail.contains(BIBTEX_TITLE_PROMPT)){
                 refinedDetail = refinedDetail.replace(BIBTEX_TITLE_PROMPT,"");
                 importedBookSection.setTitle(refinedDetail);
@@ -254,7 +254,7 @@ public class ArticleFactory {
                 importedPhdThesis.setTitle(refinedDetail);
             } else if (rawDetail.contains(BIBTEX_AUTHOR_PROMPT)){
                 refinedDetail = refinedDetail.replace(BIBTEX_AUTHOR_PROMPT,"").replace(" and ","; ");
-                importedPhdThesis.setAuthor(refinedDetail);
+                importedPhdThesis.setAuthors(refinedDetail);
             }   else if (rawDetail.contains(BIBTEX_YEAR_PROMPT)){
                 refinedDetail = refinedDetail.replace(BIBTEX_YEAR_PROMPT,"");
                 importedPhdThesis.setYear( MyLittleHelpers.convertStringInputToInteger(refinedDetail));
@@ -278,7 +278,7 @@ public class ArticleFactory {
                 importedPatent.setTitle(refinedDetail);
             } else if (rawDetail.contains(BIBTEX_AUTHOR_PROMPT)){
                 refinedDetail = refinedDetail.replace(BIBTEX_AUTHOR_PROMPT,"").replace(" and ","; ");
-                importedPatent.setAuthor(refinedDetail);
+                importedPatent.setAuthors(refinedDetail);
             }   else if (rawDetail.contains(BIBTEX_YEAR_PROMPT)){
                 refinedDetail = refinedDetail.replace(BIBTEX_YEAR_PROMPT,"");
                 importedPatent.setYear( MyLittleHelpers.convertStringInputToInteger(refinedDetail));
@@ -302,7 +302,7 @@ public class ArticleFactory {
                 importedUnpublished.setTitle(refinedDetail);
             } else if (rawDetail.contains(BIBTEX_AUTHOR_PROMPT)){
                 refinedDetail = refinedDetail.replace(BIBTEX_AUTHOR_PROMPT,"").replace(" and ","; ");
-                importedUnpublished.setAuthor(refinedDetail);
+                importedUnpublished.setAuthors(refinedDetail);
             }   else if (rawDetail.contains(BIBTEX_YEAR_PROMPT)){
                 refinedDetail = refinedDetail.replace(BIBTEX_YEAR_PROMPT,"");
                 importedUnpublished.setYear( MyLittleHelpers.convertStringInputToInteger(refinedDetail));

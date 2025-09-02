@@ -8,6 +8,18 @@ import java.util.Optional;
 
 public class Alerts {
     //0. constants
+    public static final String ALERT_EMPTY_LIBRARY_TITLE = "Library is empty";
+    public static final String ALERT_EMPTY_LIBRARY_HEADER = "The active library is empty.";
+    public static final String ALERT_INVALID_FILENAME_TITLE = "Invalid filename";
+    public static final String ALERT_INVALID_FILENAME_HEADER = "Filename can't contain whitespace character and can't be empty";
+    public static final String ALERT_FILENAME_EXISTS_TITLE = "Filename already exists";
+    public static final String ALERT_FILENAME_EXISTS_HEADER = "Filename already exists in this directory";
+    public static final String INFORMATION_NO_FILE_CHOSEN_TITLE = "No file chosen";
+    public static final String INFORMATION_NO_FILE_CHOSEN_HEADER = "There was no file chosen";
+    public static final String CONFIRMATION_DELETE_ARTICLE_TITLE = "Delete selected article";
+    public static final String CONFIRMATION_DELETE_ARTICLE_CONTENT = "Do you want to delete selected article?\nOK to confirm";
+    public static final String INFORMATION_RECORD_NOT_FOUND_TITLE = "Record not found";
+    public static final String INFORMATION_RECORD_NOT_FOUND_HEADER = "The record wasn't found in the PubMed database.";
 
     //1. attributes
 
@@ -17,38 +29,45 @@ public class Alerts {
     //3. alerts
     public static void showAlertMessageEmptyLibrary() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(AppTexts.ALERT_EMPTY_LIBRARY_TITLE);
-        alert.setHeaderText(AppTexts.ALERT_EMPTY_LIBRARY_HEADER);
+        alert.setTitle(ALERT_EMPTY_LIBRARY_TITLE);
+        alert.setHeaderText(ALERT_EMPTY_LIBRARY_HEADER);
         alert.show();
     }
 
     public static void showAlertInvalidFileName() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(AppTexts.ALERT_INVALID_FILENAME_TITLE);
-        alert.setHeaderText(AppTexts.ALERT_INVALID_FILENAME_HEADER);
+        alert.setTitle(ALERT_INVALID_FILENAME_TITLE);
+        alert.setHeaderText(ALERT_INVALID_FILENAME_HEADER);
         alert.show();
     }
 
     public static void showAlertFileNameAlreadyExists() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(AppTexts.ALERT_FILENAME_EXISTS_TITLE);
-        alert.setHeaderText(AppTexts.ALERT_FILENAME_EXISTS_HEADER);
+        alert.setTitle(ALERT_FILENAME_EXISTS_TITLE);
+        alert.setHeaderText(ALERT_FILENAME_EXISTS_HEADER);
         alert.show();
     }
 
     //4. information
     public static void showInformationNoFileChoosen(){
         Alert alert= new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(AppTexts.INFORMATION_NO_FILE_CHOSEN_TITLE);
-        alert.setHeaderText(AppTexts.INFORMATION_NO_FILE_CHOSEN_HEADER);
+        alert.setTitle(INFORMATION_NO_FILE_CHOSEN_TITLE);
+        alert.setHeaderText(INFORMATION_NO_FILE_CHOSEN_HEADER);
         alert.show();
     }
 
     //5. conformation
     public static Optional<ButtonType> showConfirmationDeleteArticle() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(AppTexts.CONFIRMATION_DELETE_ARTICLE_TITLE);
-        alert.setHeaderText(AppTexts.CONFIRMATION_DELETE_ARTICLE_CONTENT);
+        alert.setTitle(CONFIRMATION_DELETE_ARTICLE_TITLE);
+        alert.setHeaderText(CONFIRMATION_DELETE_ARTICLE_CONTENT);
         return alert.showAndWait();
+    }
+
+    public static void showInformationRecordNotFound() {
+        Alert alert= new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(INFORMATION_RECORD_NOT_FOUND_TITLE);
+        alert.setHeaderText(INFORMATION_RECORD_NOT_FOUND_HEADER);
+        alert.show();
     }
 }

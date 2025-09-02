@@ -106,7 +106,18 @@ public class JournalArticle extends ArticleReference {
                 this.volume,
                 this.issue,
                 this.pages,
-                this.doi,
+                "https://doi.org/" + this.doi,
                 this.year);
+    }
+
+    public String createPubMedSearchTerm(){
+        String[] authors = this.author.split(" and ");
+        String lastAuthor = authors[authors.length-1];
+
+        return this.journal.replaceAll(" ", "+") + "|" +
+                this.year + "|" +
+                this.volume + "|" +
+                this.pages + "|" +
+                lastAuthor.split(",")[0] + "|Art1|";
     }
 }

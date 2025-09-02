@@ -74,7 +74,7 @@ public class BookSubViewController implements Initializable {
     private void saveChanges() throws IOException {
         if (this.book != null){
             this.book.setTitle( this.titleChange.getText());
-            this.book.setAuthor( this.authorsChange.getText().replace("\n", ", "));
+            this.book.setAuthors( this.authorsChange.getText().replace("\n", ", "));
             this.book.setJournal( this.publisherChange.getText());
 
             this.book.setYear( MyLittleHelpers.convertStringInputToInteger(this.yearChange.getText()));
@@ -91,7 +91,7 @@ public class BookSubViewController implements Initializable {
     private void selectAttachedFile() throws IOException{
         //replace file format by the folder extension
         String folderPath = GuiController.getInstance().getActiveLibraryFilePath()
-                .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.FOLDER_EXTENSION + "\\");
+                .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.FOLDER_EXTENSION);
 
         String filePath = folderPath + this.attachedFiles.getValue();
 

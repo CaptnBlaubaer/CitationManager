@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="de.apaschold.demo.gui.ReferenceUpdateViewController"
+      prefHeight="600.0" prefWidth="600.0" spacing="20.0" alignment="TOP_CENTER" style="-fx-background-color: #FFDFCC">
+    <GridPane alignment="CENTER" vgap="10.0" hgap="10.0">
+            <Label text="Old values" style="-fx-font-size: 14; -fx-font-weight: bold" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="CENTER"/>
+            <TextField editable="false" fx:id="oldTitle" maxWidth="590.0" style="-fx-font-size: 12;" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <TextArea editable="False" fx:id="oldAuthors" maxWidth="590.0" maxHeight="100.0" style="-fx-font-size: 12;" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <TextField editable="False" fx:id="oldJournal" maxWidth="590.0" style="-fx-font-size: 12;" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <TextField editable="False" fx:id="oldJournalShortForm" maxWidth="590.0" style="-fx-font-size: 12;" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+            <TextField editable="False" fx:id="oldYear" maxWidth="590.0" style="-fx-font-size: 12;" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+            <TextField editable="False" fx:id="oldVolume" maxWidth="590.0" style="-fx-font-size: 12;" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+            <TextField editable="False" fx:id="oldIssue" maxWidth="590.0" style="-fx-font-size: 12;" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+            <TextField editable="False" fx:id="oldPages" maxWidth="590.0" style="-fx-font-size: 12;" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+            <TextField editable="False" fx:id="oldDoi" maxWidth="590.0" style="-fx-font-size: 12;" GridPane.columnIndex="0" GridPane.rowIndex="9"/>
+
+            <Label text="New values" style="-fx-font-size: 14; -fx-font-weight: bold" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER"/>
+            <TextField fx:id="newTitle" maxWidth="590.0" style="-fx-font-size: 12;" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <TextArea fx:id="newAuthors" maxWidth="590.0" maxHeight="100.0" style="-fx-font-size: 12;" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            <TextField fx:id="newJournal" maxWidth="590.0" style="-fx-font-size: 12;" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            <TextField fx:id="newJournalShortForm" maxWidth="590.0" style="-fx-font-size: 12;" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+            <TextField fx:id="newYear" maxWidth="590.0" style="-fx-font-size: 12;" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+            <TextField fx:id="newVolume" maxWidth="590.0" style="-fx-font-size: 12;" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+            <TextField fx:id="newIssue" maxWidth="590.0" style="-fx-font-size: 12;" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+            <TextField fx:id="newPages" maxWidth="590.0" style="-fx-font-size: 12;" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+            <TextField fx:id="newDoi" maxWidth="590.0" style="-fx-font-size: 12;" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
+
+            <CheckBox fx:id="checkTitle" selected="true" style="-fx-font-size: 12;" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+            <CheckBox fx:id="checkAuthors" selected="true" maxHeight="100.0" style="-fx-font-size: 12;" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+            <CheckBox fx:id="checkJournal" selected="true" style="-fx-font-size: 12;" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+            <CheckBox fx:id="checkJournalShortForm" selected="true" style="-fx-font-size: 12;" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+            <CheckBox fx:id="checkYear" selected="true" style="-fx-font-size: 12;" GridPane.columnIndex="2" GridPane.rowIndex="5"/>
+            <CheckBox fx:id="checkVolume" selected="true" style="-fx-font-size: 12;" GridPane.columnIndex="2" GridPane.rowIndex="6"/>
+            <CheckBox fx:id="checkIssue" selected="true" style="-fx-font-size: 12;" GridPane.columnIndex="2" GridPane.rowIndex="7"/>
+            <CheckBox fx:id="checkPages" selected="true" style="-fx-font-size: 12;" GridPane.columnIndex="2" GridPane.rowIndex="8"/>
+            <CheckBox fx:id="checkDoi" selected="true" style="-fx-font-size: 12;" GridPane.columnIndex="2" GridPane.rowIndex="9"/>
+    </GridPane>
+
+    <HBox alignment="CENTER" spacing="20.0">
+        <Button text="Confirm Changes" maxWidth="150.0" onAction="#confirmChanges"/>
+        <Button text="Discard Changes" maxWidth="150.0" onAction="#discardChanges"/>
+    </HBox>
+
+    <padding>
+        <Insets top="5.0" />
+    </padding>
+</VBox>

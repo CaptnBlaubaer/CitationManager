@@ -5,7 +5,6 @@ import de.apaschold.demo.logic.filehandling.FileHandler;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
@@ -15,7 +14,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class NewLibraryViewController implements Initializable {
+public class CreateNewLibraryViewController implements Initializable {
     //0. constants
 
     //1. attributes

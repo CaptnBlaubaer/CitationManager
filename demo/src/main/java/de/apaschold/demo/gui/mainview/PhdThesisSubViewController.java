@@ -66,7 +66,7 @@ public class PhdThesisSubViewController implements Initializable {
     private void saveChanges() throws IOException {
         if (this.phdThesis != null){
             this.phdThesis.setTitle( this.titleChange.getText());
-            this.phdThesis.setAuthor( this.authorsChange.getText().replace("\n", ", "));
+            this.phdThesis.setAuthors( this.authorsChange.getText().replace("\n", ", "));
 
             this.phdThesis.setYear( MyLittleHelpers.convertStringInputToInteger(this.yearChange.getText()));
 
@@ -81,7 +81,7 @@ public class PhdThesisSubViewController implements Initializable {
     private void selectAttachedFile() throws IOException{
         //replace file format by the folder extension
         String folderPath = GuiController.getInstance().getActiveLibraryFilePath()
-                .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.FOLDER_EXTENSION + "\\");
+                .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.FOLDER_EXTENSION);
 
         String filePath = folderPath + this.attachedFiles.getValue();
 

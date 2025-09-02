@@ -48,7 +48,7 @@ public class PhdThesis extends ArticleReference {
                 bibTexReference,
                 this.author,
                 this.title,
-                this.doi,
+                "https://doi.org/" + this.doi,
                 this.year);
     }
 }
