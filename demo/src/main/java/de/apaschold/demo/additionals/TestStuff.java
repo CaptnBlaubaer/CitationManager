@@ -1,37 +1,16 @@
 package de.apaschold.demo.additionals;
 
-import de.apaschold.demo.logic.filehandling.WebHandler;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.sql.SQLOutput;
+import de.apaschold.demo.logic.filehandling.SeleniumWebHandlerHeadless;
 
 public class TestStuff {
+
+    private static final String ACS_PAGE = "https://doi.org/10.1021/acs.bioconjchem.4c00188";
+    private static final String WILEY_PAGE = "https://onlinelibrary.wiley.com/doi/10.1002/anie.202512346";
+    private static final String NATURE_PAGE = "https://doi.org/10.1038/s41586-025-09495-w";
+    private static final String RSC_PAGE = "https://doi.org/10.1039/D5CC03181H";
+
     public static void main(String[] args) {
-        String input = "2014248";
-        JSONObject info = WebHandler.getInstance().getRecordsFromPubMedId(input);
 
-        //String info = "<?xml version='1.0' encoding='UTF-8'?>   <posts>    <post postId='1'>    <title>Parsing XML as a String in Java</title>   <author>John Doe</author>  </post> </posts>";
-        System.out.println(info);
-
-        JSONArray authorsAsJsonArray = info.getJSONArray("authors");
-
-        StringBuilder authorsAsString = new StringBuilder();
-
-        int authorsLength = authorsAsJsonArray.length();
-
-        for(int index = 0; index < authorsLength; index++){
-            JSONObject jo = authorsAsJsonArray.getJSONObject(index);
-
-            String author = jo.getString("name").replaceFirst(" ", ", ");
-            authorsAsString.append(author).append("; ");
-        }
-
-        System.out.println(authorsAsString);
-
-
-
-
-
+        SeleniumWebHandlerHeadless.getInstance().downloadPdfFrom(RSC_PAGE);
     }
 }

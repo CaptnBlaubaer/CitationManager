@@ -73,7 +73,9 @@ public class WebHandler {
 
     //4. page scrapping
     public void searchForPdf(String doi){
-        String doi = AppTexts.HTTPS_FOR_DOI + doi;
+        doi = AppTexts.HTTPS_FOR_DOI + doi;
+
+        System.out.println(doi);
     }
 
 

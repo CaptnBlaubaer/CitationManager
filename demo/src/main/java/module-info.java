@@ -6,6 +6,11 @@ module de.apaschold.demo {
     requires com.google.gson;
     requires org.json;
     requires java.sql;
+    requires org.seleniumhq.selenium.api;
+    requires org.seleniumhq.selenium.edge_driver;
+    requires org.seleniumhq.selenium.firefox_driver;
+    requires java.desktop;
+    requires org.seleniumhq.selenium.support;
 
 
     opens de.apaschold.demo to javafx.fxml;

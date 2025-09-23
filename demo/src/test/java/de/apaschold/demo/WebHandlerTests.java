@@ -1,11 +1,9 @@
 package de.apaschold.demo;
 
-import de.apaschold.demo.logic.filehandling.FileHandler;
+
 import de.apaschold.demo.logic.filehandling.WebHandler;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
 
 public class WebHandlerTests {
     public static final String PUB_MED_ENDPOINT_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
