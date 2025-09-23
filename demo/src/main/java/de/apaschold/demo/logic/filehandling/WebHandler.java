@@ -11,10 +11,10 @@ import java.net.URL;
 public class WebHandler {
     //0. constants
     public static final String PUB_MED_ENDPOINT_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
-    public static final String PUB_MED_GET_RECORDS_PROMPT_TEST = "esummary.fcgi?db=pubmed&id=2014248";
+    //public static final String PUB_MED_GET_RECORDS_PROMPT_TEST = "esummary.fcgi?db=pubmed&id=2014248";
     public static final String PUB_MED_GET_RECORDS_PROMPT = "esummary.fcgi?db=pubmed&id=%s&retmode=json";
     public static final String PUB_MED_SEARCH_BY_TERM_PROMPT = "ecitmatch.cgi?db=pubmed&retmode=xml&bdata=%s";
-    public static final String PUB_MED_SEARCH_BY_TERM_TEST = "ecitmatch.cgi?db=pubmed&retmode=xml&bdata=Proceedings+of+the+National+Academy+of+Sciences+of+the+United+States+of+America|1991||3248|mann|Art1|";
+    //public static final String PUB_MED_SEARCH_BY_TERM_TEST = "ecitmatch.cgi?db=pubmed&retmode=xml&bdata=Proceedings+of+the+National+Academy+of+Sciences+of+the+United+States+of+America|1991||3248|mann|Art1|";
 
     //1. attributes
     private static WebHandler instance;

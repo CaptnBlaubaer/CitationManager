@@ -3,8 +3,6 @@ package de.apaschold.demo;
 import de.apaschold.demo.logic.filehandling.SeleniumWebHandlerHeadless;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +18,7 @@ public class SeleniumWebHandlerHeadlessTest {
     private static final String ACS_PAGE = "https://doi.org/10.1021/acs.bioconjchem.4c00188";
     private static final String ACS_PDF = "paschold-et-al-2024-photocontrolled-reversible-amyloid-fibril-formation-of-parathyroid-hormone-derived-peptides.pdf";
 
-    private static final String WILEY_PAGE = "https://onlinelibrary.wiley.com/doi/10.1002/anie.202512346";
+    //private static final String WILEY_PAGE = "https://onlinelibrary.wiley.com/doi/10.1002/anie.202512346";
 
     private static final String NATURE_PAGE = "https://doi.org/10.1038/s41586-025-09495-w";
     private static final String NATURE_PDF = "s41586-025-09495-w.pdf";

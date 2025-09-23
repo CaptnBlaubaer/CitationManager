@@ -6,9 +6,9 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 public class WebHandlerTests {
-    public static final String PUB_MED_ENDPOINT_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
-    public static final String PUB_MED_GET_RECORDS_PROMPT_TEST = "esummary.fcgi?db=pubmed&id=2014248";
-    public static final String PUB_MED_SEARCH_BY_TERM_TEST = "ecitmatch.cgi?db=pubmed&retmode=xml&bdata=Proceedings+of+the+National+Academy+of+Sciences+of+the+United+States+of+America|1991||3248|mann|Art1|";
+    //public static final String PUB_MED_ENDPOINT_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
+    //public static final String PUB_MED_GET_RECORDS_PROMPT_TEST = "esummary.fcgi?db=pubmed&id=2014248";
+    //public static final String PUB_MED_SEARCH_BY_TERM_TEST = "ecitmatch.cgi?db=pubmed&retmode=xml&bdata=Proceedings+of+the+National+Academy+of+Sciences+of+the+United+States+of+America|1991||3248|mann|Art1|";
 
     @Test
     void testGetPubMedId(){
