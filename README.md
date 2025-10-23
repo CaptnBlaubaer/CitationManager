@@ -9,7 +9,7 @@ It is written in Java and possesses basic functionalities to add/update/delete c
 _What it does?_
 
 It is possible to create a new libraries, open old libraries, and delete libraries. 
-Publications can be added by creating a new entry manually, whereby different formats (journal publication, book, book chapter, patent, website, unpublished work) are possible,
+Publications can be added by creating a new entry manually, whereby different formats (journal publication, book, book chapter, patent, thesis, unpublished work) are possible,
 or by importing citation in bibtex-format for on or more entries, form e.g. google scholar.
 
 The library data is stored in a textdocument of type .cml (citation manager library) and can be exported to the bibtex format .bib to use it in LaTeX documents or export it to other systems e.g. Endnote or Citavi. 
