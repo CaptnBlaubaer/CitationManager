@@ -21,6 +21,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * <h2>MainViewController</h2>
+ * <li>Represents the Main User Interface</li>
+ * <li>Offers basic functionalities, e.g. CRUD methods for library, adding and deleting new reference entries</li>
+ * <li>Manages the display and interaction with the list of article references
+ * and the detailed view of the selected article.</li>
+ */
+
 public class MainViewController implements Initializable {
     //0. constants
 
@@ -45,6 +53,12 @@ public class MainViewController implements Initializable {
     private Label activeLibraryPath;
 
     //3. constructors/initialize method
+    /**
+     * <h2>initialize</h2>
+     * <li>Sets up {@link TableView}</li>
+     * <li>Sets up {@link ArticleReference} view</li>
+     * <li>Displays the active library file path in the upper </li>
+     */
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
 
@@ -58,6 +72,12 @@ public class MainViewController implements Initializable {
     }
 
     //4. FXML methods
+    /**
+     * <h2>openLibrary</h2>
+     * <li>Opens a file chooser dialog to select a new library file.</li>
+     * <li>Updates the active library path and populates the table with articles from the selected library.</li>
+     * <li>Calls {@link Alert} if no valid library was chosen</li>
+     */
     @FXML
     protected void openLibrary(){
         Stage stage = (Stage) this.articleView.getScene().getWindow();
@@ -86,11 +106,21 @@ public class MainViewController implements Initializable {
         }
     }
 
+    /**
+     * <h2>saveLibraryToCml</h2>
+     * <li>Saves the current state of the active library to a .cml file.</li>
+     */
     @FXML
-    protected void saveLibraryToCsv() {
-        GuiController.getInstance().saveActiveLibraryToCsv();
+    protected void saveLibraryToCml() {
+        GuiController.getInstance().saveActiveLibraryToCml();
     }
 
+    /**
+     * <h2>createNewLibrary</h2>
+     * <li>Opens {@link de.apaschold.demo.gui.CreateNewLibraryViewController}</li>
+     * <li>Creates a new library and clears the current article list.</li>
+     * <li>Updates the active library path display.</li>
+     */
     @FXML
     protected void createNewLibrary(){
         GuiController.getInstance().loadCreateNewLibraryView();
@@ -100,6 +130,11 @@ public class MainViewController implements Initializable {
         this.activeLibraryPath.setText(GuiController.getInstance().getActiveLibraryFilePath());
     }
 
+    /**
+     * <h2>addNewArticle</h2>
+     * <li>Opens {@link de.apaschold.demo.gui.addnewarticleview.AddNewArticleViewController}</li>
+     * <li>Adds a new article reference to the active library and refreshes the table view.</li>
+     */
     @FXML
     protected void addNewArticle() {
         GuiController.getInstance().loadAddNewArticleView();
@@ -108,6 +143,11 @@ public class MainViewController implements Initializable {
         populateTable();
     }
 
+    /**
+     * <h2>deleteSelectedArticle</h2>
+     * <li>Deletes the currently selected article from the active library after user confirmation.</li>
+     * <li>Refreshes the table view to reflect the deletion.</li>
+     */
     @FXML
     protected void deleteSelectedArticle() {
         Optional<ButtonType> confirmDeletion = Alerts.showConfirmationDeleteArticle();
@@ -119,6 +159,12 @@ public class MainViewController implements Initializable {
         }
     }
 
+    /**
+     * <h2>importFromBibTex</h2>
+     * <li>Opens {@link de.apaschold.demo.gui.ImportFromBibTexViewController}</li>
+     * <li>Imports articles from a BibTeX file and add them to the active library</li>
+     * <li>Refreshes the table view.</li>
+     */
     @FXML
     protected void importFromBibTex(){
         GuiController.getInstance().loadImportFromBibTexView();
@@ -127,6 +173,11 @@ public class MainViewController implements Initializable {
         populateTable();
     }
 
+    /**
+     * <h2>exportToBibTex</h2>
+     * <li>Exports the current active library to a BibTeX file.</li>
+     * <li>Shows an alert if the library is empty.</li>
+     */
     @FXML
     protected void exportToBibTex(){
         try {
@@ -137,6 +188,12 @@ public class MainViewController implements Initializable {
     }
 
     //5. other methods
+    /**
+     * <h2>populateTable</h2>
+     * <li>Populates the {@link TableView} with articles from the active library.</li>
+     * <li>Sets up cell value factories for table columns.</li>
+     * <li>Adds a selection listener to update the article view when an article is selected.</li>
+     */
     protected void populateTable(){
         List<ArticleReference> articles = GuiController.getInstance().getArticleList();
 
@@ -164,6 +221,11 @@ public class MainViewController implements Initializable {
         };
     }
 
+    /**
+     * <h2>populateArticleView</h2>
+     * <li>Loads and displays the detailed view of the selected article based on its type.</li>
+     * <li>Dynamically loads the appropriate FXML subview for the article type.</li>
+     */
     public void populateArticleView(){
         ArticleReference selectedArticle = GuiController.getInstance().getSelectedArticle();
 

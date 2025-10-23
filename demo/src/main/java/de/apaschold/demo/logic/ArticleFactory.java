@@ -5,6 +5,10 @@ import de.apaschold.demo.model.*;
 
 //TODO Create methods for patent and unpublished
 
+/**
+ * <h2>ArticleFactory</h2>
+ * <p>Factory class for creating {@link ArticleReference} objects from different input formats.</p>
+ */
 
 public class ArticleFactory {
     //0. constants
@@ -29,6 +33,14 @@ public class ArticleFactory {
 
     //3. factory methods
     //methods for csv
+    /**
+     * <h2>createArticleReferenceFromCsvLine</h2>
+     * <li>Creates an {@link ArticleReference} object from a CSV line.</li>
+     * <li>Chooses dynamically method for the respective article Type</li>
+     *
+     * @param csvLine the CSV line containing article details
+     * @return the created {@link ArticleReference} object
+     */
     public static ArticleReference createArticleReferenceFromCsvLine(String csvLine){
         String[] separatedCsvLine = csvLine.split(";");
 
@@ -47,6 +59,13 @@ public class ArticleFactory {
         return newArticle;
     }
 
+    /**
+     * <h2>createJournalArticleFromCsvLine</h2>
+     * <li>Creates a {@link JournalArticle} object from a CSV line.</li>
+     *
+     * @param separatedCsvLine the CSV line containing article details, already split into an array
+     * @return the created {@link JournalArticle} object
+     */
     private static JournalArticle createJournalArticleFromCsvLine(String[] separatedCsvLine){
         String title = separatedCsvLine[1];
         String authors = separatedCsvLine[2].replace(" and ", "; ");
@@ -62,6 +81,13 @@ public class ArticleFactory {
         return new JournalArticle(title, authors, journal, journalShortForm, year, volume, issue, pages, doi, pdfFilePath);
     }
 
+    /**
+     * <h2>createBookFromCsvLine</h2>
+     * <li>Creates a {@link Book} object from a CSV line.</li>
+     *
+     * @param separatedCsvLine the CSV line containing article details, already split into an array
+     * @return the created {@link Book} object
+     */
     private static Book createBookFromCsvLine(String[] separatedCsvLine){
         String title = separatedCsvLine[1];
         String authors = separatedCsvLine[2].replace(" and ", "; ");
@@ -73,6 +99,13 @@ public class ArticleFactory {
         return new Book(title, authors, journal, year, volume, doi, pdfFilePath);
     }
 
+    /**
+     * <h2>createBookSectionFromCsvLine</h2>
+     * <li>Creates a {@link BookSection} object from a CSV line.</li>
+     *
+     * @param separatedCsvLine the CSV line containing article details, already split into an array
+     * @return the created {@link BookSection} object
+     */
     private static BookSection createBookSectionFromCsvLine(String[] separatedCsvLine){
         String title = separatedCsvLine[1];
         String authors = separatedCsvLine[2].replace(" and ", "; ");
@@ -88,6 +121,13 @@ public class ArticleFactory {
         return new BookSection(title, authors, bookTitle, editor, journal, year, volume, pages, doi, pdfFilePath);
     }
 
+    /**
+     * <h2>createPhdThesisFromCsvLine</h2>
+     * <li>Creates a {@link PhdThesis} object from a CSV line.</li>
+     *
+     * @param separatedCsvLine the CSV line containing article details, already split into an array
+     * @return the created {@link PhdThesis} object
+     */
     private static ArticleReference createPhdThesisFromCsvLine(String[] separatedCsvLine) {
         String title = separatedCsvLine[1];
         String authors = separatedCsvLine[2].replace(" and ", "; ");
@@ -97,6 +137,13 @@ public class ArticleFactory {
         return new PhdThesis(title, authors, year, doi, pdfFilePath);
     }
 
+    /**
+     * <h2>createPatentFromCsvLine</h2>
+     * <li>Creates a {@link Patent} object from a CSV line.</li>
+     *
+     * @param separatedCsvLine the CSV line containing article details, already split into an array
+     * @return the created {@link Patent} object
+     */
     private static ArticleReference createPatentFromCsvLine(String[] separatedCsvLine) {
         String title = separatedCsvLine[1];
         String authors = separatedCsvLine[2].replace(" and ", "; ");
@@ -106,7 +153,13 @@ public class ArticleFactory {
         return new Patent(title, authors, year, doi, pdfFilePath);
     }
 
-
+    /**
+     * <h2>createUnpublishedFromCsvLine</h2>
+     * <li>Creates a {@link Unpublished} object from a CSV line.</li>
+     *
+     * @param separatedCsvLine the CSV line containing article details, already split into an array
+     * @return the created {@link Unpublished} object
+     */
     private static ArticleReference createUnpublishedFromCsvLine(String[] separatedCsvLine) {
         String title = separatedCsvLine[1];
         String authors = separatedCsvLine[2].replace(" and ", "; ");
@@ -115,8 +168,15 @@ public class ArticleFactory {
         return new Unpublished (title, authors, year, pdfFilePath);
     }
 
-
     //methods for BibTex
+    /**
+     * <h2>createArticleFromBibTex</h2>
+     * <li>Creates an {@link ArticleReference} object from a BibTex text.</li>
+     * <li>Chooses dynamically method for the respective article Type</li>
+     *
+     * @param bibTexText the BibTex text containing article details
+     * @return the created {@link ArticleReference} object
+     */
     public static ArticleReference createArticleFromBibTex(String bibTexText){
         String[] articleTypeAndDetails = bibTexText.split("\\{", 2); //
 
@@ -137,6 +197,13 @@ public class ArticleFactory {
         return importedArticle;
     }
 
+    /**
+     * <h2>createJournalArticleFromBibTex</h2>
+     * <li>Creates a {@link JournalArticle} object from a BibTex text.</li>
+     *
+     * @param articleDetails the BibTex text containing article details, already split into an array
+     * @return the created {@link JournalArticle} object
+     */
     private static ArticleReference createJournalArticleFromBibTex(String[] articleDetails) {
         JournalArticle importedJournalArticle = new JournalArticle();
 
@@ -173,6 +240,13 @@ public class ArticleFactory {
         return importedJournalArticle;
     }
 
+    /**
+     * <h2>createBookFromBibTex</h2>
+     * <li>Creates a {@link Book} object from a BibTex text.</li>
+     *
+     * @param articleDetails the BibTex text containing article details, already split into an array
+     * @return the created {@link Book} object
+     */
     private static ArticleReference createBookFromBibTex(String[] articleDetails) {
         Book importedBook = new Book();
 
@@ -203,6 +277,13 @@ public class ArticleFactory {
         return importedBook;
     }
 
+    /**
+     * <h2>createBookSectionFromBibTex</h2>
+     * <li>Creates a {@link BookSection} object from a BibTex text.</li>
+     *
+     * @param articleDetails the BibTex text containing article details, already split into an array
+     * @return the created {@link BookSection} object
+     */
     private static ArticleReference createBookSectionFromBibTex(String[] articleDetails) {
         BookSection importedBookSection = new BookSection();
 
@@ -242,7 +323,13 @@ public class ArticleFactory {
         return importedBookSection;
     }
 
-
+    /**
+     * <h2>createPhdThesisFromBibTex</h2>
+     * <li>Creates a {@link PhdThesis} object from a BibTex text.</li>
+     *
+     * @param articleDetails the BibTex text containing article details, already split into an array
+     * @return the created {@link PhdThesis} object
+     */
     private static ArticleReference createPhdThesisFromBibTex(String[] articleDetails) {
         PhdThesis importedPhdThesis = new PhdThesis();
 
@@ -267,6 +354,13 @@ public class ArticleFactory {
         return importedPhdThesis;
     }
 
+    /**
+     * <h2>createPatentFromBibTex</h2>
+     * <li>Creates a {@link Patent} object from a BibTex text.</li>
+     *
+     * @param articleDetails the BibTex text containing article details, already split into an array
+     * @return the created {@link Patent} object
+     */
     private static ArticleReference createPatentFromBibTex(String[] articleDetails) {
         Patent importedPatent = new Patent();
 
@@ -291,6 +385,13 @@ public class ArticleFactory {
         return importedPatent;
     }
 
+    /**
+     * <h2>createUnpublishedFromBibTex</h2>
+     * <li>Creates a {@link Unpublished} object from a BibTex text.</li>
+     *
+     * @param articleDetails the BibTex text containing article details, already split into an array
+     * @return the created {@link Unpublished} object
+     */
     private static ArticleReference createUnpublishedFromBibTex(String[] articleDetails) {
         Unpublished importedUnpublished = new Unpublished();
 

@@ -8,7 +8,6 @@ import java.io.IOException;
 
 
 /*TODO create model website
-  TODO create view to open and article pdf files
   TODO create view to add other article types (book, web, etc.)
   TODO obtain String representation of article types in add-new-article-view
   TODO export functionality to bibtex

@@ -11,7 +11,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class AddNewArticleView implements Initializable {
+public class AddNewArticleViewController implements Initializable {
     //0. constants
 
     //1. attributes

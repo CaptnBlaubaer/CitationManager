@@ -13,6 +13,12 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * <h2>GuiController</h2>
+ * <li>Singleton class that manages the views of the application and holds references to the main data structures.</li>
+ * <li>Starting point of application</li>
+ */
+
 public class GuiController {
     //0. constants
 
@@ -25,10 +31,20 @@ public class GuiController {
     private JSONObject referenceChanges;
 
     //2. constructors
+
+    /**
+     * Private constructor for singleton pattern.
+     * Loads the last used library file path and initializes the article library.
+     * If the library is empty, sets the active library file path to the program directory.
+     */
     private GuiController() {
         this.activeLibraryFilePath = TextFileHandler.getInstance().loadLibraryFilePath();
 
         this.library = new ArticleLibrary( this.activeLibraryFilePath);
+
+        if (this.library.getArticles().isEmpty()){
+            setActiveLibraryFilePath(System.getProperty("user.dir"));
+        }
     }
 
     public static synchronized GuiController getInstance() {
@@ -64,6 +80,12 @@ public class GuiController {
     public void setReferenceChanges(JSONObject referenceChanges){ this.referenceChanges = referenceChanges;}
 
     //4. open view methods
+    /**
+     * <h2>loadMainMenu</h2>
+     * Loads the main menu view of the application.
+     *
+     * @throws IOException if the FXML file cannot be loaded
+     */
     public void loadMainMenu() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1680, 960);
@@ -72,6 +94,10 @@ public class GuiController {
         this.mainStage.show();
     }
 
+    /**
+     * <h2>loadAddNewArticleView</h2>
+     * Loads the view for adding a new article reference.
+     */
     public void loadAddNewArticleView() {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("add-new-article-view.fxml"));
         try {
@@ -86,6 +112,10 @@ public class GuiController {
         }
     }
 
+    /**
+     * <h2>loadReferenceUpdateView</h2>
+     * Loads the view for updating article references from PubMed.
+     */
     public void loadReferenceUpdateView() {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("reference-update-view.fxml"));
         try {
@@ -100,6 +130,10 @@ public class GuiController {
         }
     }
 
+    /**
+     * <h2>loadImportFromBibTexView</h2>
+     * Loads the view for importing article references from a BibTex file.
+     */
     public void loadImportFromBibTexView() {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("import-from-bibtex-view.fxml"));
         try {
@@ -114,6 +148,10 @@ public class GuiController {
         }
     }
 
+    /**
+     * <h2>loadCreateNewLibraryView</h2>
+     * Loads the view for creating a new empty article library.
+     */
     public void loadCreateNewLibraryView() {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("create-new-library-view.fxml"));
         try {
@@ -131,6 +169,14 @@ public class GuiController {
     }
 
     //5. other
+    /**
+     * <h2>exportActiveLibraryToBibTex</h2>
+     * Exports the active article library to a BibTex file.
+     * The BibTex file is created in the same directory as the active library file,
+     * with the same name but with a .bib extension.
+     *
+     * @throws NullPointerException if the library is empty and there is nothing to export
+     */
     public void exportActiveLibraryToBibTex(){
         String bibTexString = this.library.generateStringForBibTex();
 
@@ -143,27 +189,29 @@ public class GuiController {
         }
     }
 
-    public void saveActiveLibraryToCsv(){
-        TextFileHandler.getInstance().exportLibraryToCsv(this.library.getArticles(), this.activeLibraryFilePath);
+    /**
+     * <h2>saveActiveLibraryToCml</h2>
+     * Saves the current state of the active article library to the CML file.
+     */
+    public void saveActiveLibraryToCml(){
+        TextFileHandler.getInstance().exportLibraryToCml(this.library.getArticles(), this.activeLibraryFilePath);
     }
 
+    /**
+     * <h2>fillLibraryFromChosenFile</h2>
+     * Imports article references from the specified file into the active article library.
+     *
+     * @param activeLibraryFilePath the file path of the library file to import from
+     */
     public void fillLibraryFromChosenFile(String activeLibraryFilePath){
         this.library.importLibraryFromFile(activeLibraryFilePath);
     }
 
+    /**
+     * <h2>deleteSelectedArticle</h2>
+     * Deletes the currently selected article reference from the active article library.
+     */
     public void deleteSelectedArticle() {
         this.library.deleteArticle(this.selectedArticle);
-    }
-
-    public void addNewAttachmentToArticleReference(String newAttachmentName) {
-        String attachmentNamesAsString = String.join(",", this.selectedArticle.getPdfFilePaths());
-
-        if(!attachmentNamesAsString.equals(AppTexts.PLACEHOLDER)){
-            attachmentNamesAsString += "," + newAttachmentName;
-        } else {
-            attachmentNamesAsString = newAttachmentName;
-        }
-
-        this.selectedArticle.setPdfFilePath(attachmentNamesAsString.split(","));
     }
 }

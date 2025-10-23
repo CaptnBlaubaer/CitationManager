@@ -12,6 +12,12 @@ public class ArticleLibrary {
     private List<ArticleReference> articles;
 
     //2. constructors
+    /**
+     * <h2>ArticleLibrary</h2>
+     * <li>Initializes the article library by calling import method.</li>
+     *
+     * @param activeLibraryFilePath path of the active library file as String
+     */
     public ArticleLibrary(String activeLibraryFilePath) {
         importLibraryFromFile(activeLibraryFilePath);
     }
@@ -31,6 +37,12 @@ public class ArticleLibrary {
     public void deleteArticle(ArticleReference article){ this.articles.remove(article);}
 
     //5. export/import methods
+    /**
+     * <h2>generateStringForBibTex</h2>
+     * <li>Generates a BibTex representation of the article library as a String.</li>
+     *
+     * @return the article library as BibTex String
+     */
     public String generateStringForBibTex (){
         StringBuilder libraryAsBibTex = new StringBuilder();
 
@@ -41,7 +53,13 @@ public class ArticleLibrary {
         return libraryAsBibTex.toString();
     }
 
+    /**
+     * <h2>importLibraryFromFile</h2>
+     * <li>Imports the article library from a CSV file.</li>
+     *
+     * @param activeLibraryFilePath path of the active library file as String
+     */
     public void importLibraryFromFile(String activeLibraryFilePath){
-        this.articles = TextFileHandler.getInstance().importLibraryFromCsvFile(activeLibraryFilePath);
+        this.articles = TextFileHandler.getInstance().importLibraryFromCmlFile(activeLibraryFilePath);
     }
 }

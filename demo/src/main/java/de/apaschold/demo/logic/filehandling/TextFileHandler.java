@@ -1,6 +1,5 @@
 package de.apaschold.demo.logic.filehandling;
 
-import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.logic.ArticleFactory;
 import de.apaschold.demo.model.ArticleReference;
 
@@ -37,7 +36,7 @@ public class TextFileHandler {
      * @param filePath of the active library as String
      * @return a list of articles resembling the lines of the file
      */
-    public List<ArticleReference> importLibraryFromCsvFile(String filePath) {
+    public List<ArticleReference> importLibraryFromCmlFile(String filePath) {
 
         if (filePath == null) {
             filePath = DEFAULT_LIBRARY_FILE_PATH;
@@ -76,7 +75,7 @@ public class TextFileHandler {
      *
      * @param articleReferences the list of article information to write to the file
      */
-    public void exportLibraryToCsv(List<ArticleReference> articleReferences, String activeLibraryFilePath) {
+    public void exportLibraryToCml(List<ArticleReference> articleReferences, String activeLibraryFilePath) {
 
         try (FileWriter writer = new FileWriter(activeLibraryFilePath, StandardCharsets.UTF_8)) {
             for (ArticleReference articleReference : articleReferences) {
