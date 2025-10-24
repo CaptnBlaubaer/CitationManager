@@ -2,6 +2,11 @@ package de.apaschold.demo.model;
 
 import de.apaschold.demo.additionals.AppTexts;
 
+/**
+ * <h2>Unpublished</h2>
+ * <li>Represents an unpublished article reference, extending the ArticleReference class.</li>
+ */
+
 public class Unpublished extends ArticleReference {
     //0. constants
 

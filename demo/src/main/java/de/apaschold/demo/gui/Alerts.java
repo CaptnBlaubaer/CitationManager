@@ -6,6 +6,11 @@ import javafx.scene.control.ButtonType;
 
 import java.util.Optional;
 
+/**
+ * <h2>Alerts</h2>
+ * <li>Utility class for displaying alert, information, and confirmation dialogs.</li>
+ */
+
 public class Alerts {
     //0. constants
     public static final String ALERT_EMPTY_LIBRARY_TITLE = "Library is empty";

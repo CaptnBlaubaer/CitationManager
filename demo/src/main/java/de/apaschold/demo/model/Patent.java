@@ -2,6 +2,11 @@ package de.apaschold.demo.model;
 
 import de.apaschold.demo.additionals.AppTexts;
 
+/**
+ * <h2>Patent</h2>
+ * <li>Represents a patent article reference, extending the ArticleReference class.</li>
+ */
+
 public class Patent extends ArticleReference {
     //0. constants
 

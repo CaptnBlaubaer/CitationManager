@@ -1,5 +1,10 @@
 package de.apaschold.demo.model;
 
+/**
+ * <h2>ArticleType</h2>
+ * <li>Enumeration representing different types of article references.</li>
+ */
+
 public enum ArticleType {
     JOURNAL_ARTICLE ("Journal Article"),
     BOOK ("Book"),
@@ -15,6 +20,13 @@ public enum ArticleType {
 
     public String getDescription() { return description;}
 
+    /**
+     * <h2>getArticleTypeFromBibTexImport</h2>
+     * <li>Static method to map BibTeX article type strings to ArticleType enum values.</li>
+     *
+     * @param bibTexArticleType String representing the BibTeX article type
+     * @return Corresponding ArticleType enum value, or null if no match is found
+     */
     public static ArticleType getArticleTypeFromBibTexImport(String bibTexArticleType){
         ArticleType returnType = null;
 

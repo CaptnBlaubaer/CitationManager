@@ -24,6 +24,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+/**
+ * <h2>JournalArticleSubViewController</h2>
+ * <li>Controller for the journal article sub view.</li>
+ * <li>Handles displaying and editing journal article details,
+ * as well as managing PDF attachments.</li>
+ */
+
 public class JournalArticleSubViewController implements Initializable {
     //0. constants
 
@@ -78,6 +85,13 @@ public class JournalArticleSubViewController implements Initializable {
     private BorderPane pdfViewer;
 
     //3. constructors/initialize method
+    /**<h2>initialize</h2>
+     * <li>Initializes the controller by populating the journal article view
+     * and setting up the PDF displayer.</li>
+     *
+     * @param location  The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
         this.journalArticle = (JournalArticle) GuiController.getInstance().getSelectedArticle();
@@ -89,6 +103,14 @@ public class JournalArticleSubViewController implements Initializable {
     }
 
     //4. FXML methods
+    /** <h2>checkForUpdates</h2>
+     * <li>Checks for updates to the journal article reference using PubMed.</li>
+     * <li>If updates are found, it loads the reference update view in the GUI controller.</li>
+     * <li>Linked to the Button in "Article Info"-Tab</li>
+     *
+     * @throws IOException if an I/O error occurs during the update check process.
+     */
+
     @FXML
     private void checkForUpdates() throws IOException {
         String pubMedString = this.journalArticle.createPubMedSearchTerm();
@@ -108,6 +130,14 @@ public class JournalArticleSubViewController implements Initializable {
     }
 
     @FXML
+    /** <h2>saveChanges</h2>
+     * <li>Saves the changes made to the journal article reference manually.</li>
+     * <li>Updates the data in the MainView </li>
+     * <li>Linked to the Button in "Edit"-Tab</li>
+     *
+     * @throws IOException if an I/O error occurs during the save process.
+     */
+
     private void saveChanges() throws IOException {
         if (this.journalArticle != null){
             this.journalArticle.setTitle( this.titleChange.getText());
@@ -127,6 +157,12 @@ public class JournalArticleSubViewController implements Initializable {
         }
     }
 
+    /** <h2>selectAttachedFile</h2>
+     * <li>Selects and displays the attached PDF file in the PDF viewer.</li>
+     * <li>Linked to the ComboBox in "Attached Pdfs"-Tab</li>
+     *
+     * @throws IOException if an I/O error occurs while loading the PDF file.
+     */
     @FXML
     private void selectAttachedFile() throws IOException{
         //replace file format by the folder extension
@@ -138,6 +174,12 @@ public class JournalArticleSubViewController implements Initializable {
         displayer.loadPDF(new File(filePath));
     }
 
+    /** <h2>addNewAttachmentToArticleReference</h2>
+     * <li>Adds a new attachment to the journal article reference.</li>
+     * <li>Opens a file chooser dialog for the user to select a PDF file.</li>
+     * <li>Copies the selected file to the PDF folder of the active library and to the article reference.</li>
+     * <li>Linked to Button in "Attached Pdfs"-Tab</li>
+     */
     @FXML
     private void addNewAttachmentToArticleReference(){
         Stage stage = (Stage) this.pdfViewer.getScene().getWindow();
@@ -160,6 +202,10 @@ public class JournalArticleSubViewController implements Initializable {
         }
     }
 
+    /** <h2>deleteAttachment</h2>
+     * <li>Deletes the selected attachment from the journal article reference and the PDF folder.</li>
+     * <li>Linked to Button in "Attached Pdfs"-Tab</li>
+     */
     @FXML
     protected void deleteAttachment(){
         String chosenAttachment = this.attachedFiles.getValue();
@@ -178,6 +224,13 @@ public class JournalArticleSubViewController implements Initializable {
         }
     }
 
+    /** <h2>searchPdfFile</h2>
+     * <li>Searches for a PDF file of the journal article using its DOI.</li>
+     * <li>Uses {@link SeleniumWebHandlerHeadless} to get .pdf file</li>
+     * <li>Downloads the PDF file and adds it as an attachment to the article reference.</li>
+     * <li>Linked to Button in "Attached Pdfs"-Tab</li>
+     */
+
     @FXML
     protected void searchPdfFile(){
         try {
@@ -193,6 +246,11 @@ public class JournalArticleSubViewController implements Initializable {
     }
 
     //5. other methods
+    /** <h2>populateJournalArticleView</h2>
+     * <li>Populates the journal article view with the details of the selected journal article.</li>
+     * <li>Calls methods for each Tab</li>
+     */
+
     public void populateJournalArticleView(){
         String yearAsString = "-";
         if (this.journalArticle.getYear() != 0){
@@ -218,6 +276,14 @@ public class JournalArticleSubViewController implements Initializable {
         populatePDFViewerTab();
     }
 
+    /** <h2>populateArticleOverviewTab</h2>
+     * <li>Populates the article overview tab with the details of the journal article.</li>
+     *
+     * @param yearAsString   The year of publication as a string.
+     * @param volumeAsString The volume number as a string.
+     * @param issueAsString  The issue number as a string.
+     */
+
     private void populateArticleOverviewTab(String yearAsString, String volumeAsString, String issueAsString) {
         this.articleType.setText("Type: " + this.journalArticle.getArticleType().getDescription());
         this.title.setText("Title: " + this.journalArticle.getTitle());
@@ -231,6 +297,14 @@ public class JournalArticleSubViewController implements Initializable {
         this.doi.setText("DOI: " + this.journalArticle.getDoi());
     }
 
+    /** <h2>populateArticleEditTab</h2>
+     * <li>Populates the article edit tab with the details of the journal article.</li>
+     *
+     * @param yearAsString   The year of publication as a string.
+     * @param volumeAsString The volume number as a string.
+     * @param issueAsString  The issue number as a string.
+     */
+
     private void populateArticleEditTab(String yearAsString,String volumeAsString,String issueAsString) {
         this.titleChange.setText(this.journalArticle.getTitle());
         this.authorsChange.setText(this.journalArticle.getAuthor().replace("; ", "\n"));
@@ -243,6 +317,9 @@ public class JournalArticleSubViewController implements Initializable {
         this.doiChange.setText(this.journalArticle.getDoi());
     }
 
+    /** <h2>populatePDFViewerTab</h2>
+     * <li>Populates the PDF viewer tab with the attached PDF files of the journal article.</li>
+     */
     private void populatePDFViewerTab(){
         this.attachedFiles.getItems().setAll(this.journalArticle.getPdfFilePaths());
     }

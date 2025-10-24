@@ -17,6 +17,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+/**
+ * <h2>BookSubViewController</h2>
+ * <li>Controller for the book sub view in the article detail view.</li>
+ * <li>Handles displaying and editing book-specific information and PDF viewing.</li>
+ */
+
 public class BookSubViewController implements Initializable {
     //0. constants
 
@@ -59,6 +65,14 @@ public class BookSubViewController implements Initializable {
     private BorderPane pdfViewer;
 
     //3. constructors/initialize method
+    /** <h2>initialize</h2>
+     * <li>Initializes the controller by retrieving the selected book from the GuiController.</li>
+     * <li>Populates the book sub view with the book's data.</li>
+     * <li>Sets up the PDF viewer for displaying attached PDF files.</li>
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
+
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
         this.book = (Book) GuiController.getInstance().getSelectedArticle();
@@ -70,6 +84,12 @@ public class BookSubViewController implements Initializable {
     }
 
     //4. FXML methods
+    /** <h2>saveChanges</h2>
+     * <li>Saves the changes made in the edit view to the book object.</li>
+     * <li>Updates the main menu to reflect the changes.</li>
+     * @throws IOException if an I/O error occurs during the update process.
+     */
+
     @FXML
     private void saveChanges() throws IOException {
         if (this.book != null){
@@ -87,6 +107,11 @@ public class BookSubViewController implements Initializable {
         }
     }
 
+    /** <h2>selectAttachedFile</h2>
+     * <li>Loads the selected attached PDF file into the PDF viewer.</li>
+     * @throws IOException if an I/O error occurs while loading the PDF file.
+     */
+
     @FXML
     private void selectAttachedFile() throws IOException{
         //replace file format by the folder extension
@@ -99,6 +124,10 @@ public class BookSubViewController implements Initializable {
     }
 
     //5. other methods
+    /** <h2>populateBookSubView</h2>
+     * <li>Populates the journal article view with the details of the selected journal article.</li>
+     * <li>Calls methods for each Tab</li>
+     */
     public void populateBookSubView(){
         String yearAsString = "-";
         if (this.book.getYear() != 0){
@@ -119,6 +148,12 @@ public class BookSubViewController implements Initializable {
         populatePDFViewerTab();
     }
 
+    /** <h2>populateArticleOverviewTab</h2>
+     * <li>Populates the article overview tab with the book's details.</li>
+     * @param yearAsString The year of publication as a string.
+     * @param volumeAsString The volume number as a string.
+     */
+
     private void populateArticleOverviewTab(String yearAsString, String volumeAsString) {
         this.articleType.setText("Type: " + this.book.getArticleType().getDescription());
         this.title.setText("Title: " + this.book.getTitle());
@@ -129,6 +164,12 @@ public class BookSubViewController implements Initializable {
         this.doi.setText("DOI: " + this.book.getDoi());
     }
 
+    /** <h2>populateArticleEditTab</h2>
+     * <li>Populates the article edit tab with the book's details.</li>
+     * @param yearAsString The year of publication as a string.
+     * @param volumeAsString The volume number as a string.
+     */
+
     private void populateArticleEditTab(String yearAsString,String volumeAsString) {
         this.titleChange.setText(this.book.getTitle());
         this.authorsChange.setText(this.book.getAuthor().replace("; ", "\n"));
@@ -137,6 +178,10 @@ public class BookSubViewController implements Initializable {
         this.volumeChange.setText(volumeAsString);
         this.doiChange.setText(this.book.getDoi());
     }
+
+    /** <h2>populatePDFViewerTab</h2>
+     * <li>Populates the PDF viewer tab with the attached PDF files of the book.</li>
+     */
 
     private void populatePDFViewerTab(){
         this.attachedFiles.getItems().setAll(this.book.getPdfFilePaths());

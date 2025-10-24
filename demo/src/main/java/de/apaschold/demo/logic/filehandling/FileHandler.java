@@ -8,6 +8,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
+/**
+ * <h2>FileHandler</h2>
+ * <li>Singleton class that manages reading and writing of files.</li>
+ * <li>Handles creation of new library files and management of PDF attachments.</li>
+ */
 
 public class FileHandler {
     //0. constants
@@ -27,6 +32,13 @@ public class FileHandler {
     }
 
     //3. read'n'write methods
+    /**
+     * <h2>createEmptyLibrary</h2>
+     * <li>Creates an empty library file and its corresponding PDF folder.</li>
+     *
+     * @param newLibraryFile the File object representing the new library file to be created
+     */
+
     public void createEmptyLibrary(File newLibraryFile){
         try (FileWriter writer = new FileWriter(newLibraryFile , StandardCharsets.UTF_8)) {
             writer.write("");
@@ -42,6 +54,12 @@ public class FileHandler {
         }
     }
 
+    /**
+     * <h2>deleteSelectedAttachmentFromFolder</h2>
+     * <li>Deletes the specified attachment file from the PDF folder of the active library.</li>
+     *
+     * @param chosenAttachment the name of the attachment file to be deleted
+     */
     public void deleteSelectedAttachmentFromFolder(String chosenAttachment) {
         String activeLibraryFilePath = GuiController.getInstance().getActiveLibraryFilePath();
         String pdfFolderPath = activeLibraryFilePath.replace(AppTexts.LIBRARY_FILE_FORMAT,AppTexts.PDF_FOLDER_EXTENSION);
@@ -51,6 +69,13 @@ public class FileHandler {
             attachmentToDelete.delete();
         }
     }
+
+    /**
+     * <h2>copySelectedAttachmentToPdfFolder</h2>
+     * <li>Copies the specified attachment file to the PDF folder of the active library.</li>
+     *
+     * @param chosenFile the File object representing the attachment file to be copied
+     */
 
     public void copySelectedAttachmentToPdfFolder(File chosenFile) {
         String activeLibraryFilePath = GuiController.getInstance().getActiveLibraryFilePath();
@@ -66,6 +91,11 @@ public class FileHandler {
         }
     }
 
+    /** <h2>determineLatestAddedFile</h2>
+     * <li>Determines the most recently added file in the PDF folder of the active library.</li>
+     *
+     * @return the name of the latest added file, or an empty string if the folder is empty
+     */
     public String determineLatestAddedFile(){
         String activeLibraryFilePath = GuiController.getInstance().getActiveLibraryFilePath();
         String pdfFolderPath = activeLibraryFilePath.replace(AppTexts.LIBRARY_FILE_FORMAT,AppTexts.PDF_FOLDER_EXTENSION);

@@ -8,6 +8,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <h2>TextFileHandler</h2>
+ * <li>Singleton class that manages reading and writing of text files.</li>
+ * <li>Handles import and export of reference libraries in CML format.</li>
+ */
 public class TextFileHandler {
     //0. constants
     private static final String DEFAULT_LIBRARY_FILE_PATH = "demo/src/main/resources/de/apaschold/demo/data/default-library.cml";
@@ -109,6 +114,11 @@ public class TextFileHandler {
         return libraryFilePath;
     }
 
+    /** <h2>saveNewActiveLibraryPath</h2>
+     * <li>Saves the file path of the active library to active-library.txt</li>
+     *
+     * @param newFilePath the new file path to save
+     */
     public void saveNewActiveLibraryPath (String newFilePath){
         try (FileWriter writer = new FileWriter(ACTIVE_LIBRARY_FILE_PATH, StandardCharsets.UTF_8)) {
             writer.write(newFilePath);
@@ -116,6 +126,13 @@ public class TextFileHandler {
             System.err.println("Error saving to File: " );
         }
     }
+
+    /** <h2>exportLibraryToBibTex</h2>
+     * Writes a BibTex string to a .bib file.
+     *
+     * @param libraryAsBibTex the BibTex string representing the article library
+     * @param bibTexFilePath  the file path where the BibTex file will be saved
+     */
 
     public void exportLibraryToBibTex(String libraryAsBibTex, String bibTexFilePath){
         try (FileWriter writer = new FileWriter(bibTexFilePath, StandardCharsets.UTF_8)) {

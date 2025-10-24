@@ -17,6 +17,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+/**
+ * <h2>PhdThesisSubViewController</h2>
+ * <li>Controller for the PhD thesis sub view in the main view.</li>
+ * <li>Handles displaying and editing PhD thesis article details.</li>
+ */
 public class PhdThesisSubViewController implements Initializable {
     //0. constants
 
@@ -51,6 +56,11 @@ public class PhdThesisSubViewController implements Initializable {
     private BorderPane pdfViewer;
 
     //3. constructors/initialize method
+    /** <h2>initialize</h2>
+     * <li>Initializes the controller by populating the sub view with the selected PhD thesis article details.</li>
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
         this.phdThesis = (PhdThesis) GuiController.getInstance().getSelectedArticle();
@@ -62,6 +72,10 @@ public class PhdThesisSubViewController implements Initializable {
     }
 
     //4. FXML methods
+    /** <h2>saveChanges</h2>
+     * <li>Saves the changes made to the PhD thesis article details.</li>
+     * @throws IOException if an I/O error occurs.
+     */
     @FXML
     private void saveChanges() throws IOException {
         if (this.phdThesis != null){
@@ -77,6 +91,10 @@ public class PhdThesisSubViewController implements Initializable {
         }
     }
 
+    /** <h2>selectAttachedFile</h2>
+     * <li>Loads the selected attached PDF file into the PDF viewer.</li>
+     * @throws IOException if an I/O error occurs.
+     */
     @FXML
     private void selectAttachedFile() throws IOException{
         //replace file format by the folder extension
@@ -89,6 +107,10 @@ public class PhdThesisSubViewController implements Initializable {
     }
 
     //5. other methods
+    /** <h2>populateBookSubView</h2>
+     * <li>Populates the PhD thesis sub view with the article details.</li>
+     * <li>Calls methods for each tab</li>
+     */
     public void populateBookSubView(){
         String yearAsString = "-";
         if (this.phdThesis.getYear() != 0){
@@ -104,6 +126,10 @@ public class PhdThesisSubViewController implements Initializable {
         populatePDFViewerTab();
     }
 
+    /** <h2>populateArticleOverviewTab</h2>
+     * <li>Populates the article overview tab with the PhD thesis article details.</li>
+     * @param yearAsString The year of the article as a string.
+     */
     private void populateArticleOverviewTab(String yearAsString) {
         this.articleType.setText("Type: " + this.phdThesis.getArticleType().getDescription());
         this.title.setText("Title: " + this.phdThesis.getTitle());
@@ -112,6 +138,10 @@ public class PhdThesisSubViewController implements Initializable {
         this.doi.setText("DOI: " + this.phdThesis.getDoi());
     }
 
+    /** <h2>populateArticleEditTab</h2>
+     * <li>Populates the article edit tab with the PhD thesis article details.</li>
+     * @param yearAsString The year of the article as a string.
+     */
     private void populateArticleEditTab(String yearAsString) {
         this.titleChange.setText(this.phdThesis.getTitle());
         this.authorsChange.setText(this.phdThesis.getAuthor().replace("; ", "\n"));
@@ -119,6 +149,9 @@ public class PhdThesisSubViewController implements Initializable {
         this.doiChange.setText(this.phdThesis.getDoi());
     }
 
+    /** <h2>populatePDFViewerTab</h2>
+     * <li>Populates the PDF viewer tab with the attached PDF files of the PhD thesis article.</li>
+     */
     private void populatePDFViewerTab(){
         this.attachedFiles.getItems().setAll(this.phdThesis.getPdfFilePaths());
     }

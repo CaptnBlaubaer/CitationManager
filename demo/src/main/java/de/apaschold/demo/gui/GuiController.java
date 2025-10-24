@@ -17,6 +17,7 @@ import java.util.List;
  * <h2>GuiController</h2>
  * <li>Singleton class that manages the views of the application and holds references to the main data structures.</li>
  * <li>Starting point of application</li>
+ * <li>Last used librabry file path is stored in a .txt file in the resource folder</li>
  */
 
 public class GuiController {
@@ -34,7 +35,7 @@ public class GuiController {
 
     /**
      * Private constructor for singleton pattern.
-     * Loads the last used library file path and initializes the article library.
+     * Loads the last used library file path from a .txt and initializes the article library.
      * If the library is empty, sets the active library file path to the program directory.
      */
     private GuiController() {

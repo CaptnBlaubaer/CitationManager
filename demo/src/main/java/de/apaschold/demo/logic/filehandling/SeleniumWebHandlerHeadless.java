@@ -13,7 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-//IMPORTANT: Wiley can't be handled up to today as it uses an own pdf viewer in the browser
+/**
+ * <h2>SeleniumWebHandlerHeadless</h2>
+ * <li>Singleton class that manages Selenium WebDriver in headless mode.</li>
+ * <li>Handles downloading of PDF files from various journal websites.</li>
+ */
+//IMPORTANT: Wiley can't be handled  as it uses an own pdf viewer in the browser
 
 public class SeleniumWebHandlerHeadless {
     //0. constants for Selenium pdf download
@@ -47,11 +52,24 @@ public class SeleniumWebHandlerHeadless {
     }
 
     //4. setters and getters
+    /**
+     * <h2>setDownloadPath</h2>
+     * <li>Sets the download path for PDFs based on the active library file path.</li>
+     */
     private void setDownloadPath() {
         this.downloadPath = GuiController.getInstance().getActiveLibraryFilePath().replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.PDF_FOLDER_EXTENSION);
     }
 
     //4. methods for Browser Control
+    /**
+     * <h2>downloadPdfFrom</h2>
+     * <li>Downloads a PDF from the given article URL using Selenium WebDriver in headless mode.</li>
+     * <li>Starts WebDriver and navigates to article URL</li>
+     * <li>Based on publisher uses different procedure</li>
+     *
+     * @param articleURL the URL of the article to download the PDF from
+     */
+
     public void downloadPdfFrom(String articleURL){
         System.out.println("Downloading pdf from: " + articleURL);
 
@@ -73,6 +91,11 @@ public class SeleniumWebHandlerHeadless {
         System.out.println("finished downloading pdf!");
     }
 
+    /** <h2>startWebDriver</h2>
+     * <li>Initializes and starts the Selenium WebDriver in headless mode.</li>
+     * <li>Sets timeouts and maximizes the browser window.</li>
+     * <li>Mimics user action</li></li>
+     */
     private void startWebDriver() {
         this.driver = createFirefoxDriver();
 
@@ -85,6 +108,10 @@ public class SeleniumWebHandlerHeadless {
         mouseMovement();
     }
 
+    /** <h2>downloadPdfFromNature</h2>
+     * <li>Handles PDF download specifically for Nature articles.</li>
+     * <li>Finds the PDF link on the page and navigates to it to trigger the download.</li>
+     */
     private void downloadPdfFromNature() {
         WebElement element = this.driver.findElement(By.xpath("//a[contains(@href,'pdf')]"));
 
@@ -99,6 +126,15 @@ public class SeleniumWebHandlerHeadless {
         this.driver.close();
     }
 
+    /** <h2>getPdfDownloadLink</h2>
+     * <li>Finds the PDF download link on the article page based on the publisher's website structure.</li>
+     * <li>Download link is stored in class variable</li>
+     * <li>Thread.sleep used to wait that page is loaded</li>
+     * <li>Closes first driver</li>
+     * <li>Supports RSC and ACS.</li>
+     *
+     * @param articleURL the URL of the article page
+     */
     public void getPdfDownloadLink(String articleURL) {
         String pdfElementXpath = "";
 
@@ -107,9 +143,9 @@ public class SeleniumWebHandlerHeadless {
                 pdfElementXpath = "//a[contains(text(),'Download this article')]";
             } else if (articleURL.contains("acs.org")){
                 pdfElementXpath = "//a[contains(@title,'PDF')]";
-            } else if (articleURL.contains("wiley.com")){
+            } /*else if (articleURL.contains("wiley.com")){
                 pdfElementXpath = "//a[contains(@title,'PDF')]";
-            }
+            }*/
 
             try{
                 Thread.sleep(200);
@@ -130,6 +166,12 @@ public class SeleniumWebHandlerHeadless {
         this.driver.close();
     }
 
+    /** <h2>getPdf</h2>
+     * <li>2nd part of the download process</li>
+     * <li>Uses the stored PDF download link to navigate to the PDF and trigger the download.</li>
+     * <li>Starts WebDriver a 2nd time to avoid Bot tracking test</li>
+     * <li>Closes the WebDriver after download.</li>
+     */
     private void getPdf(){
         try {
             startWebDriver();
@@ -146,6 +188,10 @@ public class SeleniumWebHandlerHeadless {
         this.driver.close();
     }
 
+    /** <h2>mouseMovement</h2>
+     * <li>Mimics human mouse movement to avoid bot detection.</li>
+     * <li>Moves the mouse in a predefined pattern.</li>
+     */
     private void mouseMovement(){
         List<int []> coordinates = new ArrayList<>();
 
@@ -170,6 +216,13 @@ public class SeleniumWebHandlerHeadless {
         }
     }
 
+    /** <h2>createFirefoxDriver</h2>
+     * <li>Creates and configures a Firefox WebDriver instance for headless operation.</li>
+     * <li>Sets download preferences to automatically save PDFs to the specified download path.</li>
+     * <li>Randomizes the user agent to mimic different browsers.</li>
+     *
+     * @return a configured WebDriver instance
+     */
     private WebDriver createFirefoxDriver(){
         System.setProperty("webdriver.gecko.driver", FIREFOX_DRIVER_PATH);
 
@@ -191,6 +244,11 @@ public class SeleniumWebHandlerHeadless {
         return new FirefoxDriver(options);
     }
 
+    /** <h2>chooseRandomUserAgent</h2>
+     * <li>Selects a random user agent string from a predefined list.</li>
+     *
+     * @return a random user agent string
+     */
     private String chooseRandomUserAgent(){
         int randomIndex = new Random().nextInt(USER_AGENTS.length);
 

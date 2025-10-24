@@ -2,6 +2,11 @@ package de.apaschold.demo.model;
 
 import de.apaschold.demo.additionals.AppTexts;
 
+/**
+ * <h2>JournalArticle</h2>
+ * <li>Represents a journal article reference, extending the ArticleReference class.</li>
+ */
+
 public class JournalArticle extends ArticleReference {
     //0. constants
 

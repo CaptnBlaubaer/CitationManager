@@ -8,6 +8,12 @@ import javafx.beans.property.StringProperty;
 
 import java.util.Arrays;
 
+/**
+ * <h2>ArticleReference</h2>
+ * <li>Abstract superclass for different types of article references (e.g., JournalArticle, BookArticle).</li>
+ * <li>Holds common attributes and methods for article references.</li>
+ */
+
 public abstract class ArticleReference {
     //0. constants
 
@@ -106,6 +112,12 @@ public abstract class ArticleReference {
         return firstAuthorLastName + firstAuthorPreNameFirstCharacter + publishedYear + journalWithoutWhitespace;
     }
 
+    /**
+     * <h2>addNewAttachment</h2>
+     * <li>Adds a new attachment file path to the existing list of PDF file paths.</li>
+     *
+     * @param newAttachement the file path of the new attachment to be added
+     */
     public void addNewAttachment(String newAttachement){
         String oldAttachmentsAsString = String.join(",", this.pdfFilePath);
 

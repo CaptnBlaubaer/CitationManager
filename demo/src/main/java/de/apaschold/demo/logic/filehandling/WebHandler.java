@@ -7,6 +7,11 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * <h2>WebHandler</h2>
+ * <li>Singleton class that manages web requests to external APIs.</li>
+ * <li>Retrieves data from PubMed database</li>
+ */
 
 public class WebHandler {
     //0. constants
@@ -31,6 +36,14 @@ public class WebHandler {
     }
 
     //3. web methods
+    /**
+     * <h2>webRequest</h2>
+     * <li>Sends a GET request to the specified URL and returns the response content as a String.</li>
+     *
+     * @param urlAsString the URL to send the GET request to
+     * @return the response content as a String
+     */
+
     private String webRequest(String urlAsString){
         StringBuilder content = new StringBuilder();
 
@@ -59,10 +72,23 @@ public class WebHandler {
         return content.toString();
     }
 
+    /** <h2>getPubMedId</h2>
+     * <li>Sends a request to PubMed to search for an article using a search term and retrieves the PubMed ID.</li>
+     *
+     * @param articlePubMedString the search term for the article
+     * @return the PubMed ID as a String
+     */
     public String getPubMedId(String articlePubMedString){
         return webRequest(PUB_MED_ENDPOINT_URL + String.format(PUB_MED_SEARCH_BY_TERM_PROMPT, articlePubMedString));
     }
 
+    /** <h2>getRecordsFromPubMedId</h2>
+     * <li>Sends a request to PubMed to retrieve article records using the provided PubMed ID.</li>
+     * <li>Retrieves data as {@link JSONObject} and returns only results part</li>
+     *
+     * @param pubMedId the PubMed ID of the article
+     * @return the article records as a JSONObject
+     */
     public JSONObject getRecordsFromPubMedId(String pubMedId){
         String webResponse = webRequest(PUB_MED_ENDPOINT_URL + String.format(PUB_MED_GET_RECORDS_PROMPT, pubMedId));
 

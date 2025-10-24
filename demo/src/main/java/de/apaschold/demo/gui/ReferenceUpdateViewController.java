@@ -15,6 +15,13 @@ import org.json.JSONObject;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * <h2>ReferenceUpdateViewController</h2>
+ * <li>Controller for the reference update view.</li>
+ * <li>Handles displaying old and new reference values and updating the reference based on user selection.</li>
+ * <li>Only available for journal articles</li>
+ */
+
 public class ReferenceUpdateViewController implements Initializable {
     //0. constants
 
@@ -82,6 +89,14 @@ public class ReferenceUpdateViewController implements Initializable {
 
 
     //3. constructor/initialize method
+    /**
+     * <h2>initialize</h2>
+     * <li>Initializes the controller by populating old and new reference values.</li>
+     *
+     * @param location          the location used to resolve relative paths for the root object, or null if the location is not known
+     * @param resourceBundle    the resources used to localize the root object, or null if the root object was not localized
+     */
+
     @Override
     public void initialize (URL location, ResourceBundle resourceBundle){
         this.referenceChanges =
@@ -95,6 +110,11 @@ public class ReferenceUpdateViewController implements Initializable {
     }
 
     //4. FXML methods
+    /**
+     * <h2>confirmChanges</h2>
+     * <li>Updates the reference with the selected new values and closes the update view.</li>
+     */
+
     @FXML
     protected void confirmChanges() {
         updateReference();
@@ -104,6 +124,11 @@ public class ReferenceUpdateViewController implements Initializable {
         stage.close();
     }
 
+    /**
+     * <h2>discardChanges</h2>
+     * <li>Closes the update view without making any changes to the reference.</li>
+     */
+
     @FXML
     protected void discardChanges(){
         Stage stage = (Stage) this.checkAuthors.getScene().getWindow();
@@ -111,6 +136,9 @@ public class ReferenceUpdateViewController implements Initializable {
         stage.close();
     }
 
+    /** <h2>populateOldValues</h2>
+     * <li>Fills TextFields with old reference values</li>
+     */
     //5. other methods
     private void populateOldValues() {
         this.oldTitle.setText( this.journalArticle.getTitle());
@@ -124,6 +152,9 @@ public class ReferenceUpdateViewController implements Initializable {
         this.oldDoi.setText(this.journalArticle.getDoi());
     }
 
+    /** <h2>populateNewValues</h2>
+     * <li>Fills TextFields with new reference values retrieved from pubMed database</li>
+     */
     private void populateNewValues() {
         if(this.referenceChanges.length > 0){
             this.newTitle.setText( this.referenceChanges[0]);
@@ -138,6 +169,12 @@ public class ReferenceUpdateViewController implements Initializable {
         }
     }
 
+    /** <h2>getValuesFromJson</h2>
+     * <li>Extracts reference values from a JSON object.</li>
+     *
+     * @param webResponse  the JSON object containing reference data
+     * @return             an array of reference values
+     */
     private String[] getValuesFromJson(JSONObject webResponse) {
         try {
             String title = webResponse.getString("title");
@@ -158,6 +195,14 @@ public class ReferenceUpdateViewController implements Initializable {
         }
     }
 
+    /** <h2>getAuthorListFromJsonArray</h2>
+     * <li>Converts a JSON array of authors into a formatted string.</li>
+     *
+     * @param authorsAsJsonArray  the JSON array containing author data
+     * @return                    a formatted string of authors
+     * @throws JSONException      if there is an error parsing the JSON array
+     */
+
     private String getAuthorListFromJsonArray(JSONArray authorsAsJsonArray) throws JSONException {
         StringBuilder authorsAsString = new StringBuilder();
 
@@ -173,6 +218,13 @@ public class ReferenceUpdateViewController implements Initializable {
         return authorsAsString.toString();
     }
 
+    /** <h2>searchArticleIdsForDoi</h2>
+     * <li>Searches a JSON array for a DOI and returns its value.</li>
+     *
+     * @param articleids       the JSON array containing article IDs
+     * @return                 the DOI value if found, otherwise an empty string
+     * @throws JSONException   if there is an error parsing the JSON array
+     */
     private String searchArticleIdsForDoi(JSONArray articleids) throws JSONException {
         String doi = "";
 
@@ -188,6 +240,9 @@ public class ReferenceUpdateViewController implements Initializable {
         return doi;
     }
 
+    /** <h2>updateReference</h2>
+     * <li>Updates the journal article reference with new values based on user selection.</li>
+     */
     private void updateReference(){
         if (checkTitle.isSelected()){ this.journalArticle.setTitle(this.newTitle.getText());}
 

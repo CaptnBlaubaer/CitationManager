@@ -2,6 +2,11 @@ package de.apaschold.demo.model;
 
 import de.apaschold.demo.additionals.AppTexts;
 
+/**
+ * <h2>PhdThesis</h2>
+ * <li>Represents a PhD thesis article reference, extending the ArticleReference class.</li>
+ */
+
 public class PhdThesis extends ArticleReference {
     //0. constants
 
