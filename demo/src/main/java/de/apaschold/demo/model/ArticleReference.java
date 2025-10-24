@@ -6,6 +6,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.util.Arrays;
+
 public abstract class ArticleReference {
     //0. constants
 
@@ -102,5 +104,21 @@ public abstract class ArticleReference {
         String journalWithoutWhitespace = this.journal.replaceAll(" ","").replaceAll("\\.","");
 
         return firstAuthorLastName + firstAuthorPreNameFirstCharacter + publishedYear + journalWithoutWhitespace;
+    }
+
+    public void addNewAttachment(String newAttachement){
+        String oldAttachmentsAsString = String.join(",", this.pdfFilePath);
+
+        System.out.println(Arrays.toString(this.pdfFilePath));
+
+        if (oldAttachmentsAsString.equals(AppTexts.PLACEHOLDER)){
+            this.pdfFilePath = newAttachement.split(",");
+        }
+        else {
+            oldAttachmentsAsString = oldAttachmentsAsString + "," + newAttachement;
+            this.pdfFilePath = oldAttachmentsAsString.split(",");
+        }
+
+        System.out.println(Arrays.toString(this.pdfFilePath));
     }
 }

@@ -214,4 +214,8 @@ public class GuiController {
     public void deleteSelectedArticle() {
         this.library.deleteArticle(this.selectedArticle);
     }
+
+    public void addNewAttachmentToArticleReference(String newAttachment) {
+        this.selectedArticle.addNewAttachment(newAttachment);
+    }
 }
