@@ -109,8 +109,6 @@ public abstract class ArticleReference {
     public void addNewAttachment(String newAttachement){
         String oldAttachmentsAsString = String.join(",", this.pdfFilePath);
 
-        System.out.println(Arrays.toString(this.pdfFilePath));
-
         if (oldAttachmentsAsString.equals(AppTexts.PLACEHOLDER)){
             this.pdfFilePath = newAttachement.split(",");
         }
@@ -118,7 +116,5 @@ public abstract class ArticleReference {
             oldAttachmentsAsString = oldAttachmentsAsString + "," + newAttachement;
             this.pdfFilePath = oldAttachmentsAsString.split(",");
         }
-
-        System.out.println(Arrays.toString(this.pdfFilePath));
     }
 }
