@@ -31,7 +31,7 @@ public class FileHandler {
         try (FileWriter writer = new FileWriter(newLibraryFile , StandardCharsets.UTF_8)) {
             writer.write("");
 
-            String pdfDirectoryPath = newLibraryFile.getAbsolutePath().replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.FOLDER_EXTENSION);
+            String pdfDirectoryPath = newLibraryFile.getAbsolutePath().replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.PDF_FOLDER_EXTENSION);
 
             File theDir = new File(pdfDirectoryPath);
             if (!theDir.exists()){
@@ -44,7 +44,7 @@ public class FileHandler {
 
     public void deleteSelectedAttachmentFromFolder(String chosenAttachment) {
         String activeLibraryFilePath = GuiController.getInstance().getActiveLibraryFilePath();
-        String pdfFolderPath = activeLibraryFilePath.replace(AppTexts.LIBRARY_FILE_FORMAT,AppTexts.FOLDER_EXTENSION);
+        String pdfFolderPath = activeLibraryFilePath.replace(AppTexts.LIBRARY_FILE_FORMAT,AppTexts.PDF_FOLDER_EXTENSION);
 
         File attachmentToDelete = new File(pdfFolderPath + chosenAttachment);
         if (!attachmentToDelete.isDirectory()) {
@@ -54,7 +54,7 @@ public class FileHandler {
 
     public void copySelectedAttachmentToPdfFolder(File chosenFile) {
         String activeLibraryFilePath = GuiController.getInstance().getActiveLibraryFilePath();
-        String pdfFolderPath = activeLibraryFilePath.replace(AppTexts.LIBRARY_FILE_FORMAT,AppTexts.FOLDER_EXTENSION);
+        String pdfFolderPath = activeLibraryFilePath.replace(AppTexts.LIBRARY_FILE_FORMAT,AppTexts.PDF_FOLDER_EXTENSION);
 
         String chosenFileName = chosenFile.getName();
         String destinationPath = pdfFolderPath + chosenFileName;
@@ -63,6 +63,26 @@ public class FileHandler {
             Files.copy(chosenFile.toPath(), new File(destinationPath).toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e){
             e.printStackTrace();
+        }
+    }
+
+    public String determineLatestAddedFile(){
+        String activeLibraryFilePath = GuiController.getInstance().getActiveLibraryFilePath();
+        String pdfFolderPath = activeLibraryFilePath.replace(AppTexts.LIBRARY_FILE_FORMAT,AppTexts.PDF_FOLDER_EXTENSION);
+
+        File pdfFolder = new File(pdfFolderPath);
+        File[] filesInPdfFolder = pdfFolder.listFiles();
+
+        if (filesInPdfFolder != null && filesInPdfFolder.length > 0) {
+            File latestFile = filesInPdfFolder[0];
+            for (File file : filesInPdfFolder) {
+                if (file.lastModified() > latestFile.lastModified()) {
+                    latestFile = file;
+                }
+            }
+            return latestFile.getName();
+        } else {
+            return "";
         }
     }
 }

@@ -6,6 +6,7 @@ import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.Alerts;
 import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.logic.filehandling.FileHandler;
+import de.apaschold.demo.logic.filehandling.SeleniumWebHandlerHeadless;
 import de.apaschold.demo.logic.filehandling.WebHandler;
 import de.apaschold.demo.model.JournalArticle;
 import javafx.fxml.FXML;
@@ -130,7 +131,7 @@ public class JournalArticleSubViewController implements Initializable {
     private void selectAttachedFile() throws IOException{
         //replace file format by the folder extension
         String folderPath = GuiController.getInstance().getActiveLibraryFilePath()
-                .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.FOLDER_EXTENSION);
+                .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.PDF_FOLDER_EXTENSION);
 
         String filePath = folderPath + this.attachedFiles.getValue();
 
@@ -149,17 +150,7 @@ public class JournalArticleSubViewController implements Initializable {
         File chosenFile = fileChooser.showOpenDialog(stage);
 
         if (chosenFile != null) {
-            String newAttachmentName = chosenFile.getName();
-
-            String attachmentNamesAsString = String.join(",", this.journalArticle.getPdfFilePaths());
-
-            if(!attachmentNamesAsString.equals(AppTexts.PLACEHOLDER)){
-                attachmentNamesAsString += "," + newAttachmentName;
-            } else {
-                attachmentNamesAsString = newAttachmentName;
-            }
-
-            this.journalArticle.setPdfFilePath(attachmentNamesAsString.split(","));
+            GuiController.getInstance().addNewAttachmentToArticleReference(chosenFile.getName());
 
             populatePDFViewerTab();
 
@@ -189,7 +180,16 @@ public class JournalArticleSubViewController implements Initializable {
 
     @FXML
     protected void searchPdfFile(){
-        WebHandler.getInstance().searchForPdf( this.journalArticle.getDoi());
+        try {
+            SeleniumWebHandlerHeadless.getInstance().downloadPdfFrom(AppTexts.HTTPS_FOR_DOI + this.journalArticle.getDoi());
+
+            String latestAddedFile = FileHandler.getInstance().determineLatestAddedFile();
+            GuiController.getInstance().addNewAttachmentToArticleReference(latestAddedFile);
+
+            populatePDFViewerTab();
+        } catch (Exception e){
+            System.err.println("Pdf not found!");
+        }
     }
 
     //5. other methods

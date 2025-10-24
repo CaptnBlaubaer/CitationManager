@@ -70,14 +70,5 @@ public class WebHandler {
 
         return webResponseAsJsonObject.getJSONObject("result").getJSONObject(pubMedId);
     }
-
-    //4. page scrapping
-    public void searchForPdf(String doi){
-        doi = AppTexts.HTTPS_FOR_DOI + doi;
-
-        System.out.println(doi);
-    }
-
-
 }
 

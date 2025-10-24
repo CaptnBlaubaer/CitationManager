@@ -1,5 +1,7 @@
 package de.apaschold.demo.logic.filehandling;
 
+import de.apaschold.demo.additionals.AppTexts;
+import de.apaschold.demo.gui.GuiController;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -16,8 +18,6 @@ import java.util.Random;
 public class SeleniumWebHandlerHeadless {
     //0. constants for Selenium pdf download
     private static final String FIREFOX_DRIVER_PATH = System.getProperty("user.dir") + "\\geckodriver.exe";
-    private static final String DOWNLOAD_PATH = System.getProperty("user.dir");
-
     private static final String START_PAGE = "https://www.google.com";
 
     private static final String USER_AGENT_OPERA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36 OPR/120.0.0.0";
@@ -31,6 +31,7 @@ public class SeleniumWebHandlerHeadless {
     private WebDriver driver;
     private String elementDownloadLink;
     private static SeleniumWebHandlerHeadless instance;
+    private String downloadPath;
 
     //2. constructors
     private SeleniumWebHandlerHeadless(){
@@ -45,9 +46,16 @@ public class SeleniumWebHandlerHeadless {
         return instance;
     }
 
+    //4. setters and getters
+    private void setDownloadPath() {
+        this.downloadPath = GuiController.getInstance().getActiveLibraryFilePath().replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.PDF_FOLDER_EXTENSION);
+    }
+
     //4. methods for Browser Control
     public void downloadPdfFrom(String articleURL){
         System.out.println("Downloading pdf from: " + articleURL);
+
+        setDownloadPath();
 
         startWebDriver();
 
@@ -171,7 +179,7 @@ public class SeleniumWebHandlerHeadless {
         firefoxProfile.setPreference("browser.download.manager.showWhenStarting", false);
         firefoxProfile.setPreference("browser.download.alwaysOpenPanel", false);
         firefoxProfile.setPreference("dom.disable_open_during_load", false);
-        firefoxProfile.setPreference("browser.download.dir", DOWNLOAD_PATH);
+        firefoxProfile.setPreference("browser.download.dir", downloadPath);
         firefoxProfile.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/pdf");
         firefoxProfile.setPreference("pdfjs.disabled", true);
 
