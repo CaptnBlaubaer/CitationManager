@@ -7,19 +7,11 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="de.apaschold.demo.gui.addnewarticleview.AddNewArticleViewController"
-      prefHeight="600.0" prefWidth="300.0" spacing="10.0" alignment="TOP_CENTER" style="-fx-background-color: #FFDFCC">
+      prefHeight="630.0" prefWidth="300.0" spacing="10.0" alignment="TOP_CENTER" style="-fx-background-color: #FFDFCC">
 
-    <ComboBox fx:id="newArticleType" style="-fx-font-size: 12;"/>
-    <TextField fx:id="newTitle" maxWidth="300.0" style="-fx-font-size: 12;" promptText="Article title"/>
-    <TextArea fx:id="newAuthors" maxWidth="300.0" maxHeight="100.0" style="-fx-font-size: 12;" promptText="Author names"/>
-    <TextField fx:id="newJournal" maxWidth="300.0" style="-fx-font-size: 12;" promptText="Journal"/>
-    <TextField fx:id="newJournalShortForm" maxWidth="300.0" style="-fx-font-size: 12;" promptText="Journal abbreviation"/>
-    <TextField fx:id="newYear" maxWidth="300.0" style="-fx-font-size: 12;" promptText="Year"/>
-    <TextField fx:id="newVolume" maxWidth="300.0" style="-fx-font-size: 12;" promptText="Volume"/>
-    <TextField fx:id="newIssue" maxWidth="300.0" style="-fx-font-size: 12;" promptText="Issue"/>
-    <TextField fx:id="newPages" maxWidth="300.0" style="-fx-font-size: 12;" promptText="Pages"/>
-    <TextField fx:id="newDoi" maxWidth="300.0" style="-fx-font-size: 12;" promptText="DOI"/>
-    <Button text="Save Changes" maxWidth="300.0" onAction="#saveNewArticle"/>
+    <ComboBox fx:id="newArticleType" style="-fx-font-size: 12;" onAction="#chooseArticleType"/>
+    <VBox fx:id="articleForm" maxWidth="280.0" spacing="10.0"/>
+    <Button fx:id="saveButton" text="Save Changes" maxWidth="300.0" onAction="#saveNewArticle" visible="false"/>
 
     <padding>
         <Insets top="5.0" />

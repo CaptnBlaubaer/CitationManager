@@ -1,5 +1,7 @@
 package de.apaschold.demo.additionals;
 
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
@@ -33,5 +35,23 @@ public class MyLittleHelpers {
         } catch (NumberFormatException e) {
             return defaultValue;
         }
+    }
+
+    //add FX Elements
+    public static TextField createNewTextField(String promptText){
+        TextField textField = new TextField();
+        textField.setPromptText(promptText);
+        textField.setStyle("-fx-font-size: 12;");
+
+        return textField;
+    }
+
+    public static TextArea createNewTextArea(String promptText){
+        TextArea textArea = new TextArea();
+        textArea.setPromptText(promptText);
+        textArea.setStyle("-fx-font-size: 12;");
+        textArea.setMaxHeight(100.0);
+
+        return textArea;
     }
 }

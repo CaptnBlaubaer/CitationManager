@@ -1,15 +1,24 @@
 package de.apaschold.demo.gui.addnewarticleview;
 
+import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.GuiController;
+import de.apaschold.demo.logic.ArticleFactory;
+import de.apaschold.demo.model.ArticleReference;
 import de.apaschold.demo.model.ArticleType;
 import de.apaschold.demo.model.JournalArticle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static de.apaschold.demo.additionals.MyLittleHelpers.*;
 
 /**
  * <h2>AddNewArticleViewController</h2>
@@ -26,23 +35,10 @@ public class AddNewArticleViewController implements Initializable {
     @FXML
     private ComboBox <ArticleType> newArticleType;
     @FXML
-    private TextField newTitle;
+    private Button saveButton;
     @FXML
-    private TextArea newAuthors;
-    @FXML
-    private TextField newJournal;
-    @FXML
-    private TextField newJournalShortForm;
-    @FXML
-    private TextField newYear;
-    @FXML
-    private TextField newVolume;
-    @FXML
-    private TextField newIssue;
-    @FXML
-    private TextField newPages;
-    @FXML
-    private TextField newDoi;
+    private VBox articleForm;
+
 
     //3. constructors/initialize method
     /** <h2>initialize</h2>
@@ -51,37 +47,125 @@ public class AddNewArticleViewController implements Initializable {
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         this.newArticleType.getItems().addAll(ArticleType.values());
-        this.newArticleType.setValue(ArticleType.JOURNAL_ARTICLE);
     }
 
     //4. FXML methods
-    /** <h2>saveNewArticle</h2>
-     * <li>Creates a new ArticleReference from the input fields and adds it to the article library.</li>
-     * <li>Closes the add new article window after saving.</li>
+    /** <h2>chooseArticleType</h2>
+     * <li>Sets up the article form based on the selected ArticleType.</li>
+     * <li>Activates the save button</li>
      */
     @FXML
-    protected void saveNewArticle(){
-        int newYearAsInteger = MyLittleHelpers.convertStringInputToInteger(this.newYear.getText());
-        int newVolumeAsInteger = MyLittleHelpers.convertStringInputToInteger(this.newVolume.getText());
-        int newIssueAsInteger= MyLittleHelpers.convertStringInputToInteger(this.newIssue.getText());
+    protected void chooseArticleType(){
+        ArticleType selectedType = this.newArticleType.getSelectionModel().getSelectedItem();
 
-        JournalArticle newArticle = new JournalArticle(
-                this.newTitle.getText(),
-                this.newAuthors.getText(),
-                this.newJournal.getText(),
-                this.newJournalShortForm.getText(),
-                newYearAsInteger,
-                newVolumeAsInteger,
-                newIssueAsInteger,
-                this.newPages.getText(),
-                this.newDoi.getText(),
-                "null"
+        this.articleForm.getChildren().clear();
+
+        switch (selectedType) {
+            case JOURNAL_ARTICLE -> setUpJournalArticleForm();
+            case BOOK -> setUpBookArticleForm();
+            case BOOK_SECTION -> setUpBookSectionArticleForm();
+            case PATENT -> setUpPatentArticleForm();
+            case THESIS -> setUpPhdThesisArticleForm();
+            case UNPUBLISHED -> setUpUnpublishedArticleForm();
+            default -> System.out.println("Data type not known");
+        }
+
+        saveButton.setVisible(true);
+    }
+
+    private void setUpJournalArticleForm() {
+        articleForm.getChildren().addAll(
+                createNewTextField("Article title"),
+                createNewTextArea("Author names"),
+                createNewTextField("Journal"),
+                createNewTextField("Journal abbreviation"),
+                createNewTextField("Year"),
+                createNewTextField("Volume"),
+                createNewTextField("Issue"),
+                createNewTextField("Pages"),
+                createNewTextField("DOI")
         );
+    }
+
+    private void setUpBookArticleForm() {
+        articleForm.getChildren().addAll(
+                createNewTextField("Article title"),
+                createNewTextArea("Author names"),
+                createNewTextField("Publisher"),
+                createNewTextField("Year"),
+                createNewTextField("Volume"),
+                createNewTextField("DOI")
+        );
+    }
+
+    private void setUpBookSectionArticleForm() {
+        articleForm.getChildren().addAll(
+                createNewTextField("Article title"),
+                createNewTextArea("Author names"),
+                createNewTextField("Book title"),
+                createNewTextArea("Editor names"),
+                createNewTextField("Publisher"),
+                createNewTextField("Year"),
+                createNewTextField("Volume"),
+                createNewTextField("Pages"),
+                createNewTextField("DOI")
+        );
+    }
+
+    private void setUpPatentArticleForm() {
+        articleForm.getChildren().addAll(
+                createNewTextField("Article title"),
+                createNewTextArea("Author names"),
+                createNewTextField("Year"),
+                createNewTextField("URL")
+        );
+    }
+
+    private void setUpPhdThesisArticleForm() {
+        articleForm.getChildren().addAll(
+                createNewTextField("Article title"),
+                createNewTextArea("Author names"),
+                createNewTextField("Year"),
+                createNewTextField("DOI")
+        );
+    }
+
+    private void setUpUnpublishedArticleForm() {
+        articleForm.getChildren().addAll(
+                createNewTextField("Article title"),
+                createNewTextArea("Author names"),
+                createNewTextField("Year")
+        );
+    }
+
+    /** <h2>saveNewArticle</h2>
+     * <li>Collects data from the article form and creates a new ArticleReference.</li>
+     * <li>Adds the new ArticleReference to the article library and closes the add new article view.</li>
+     */
+    @FXML
+    protected void saveNewArticle() {
+        StringBuilder csvLine = new StringBuilder();
+
+        csvLine.append(this.newArticleType.getSelectionModel().getSelectedItem().toString()).append(";");
+
+        for (Node node: articleForm.getChildren()) {
+            if (node instanceof TextField) {
+                TextField textField = (TextField) node;
+                csvLine.append(textField.getText().replace(";", ",")).append(";");
+            } else if (node instanceof TextArea) {
+                TextArea textArea = (TextArea) node;
+                csvLine.append(textArea.getText().replace(";", ",").replace("\n",",")).append(";");
+            }
+        }
+        csvLine.append(AppTexts.PLACEHOLDER);
+
+        System.out.println("CSV Line: " + csvLine);
+
+        ArticleReference newArticle = ArticleFactory.createArticleReferenceFromCsvLine(csvLine.toString());
 
         GuiController.getInstance().getArticleLibrary().addArticle(newArticle);
 
         Stage stage = (Stage) newArticleType.getScene().getWindow();
         stage.close();
     }
-
 }
