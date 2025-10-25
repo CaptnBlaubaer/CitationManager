@@ -1,12 +1,10 @@
 package de.apaschold.demo.gui.addnewarticleview;
 
 import de.apaschold.demo.additionals.AppTexts;
-import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.logic.ArticleFactory;
 import de.apaschold.demo.model.ArticleReference;
 import de.apaschold.demo.model.ArticleType;
-import de.apaschold.demo.model.JournalArticle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -14,9 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static de.apaschold.demo.additionals.MyLittleHelpers.*;
 
@@ -149,17 +144,13 @@ public class AddNewArticleViewController implements Initializable {
         csvLine.append(this.newArticleType.getSelectionModel().getSelectedItem().toString()).append(";");
 
         for (Node node: articleForm.getChildren()) {
-            if (node instanceof TextField) {
-                TextField textField = (TextField) node;
+            if (node instanceof TextField textField) {
                 csvLine.append(textField.getText().replace(";", ",")).append(";");
-            } else if (node instanceof TextArea) {
-                TextArea textArea = (TextArea) node;
+            } else if (node instanceof TextArea textArea) {
                 csvLine.append(textArea.getText().replace(";", ",").replace("\n",",")).append(";");
             }
         }
         csvLine.append(AppTexts.PLACEHOLDER);
-
-        System.out.println("CSV Line: " + csvLine);
 
         ArticleReference newArticle = ArticleFactory.createArticleReferenceFromCsvLine(csvLine.toString());
 
