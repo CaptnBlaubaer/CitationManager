@@ -43,7 +43,9 @@ public class GuiController {
 
         this.library = new ArticleLibrary( this.activeLibraryFilePath);
 
-        if (this.library.getArticles().isEmpty()){
+        this.selectedArticle = this.library.getFirstArticle();
+
+        if (this.selectedArticle == null){
             setActiveLibraryFilePath(System.getProperty("user.dir"));
         }
     }
@@ -179,6 +181,7 @@ public class GuiController {
      * @throws NullPointerException if the library is empty and there is nothing to export
      */
     public void exportActiveLibraryToBibTex(){
+
         String bibTexString = this.library.generateStringForBibTex();
 
         if(!bibTexString.isEmpty()) {

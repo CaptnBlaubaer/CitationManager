@@ -27,6 +27,10 @@ public class ArticleLibrary {
         return this.articles;
     }
 
+    public ArticleReference getFirstArticle(){ return this.articles.isEmpty() ? null : this.articles.getFirst();}
+
+    public boolean isEmpty(){ return this.articles.isEmpty();}
+
     //4. methods to modify list
     public void clear(){ this.articles.clear();}
 
@@ -47,6 +51,7 @@ public class ArticleLibrary {
         StringBuilder libraryAsBibTex = new StringBuilder();
 
         for(ArticleReference reference : this.articles) {
+            System.out.println("Exporting article: " + reference.getTitle());
             libraryAsBibTex.append(reference.exportAsBibTexString()).append("\n\n");
         }
 
