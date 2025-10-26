@@ -1,4 +1,4 @@
-package de.apaschold.demo.gui.mainview;
+package de.apaschold.demo.gui.citationdetailsview;
 
 import com.dansoftware.pdfdisplayer.PDFDisplayer;
 import de.apaschold.demo.additionals.AppTexts;
@@ -31,7 +31,7 @@ import java.net.URL;
  * as well as managing PDF attachments.</li>
  */
 
-public class JournalArticleSubViewController implements Initializable {
+public class CitationDetailsViewController implements Initializable {
     //0. constants
 
     //1. attributes

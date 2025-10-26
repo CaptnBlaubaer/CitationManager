@@ -1,7 +1,6 @@
-package de.apaschold.demo.gui.addnewarticleview;
+package de.apaschold.demo.gui;
 
 import de.apaschold.demo.additionals.AppTexts;
-import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.logic.ArticleFactory;
 import de.apaschold.demo.model.ArticleReference;
 import de.apaschold.demo.model.ArticleType;

@@ -1,4 +1,4 @@
-package de.apaschold.demo.gui.mainview;
+package de.apaschold.demo.gui.citationdetailsview;
 
 import com.dansoftware.pdfdisplayer.PDFDisplayer;
 import de.apaschold.demo.additionals.AppTexts;

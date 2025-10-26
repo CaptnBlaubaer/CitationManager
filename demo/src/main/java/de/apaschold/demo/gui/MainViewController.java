@@ -1,9 +1,7 @@
-package de.apaschold.demo.gui.mainview;
+package de.apaschold.demo.gui;
 
 import de.apaschold.demo.HelloApplication;
 import de.apaschold.demo.additionals.AppTexts;
-import de.apaschold.demo.gui.Alerts;
-import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import de.apaschold.demo.model.ArticleReference;
 import javafx.beans.value.ChangeListener;
@@ -132,7 +130,7 @@ public class MainViewController implements Initializable {
 
     /**
      * <h2>addNewArticle</h2>
-     * <li>Opens {@link de.apaschold.demo.gui.addnewarticleview.AddNewArticleViewController}</li>
+     * <li>Opens {@link AddNewArticleViewController}</li>
      * <li>Adds a new article reference to the active library and refreshes the table view.</li>
      */
     @FXML
@@ -231,12 +229,12 @@ public class MainViewController implements Initializable {
 
         if (selectedArticle != null) {
             String fxmlFile = switch (selectedArticle.getArticleType()) {
-                case JOURNAL_ARTICLE -> "main-journal-article-subview.fxml";
-                case BOOK_SECTION -> "main-book-section-subview.fxml";
-                case BOOK -> "main-book-subview.fxml";
-                case THESIS -> "main-phd-thesis-subview.fxml";
-                case PATENT -> "main-patent-subview.fxml";
-                case UNPUBLISHED -> "main-unpublished-subview.fxml";
+                case JOURNAL_ARTICLE -> "journal-article-subview.fxml";
+                case BOOK_SECTION -> "book-section-subview.fxml";
+                case BOOK -> "book-subview.fxml";
+                case THESIS -> "phd-thesis-subview.fxml";
+                case PATENT -> "patent-subview.fxml";
+                case UNPUBLISHED -> "unpublished-subview.fxml";
                 default -> "";
             };
 

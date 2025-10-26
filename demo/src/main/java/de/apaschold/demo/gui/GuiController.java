@@ -102,7 +102,7 @@ public class GuiController {
      * Loads the view for adding a new article reference.
      */
     public void loadAddNewArticleView() {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("add-new-article-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("add-new-citation-view.fxml"));
         try {
             Scene scene = new Scene(fxmlLoader.load(), 320, 500);
             Stage newArticleStage = new Stage();

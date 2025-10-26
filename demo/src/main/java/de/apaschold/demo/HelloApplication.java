@@ -11,6 +11,7 @@ import java.io.IOException;
   TODO obtain String representation of article types in add-new-article-view
   TODO export functionality to bibtex
   TODO import of empty fields cause problems
+  TODO rename articlereference to Citation
  */
 
 
