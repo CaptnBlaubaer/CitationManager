@@ -246,8 +246,9 @@ public class ReferenceUpdateViewController implements Initializable {
     private void updateReference(){
         if (checkTitle.isSelected()){ this.journalArticle.setTitle(this.newTitle.getText());}
 
+        //strip to remove leading/trailing whitespace characters, e.g. \n
         if (checkAuthors.isSelected()){
-            this.journalArticle.setAuthors(this.newAuthors.getText().replaceAll("\n","; "));
+            this.journalArticle.setAuthors(this.newAuthors.getText().strip().replaceAll("\n","; "));
         }
 
         if (checkJournal.isSelected()){ this.journalArticle.setJournal(this.newJournal.getText());}

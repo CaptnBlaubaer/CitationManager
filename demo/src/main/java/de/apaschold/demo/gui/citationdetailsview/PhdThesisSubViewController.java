@@ -54,7 +54,7 @@ public class PhdThesisSubViewController implements Initializable {
     private void saveChanges() throws IOException {
         if (this.phdThesis != null){
             this.phdThesis.setTitle( this.titleChange.getText());
-            this.phdThesis.setAuthors( this.authorsChange.getText().replace("\n", ", "));
+            this.phdThesis.setAuthors( this.authorsChange.getText().replace("\n", "; "));
 
             this.phdThesis.setYear( MyLittleHelpers.convertStringInputToInteger(this.yearChange.getText()));
 

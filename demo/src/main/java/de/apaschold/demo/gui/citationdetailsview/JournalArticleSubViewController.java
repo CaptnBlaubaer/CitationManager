@@ -73,7 +73,7 @@ public class JournalArticleSubViewController implements Initializable {
     private void saveChanges() throws IOException {
         if (this.journalArticle != null){
             this.journalArticle.setTitle( this.titleChange.getText());
-            this.journalArticle.setAuthors( this.authorsChange.getText().replace("\n", ", "));
+            this.journalArticle.setAuthors( this.authorsChange.getText().replace("\n", "; "));
             this.journalArticle.setJournal( this.journalChange.getText());
             this.journalArticle.setJournalShortForm( this.journalShortFormChange.getText());
 

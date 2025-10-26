@@ -57,7 +57,7 @@ public class UnpublishedSubViewController implements Initializable {
     private void saveChanges() throws IOException {
         if (this.unpublished != null){
             this.unpublished.setTitle( this.titleChange.getText());
-            this.unpublished.setAuthors( this.authorsChange.getText().replace("\n", ", "));
+            this.unpublished.setAuthors( this.authorsChange.getText().replace("\n", "; "));
 
             this.unpublished.setYear( MyLittleHelpers.convertStringInputToInteger(this.yearChange.getText()));
 

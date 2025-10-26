@@ -54,7 +54,7 @@ public class PatentSubViewController implements Initializable {
     private void saveChanges() throws IOException {
         if (this.patent != null){
             this.patent.setTitle( this.titleChange.getText());
-            this.patent.setAuthors( this.authorsChange.getText().replace("\n", ", "));
+            this.patent.setAuthors( this.authorsChange.getText().replace("\n", "; "));
 
             this.patent.setYear( MyLittleHelpers.convertStringInputToInteger(this.yearChange.getText()));
 

@@ -86,8 +86,7 @@ public class BookSectionSubViewController implements Initializable {
 
     //5. other methods
     /** <h2>populateBookSectionView</h2>
-     * <li>Populates the book section view with the details of the selected {@link BookSection}.</li>
-     * <li>Calls method for each tab</li>
+     * <li>Populates the edit view with the details of the selected {@link BookSection}.</li>
      */
     public void populateBookSectionView(){
         String yearAsString = "-";
