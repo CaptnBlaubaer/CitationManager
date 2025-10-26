@@ -9,10 +9,9 @@ import java.io.IOException;
 
 /*TODO create model website
   TODO obtain String representation of article types in add-new-article-view
-  TODO export functionality to bibtex
   TODO import of empty fields cause problems
   TODO delete pdf file, when citation is deleted
-  TODO delete pdf file from Viewer, when delete attachement
+  TODO import of bibtex for patents, unpublished causes problems
  */
 
 

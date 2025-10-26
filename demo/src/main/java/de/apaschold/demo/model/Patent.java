@@ -27,7 +27,7 @@ public class Patent extends Citation {
     public String citationDetailsAsString() {
         return "Citation type: \n" + citationType.getDescription() + "\n\n" +
                 "Title: \n" + title + "\n\n" +
-                "Author(s): \n" + author + "\n\n" +
+                "Author(s): \n" + author.replaceAll("; ", "\n") + "\n\n" +
                 "Year: \n" + year + "\n\n" +
                 "URL: \n" + doi + "\n\n";
     }

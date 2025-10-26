@@ -105,7 +105,8 @@ public class CitationDetailsViewController implements Initializable {
 
     /** <h2>selectAttachedFile</h2>
      * <li>Selects and displays the attached PDF file in the PDF viewer.</li>
-     * <li>Linked to the ComboBox in "Attached Pdfs"-Tab</li>
+     * <li>Linked to the {@link ComboBox} in "Attached Pdfs"-Tab</li>
+     * <li>Checks if file name is not empty and if file exists</li>
      *
      * @throws IOException if an I/O error occurs while loading the PDF file.
      */

@@ -68,9 +68,9 @@ public class BookSectionSubViewController implements Initializable {
     private void saveChanges() throws IOException {
         if (this.bookSection != null){
             this.bookSection.setTitle( this.titleChange.getText());
-            this.bookSection.setAuthors( this.authorsChange.getText().replace("\n", ", "));
-            this.bookSection.setTitle( this.bookTitleChange.getText());
-            this.bookSection.setAuthors( this.editorsChange.getText().replace("\n", ", "));
+            this.bookSection.setAuthors( this.authorsChange.getText().replace("\n", "; "));
+            this.bookSection.setBookTitle( this.bookTitleChange.getText());
+            this.bookSection.setEditor( this.editorsChange.getText().replace("\n", "; "));
             this.bookSection.setJournal( this.publisherChange.getText());
 
             this.bookSection.setYear( MyLittleHelpers.convertStringInputToInteger(this.yearChange.getText()));

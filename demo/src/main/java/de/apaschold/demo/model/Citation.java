@@ -123,10 +123,8 @@ public abstract class Citation {
      * @param newAttachement the file path of the new attachment to be added
      */
     public void addNewAttachment(String newAttachement){
-        System.out.println(Arrays.toString(this.pdfFilePaths));
         String oldAttachmentsAsString = String.join(",", this.pdfFilePaths);
 
-        System.out.println(Arrays.toString(this.pdfFilePaths));
         if (oldAttachmentsAsString.equals(AppTexts.PLACEHOLDER)){
             this.pdfFilePaths = newAttachement.split(",");
         }
@@ -134,10 +132,14 @@ public abstract class Citation {
             oldAttachmentsAsString = oldAttachmentsAsString + "," + newAttachement;
             this.pdfFilePaths = oldAttachmentsAsString.split(",");
         }
-
-        System.out.println(Arrays.toString(this.pdfFilePaths));
     }
 
+    /**
+     * <h2>removeAttachment</h2>
+     * <li>Removes the specified attachment file path from the existing list of PDF file paths.</li>
+     *
+     * @param chosenAttachment the file path of the attachment to be removed
+     */
     public void removeAttachment(String chosenAttachment){
         String attachmentNamesAsString = String.join(",", this.pdfFilePaths);
         attachmentNamesAsString = attachmentNamesAsString.replace(chosenAttachment,"");
