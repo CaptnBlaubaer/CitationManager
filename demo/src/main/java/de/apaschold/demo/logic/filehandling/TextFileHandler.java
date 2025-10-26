@@ -1,6 +1,6 @@
 package de.apaschold.demo.logic.filehandling;
 
-import de.apaschold.demo.logic.ArticleFactory;
+import de.apaschold.demo.logic.CitationFactory;
 import de.apaschold.demo.model.Citation;
 
 import java.io.*;
@@ -62,7 +62,7 @@ public class TextFileHandler {
                 if (fileLine == null) {
                     eof = true;
                 } else {
-                    Citation citationFromCsv = ArticleFactory.createArticleReferenceFromCsvLine(fileLine);
+                    Citation citationFromCsv = CitationFactory.createCitationFromCsvLine(fileLine);
                     citations.add(citationFromCsv);
                 }
             }

@@ -1,19 +1,13 @@
 package de.apaschold.demo.gui.citationdetailsview;
 
-import com.dansoftware.pdfdisplayer.PDFDisplayer;
-import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.model.Book;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -53,7 +47,7 @@ public class BookSubViewController implements Initializable {
 
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
-        this.book = (Book) GuiController.getInstance().getSelectedArticle();
+        this.book = (Book) GuiController.getInstance().getSelectedCitation();
 
         populateBookSubView();
     }

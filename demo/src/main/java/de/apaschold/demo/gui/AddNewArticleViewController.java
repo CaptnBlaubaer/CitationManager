@@ -1,7 +1,7 @@
 package de.apaschold.demo.gui;
 
 import de.apaschold.demo.additionals.AppTexts;
-import de.apaschold.demo.logic.ArticleFactory;
+import de.apaschold.demo.logic.CitationFactory;
 import de.apaschold.demo.model.Citation;
 import de.apaschold.demo.model.CitationType;
 import javafx.fxml.FXML;
@@ -151,9 +151,9 @@ public class AddNewArticleViewController implements Initializable {
         }
         csvLine.append(AppTexts.PLACEHOLDER);
 
-        Citation newArticle = ArticleFactory.createArticleReferenceFromCsvLine(csvLine.toString());
+        Citation newArticle = CitationFactory.createCitationFromCsvLine(csvLine.toString());
 
-        GuiController.getInstance().getArticleLibrary().addArticle(newArticle);
+        GuiController.getInstance().getArticleLibrary().addCitation(newArticle);
 
         Stage stage = (Stage) newArticleType.getScene().getWindow();
         stage.close();

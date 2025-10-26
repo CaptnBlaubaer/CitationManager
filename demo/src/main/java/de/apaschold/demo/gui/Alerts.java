@@ -1,6 +1,5 @@
 package de.apaschold.demo.gui;
 
-import de.apaschold.demo.additionals.AppTexts;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
@@ -62,7 +61,7 @@ public class Alerts {
     }
 
     //5. conformation
-    public static Optional<ButtonType> showConfirmationDeleteArticle() {
+    public static Optional<ButtonType> showConfirmationDeleteCitation() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(CONFIRMATION_DELETE_ARTICLE_TITLE);
         alert.setHeaderText(CONFIRMATION_DELETE_ARTICLE_CONTENT);

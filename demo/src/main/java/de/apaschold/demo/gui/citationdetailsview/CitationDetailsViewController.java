@@ -67,7 +67,7 @@ public class CitationDetailsViewController implements Initializable {
      */
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
-        this.citation = GuiController.getInstance().getSelectedArticle();
+        this.citation = GuiController.getInstance().getSelectedCitation();
 
         populateCitationDetailsView();
 

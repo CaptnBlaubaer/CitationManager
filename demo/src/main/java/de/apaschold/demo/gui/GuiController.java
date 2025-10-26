@@ -2,7 +2,7 @@ package de.apaschold.demo.gui;
 
 import de.apaschold.demo.HelloApplication;
 import de.apaschold.demo.additionals.AppTexts;
-import de.apaschold.demo.logic.ArticleLibrary;
+import de.apaschold.demo.logic.CitationLibrary;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import de.apaschold.demo.model.Citation;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +26,7 @@ public class GuiController {
     //1. attributes
     private static GuiController instance;
     private Stage mainStage;
-    private final ArticleLibrary library;
+    private final CitationLibrary library;
     private Citation selectedArticle;
     private String activeLibraryFilePath;
     private JSONObject referenceChanges;
@@ -41,9 +41,9 @@ public class GuiController {
     private GuiController() {
         this.activeLibraryFilePath = TextFileHandler.getInstance().loadLibraryFilePath();
 
-        this.library = new ArticleLibrary( this.activeLibraryFilePath);
+        this.library = new CitationLibrary( this.activeLibraryFilePath);
 
-        this.selectedArticle = this.library.getFirstArticle();
+        this.selectedArticle = this.library.getFirstCitation();
 
         if (this.selectedArticle == null){
             setActiveLibraryFilePath(System.getProperty("user.dir"));
@@ -62,17 +62,17 @@ public class GuiController {
         this.mainStage = mainStage;
     }
 
-    public List<Citation> getArticleList() {
-        return this.library.getArticles();
+    public List<Citation> getCitationList() {
+        return this.library.getCitations();
     }
 
-    public ArticleLibrary getArticleLibrary() {
+    public CitationLibrary getArticleLibrary() {
         return this.library;
     }
 
-    public Citation getSelectedArticle() { return this.selectedArticle;}
+    public Citation getSelectedCitation() { return this.selectedArticle;}
 
-    public void setSelectedArticle(Citation selectedArticle) { this.selectedArticle = selectedArticle;}
+    public void setSelectedCitation(Citation selectedArticle) { this.selectedArticle = selectedArticle;}
 
     public String getActiveLibraryFilePath() { return this.activeLibraryFilePath;}
 
@@ -101,7 +101,7 @@ public class GuiController {
      * <h2>loadAddNewArticleView</h2>
      * Loads the view for adding a new article reference.
      */
-    public void loadAddNewArticleView() {
+    public void loadAddNewCitationView() {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("add-new-citation-view.fxml"));
         try {
             Scene scene = new Scene(fxmlLoader.load(), 320, 500);
@@ -198,7 +198,7 @@ public class GuiController {
      * Saves the current state of the active article library to the CML file.
      */
     public void saveActiveLibraryToCml(){
-        TextFileHandler.getInstance().exportLibraryToCml(this.library.getArticles(), this.activeLibraryFilePath);
+        TextFileHandler.getInstance().exportLibraryToCml(this.library.getCitations(), this.activeLibraryFilePath);
     }
 
     /**
@@ -215,8 +215,8 @@ public class GuiController {
      * <h2>deleteSelectedArticle</h2>
      * Deletes the currently selected article reference from the active article library.
      */
-    public void deleteSelectedArticle() {
-        this.library.deleteArticle(this.selectedArticle);
+    public void deleteSelectedCitation() {
+        this.library.deleteCitation(this.selectedArticle);
     }
 
     public void addNewAttachmentToArticleReference(String newAttachment) {

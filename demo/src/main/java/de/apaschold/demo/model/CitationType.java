@@ -22,12 +22,12 @@ public enum CitationType {
 
     /**
      * <h2>getArticleTypeFromBibTexImport</h2>
-     * <li>Static method to map BibTeX article type strings to ArticleType enum values.</li>
+     * <li>Static method to map BibTeX article type strings to {@link CitationType} enum values.</li>
      *
      * @param bibTexArticleType String representing the BibTeX article type
-     * @return Corresponding ArticleType enum value, or null if no match is found
+     * @return Corresponding CitationType enum value, or null if no match is found
      */
-    public static CitationType getArticleTypeFromBibTexImport(String bibTexArticleType){
+    public static CitationType getCitationTypeFromBibTexImport(String bibTexArticleType){
         CitationType returnType = null;
 
         if (bibTexArticleType.equals("@article")){
