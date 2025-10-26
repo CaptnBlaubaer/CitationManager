@@ -41,7 +41,7 @@ public class UnpublishedSubViewController implements Initializable {
 
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
-        this.unpublished = (Unpublished) GuiController.getInstance().getSelectedArticle();
+        this.unpublished = (Unpublished) GuiController.getInstance().getSelectedCitation();
 
         populateEditView();
     }

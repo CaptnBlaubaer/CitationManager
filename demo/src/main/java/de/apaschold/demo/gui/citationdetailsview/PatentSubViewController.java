@@ -1,6 +1,5 @@
 package de.apaschold.demo.gui.citationdetailsview;
 
-import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.model.Patent;
@@ -9,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -42,7 +40,7 @@ public class PatentSubViewController implements Initializable {
      */
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
-        this.patent = (Patent) GuiController.getInstance().getSelectedArticle();
+        this.patent = (Patent) GuiController.getInstance().getSelectedCitation();
 
         populateEditSubView();
     }

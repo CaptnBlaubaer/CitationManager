@@ -73,7 +73,7 @@ public class WebHandler {
     }
 
     /** <h2>getPubMedId</h2>
-     * <li>Sends a request to PubMed to search for an article using a search term and retrieves the PubMed ID.</li>
+     * <li>Sends a request to PubMed to search for an {@link de.apaschold.demo.model.JournalArticle} using a search term and retrieves the PubMed ID.</li>
      *
      * @param articlePubMedString the search term for the article
      * @return the PubMed ID as a String
@@ -83,7 +83,7 @@ public class WebHandler {
     }
 
     /** <h2>getRecordsFromPubMedId</h2>
-     * <li>Sends a request to PubMed to retrieve article records using the provided PubMed ID.</li>
+     * <li>Sends a request to PubMed to retrieve {@link de.apaschold.demo.model.JournalArticle} records using the provided PubMed ID.</li>
      * <li>Retrieves data as {@link JSONObject} and returns only results part</li>
      *
      * @param pubMedId the PubMed ID of the article

@@ -102,7 +102,7 @@ public class ReferenceUpdateViewController implements Initializable {
         this.referenceChanges =
                 getValuesFromJson(GuiController.getInstance().getReferenceChangesAsJsonObject());
 
-        this.journalArticle = (JournalArticle) GuiController.getInstance().getSelectedArticle();
+        this.journalArticle = (JournalArticle) GuiController.getInstance().getSelectedCitation();
 
         populateOldValues();
 

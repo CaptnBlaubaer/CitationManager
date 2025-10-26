@@ -63,8 +63,8 @@ public class SeleniumWebHandlerHeadless {
     //4. methods for Browser Control
     /**
      * <h2>downloadPdfFrom</h2>
-     * <li>Downloads a PDF from the given article URL using Selenium WebDriver in headless mode.</li>
-     * <li>Starts WebDriver and navigates to article URL</li>
+     * <li>Downloads a PDF from the given {@link de.apaschold.demo.model.JournalArticle} URL using Selenium WebDriver in headless mode.</li>
+     * <li>Starts WebDriver and navigates to {@link de.apaschold.demo.model.JournalArticle} URL</li>
      * <li>Based on publisher uses different procedure</li>
      *
      * @param articleURL the URL of the article to download the PDF from
