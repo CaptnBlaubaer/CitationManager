@@ -1,7 +1,7 @@
 package de.apaschold.demo.gui;
 
 import de.apaschold.demo.logic.ArticleFactory;
-import de.apaschold.demo.model.ArticleReference;
+import de.apaschold.demo.model.Citation;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
@@ -42,7 +42,7 @@ public class ImportFromBibTexViewController {
     //5. other methods
     /** <h2>importBibTex</h2>
      * <li>Parses the BibTex formatted text and adds the corresponding article references to the article library.</li>
-     * <li>Creates {@link ArticleReference} through {@link ArticleFactory}</li>
+     * <li>Creates {@link Citation} through {@link ArticleFactory}</li>
      * @param bibTexText The BibTex formatted text input.
      */
     private void importBibTex(String bibTexText) {
@@ -50,7 +50,7 @@ public class ImportFromBibTexViewController {
 
         for (String singleImport : separatedImports) {
             if (!singleImport.isEmpty()) {
-                ArticleReference importedArticle = ArticleFactory.createArticleFromBibTex(singleImport);
+                Citation importedArticle = ArticleFactory.createArticleFromBibTex(singleImport);
                 GuiController.getInstance().getArticleLibrary().addArticle(importedArticle);
             }
         }

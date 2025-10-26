@@ -7,7 +7,7 @@ import de.apaschold.demo.additionals.AppTexts;
  * <li>Represents a PhD thesis article reference, extending the ArticleReference class.</li>
  */
 
-public class PhdThesis extends ArticleReference {
+public class PhdThesis extends Citation {
     //0. constants
 
     //1. attributes

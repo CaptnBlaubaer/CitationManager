@@ -2,7 +2,7 @@ package de.apaschold.demo.gui;
 
 import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.logic.ArticleFactory;
-import de.apaschold.demo.model.ArticleReference;
+import de.apaschold.demo.model.Citation;
 import de.apaschold.demo.model.ArticleType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -151,7 +151,7 @@ public class AddNewArticleViewController implements Initializable {
         }
         csvLine.append(AppTexts.PLACEHOLDER);
 
-        ArticleReference newArticle = ArticleFactory.createArticleReferenceFromCsvLine(csvLine.toString());
+        Citation newArticle = ArticleFactory.createArticleReferenceFromCsvLine(csvLine.toString());
 
         GuiController.getInstance().getArticleLibrary().addArticle(newArticle);
 

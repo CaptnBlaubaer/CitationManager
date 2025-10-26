@@ -12,6 +12,8 @@ import java.io.IOException;
   TODO export functionality to bibtex
   TODO import of empty fields cause problems
   TODO rename articlereference to Citation
+  TODO delete pdf file, when citation is deleted
+  TODO delete pdf file from Viewer, when delete attachement
  */
 
 

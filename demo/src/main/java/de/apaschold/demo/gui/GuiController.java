@@ -4,7 +4,7 @@ import de.apaschold.demo.HelloApplication;
 import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.logic.ArticleLibrary;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
-import de.apaschold.demo.model.ArticleReference;
+import de.apaschold.demo.model.Citation;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -27,7 +27,7 @@ public class GuiController {
     private static GuiController instance;
     private Stage mainStage;
     private final ArticleLibrary library;
-    private ArticleReference selectedArticle;
+    private Citation selectedArticle;
     private String activeLibraryFilePath;
     private JSONObject referenceChanges;
 
@@ -62,7 +62,7 @@ public class GuiController {
         this.mainStage = mainStage;
     }
 
-    public List<ArticleReference> getArticleList() {
+    public List<Citation> getArticleList() {
         return this.library.getArticles();
     }
 
@@ -70,9 +70,9 @@ public class GuiController {
         return this.library;
     }
 
-    public ArticleReference getSelectedArticle() { return this.selectedArticle;}
+    public Citation getSelectedArticle() { return this.selectedArticle;}
 
-    public void setSelectedArticle(ArticleReference selectedArticle) { this.selectedArticle = selectedArticle;}
+    public void setSelectedArticle(Citation selectedArticle) { this.selectedArticle = selectedArticle;}
 
     public String getActiveLibraryFilePath() { return this.activeLibraryFilePath;}
 

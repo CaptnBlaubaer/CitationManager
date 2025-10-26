@@ -28,23 +28,6 @@ public class BookSubViewController implements Initializable {
 
     //1. attributes
     private Book book;
-    private PDFDisplayer displayer;
-
-    //2. FXML elements
-    @FXML
-    private Label articleType;
-    @FXML
-    private Label title;
-    @FXML
-    private Label authors;
-    @FXML
-    private Label publisher;
-    @FXML
-    private Label year;
-    @FXML
-    private Label volume;
-    @FXML
-    private Label doi;
 
     @FXML
     private TextField titleChange;
@@ -58,11 +41,6 @@ public class BookSubViewController implements Initializable {
     private TextField volumeChange;
     @FXML
     private TextField doiChange;
-
-    @FXML
-    private ComboBox<String> attachedFiles;
-    @FXML
-    private BorderPane pdfViewer;
 
     //3. constructors/initialize method
     /** <h2>initialize</h2>
@@ -78,9 +56,6 @@ public class BookSubViewController implements Initializable {
         this.book = (Book) GuiController.getInstance().getSelectedArticle();
 
         populateBookSubView();
-
-        this.displayer = new PDFDisplayer();
-        this.pdfViewer.setCenter(displayer.toNode());
     }
 
     //4. FXML methods
@@ -107,25 +82,9 @@ public class BookSubViewController implements Initializable {
         }
     }
 
-    /** <h2>selectAttachedFile</h2>
-     * <li>Loads the selected attached PDF file into the PDF viewer.</li>
-     * @throws IOException if an I/O error occurs while loading the PDF file.
-     */
-
-    @FXML
-    private void selectAttachedFile() throws IOException{
-        //replace file format by the folder extension
-        String folderPath = GuiController.getInstance().getActiveLibraryFilePath()
-                .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.PDF_FOLDER_EXTENSION);
-
-        String filePath = folderPath + this.attachedFiles.getValue();
-
-        displayer.loadPDF(new File(filePath));
-    }
-
     //5. other methods
     /** <h2>populateBookSubView</h2>
-     * <li>Populates the journal article view with the details of the selected journal article.</li>
+     * <li>Populates the book edit view with the details of the selected {@link Book}.</li>
      * <li>Calls methods for each Tab</li>
      */
     public void populateBookSubView(){
@@ -139,38 +98,6 @@ public class BookSubViewController implements Initializable {
             volumeAsString = String.valueOf(this.book.getVolume());
         }
 
-        //populate the labels in the article overview
-        populateArticleOverviewTab(yearAsString, volumeAsString);
-
-        //populate the textfields in the article edit view
-        populateArticleEditTab(yearAsString, volumeAsString);
-
-        populatePDFViewerTab();
-    }
-
-    /** <h2>populateArticleOverviewTab</h2>
-     * <li>Populates the article overview tab with the book's details.</li>
-     * @param yearAsString The year of publication as a string.
-     * @param volumeAsString The volume number as a string.
-     */
-
-    private void populateArticleOverviewTab(String yearAsString, String volumeAsString) {
-        this.articleType.setText("Type: " + this.book.getArticleType().getDescription());
-        this.title.setText("Title: " + this.book.getTitle());
-        this.authors.setText("Authors: " + this.book.getAuthor().replace("; ", "\n"));
-        this.publisher.setText("Publisher: " + this.book.getJournal());
-        this.year.setText("Year: " + yearAsString);
-        this.volume.setText("Volume: " + volumeAsString);
-        this.doi.setText("DOI: " + this.book.getDoi());
-    }
-
-    /** <h2>populateArticleEditTab</h2>
-     * <li>Populates the article edit tab with the book's details.</li>
-     * @param yearAsString The year of publication as a string.
-     * @param volumeAsString The volume number as a string.
-     */
-
-    private void populateArticleEditTab(String yearAsString,String volumeAsString) {
         this.titleChange.setText(this.book.getTitle());
         this.authorsChange.setText(this.book.getAuthor().replace("; ", "\n"));
         this.publisherChange.setText(this.book.getJournal());
@@ -178,12 +105,6 @@ public class BookSubViewController implements Initializable {
         this.volumeChange.setText(volumeAsString);
         this.doiChange.setText(this.book.getDoi());
     }
-
-    /** <h2>populatePDFViewerTab</h2>
-     * <li>Populates the PDF viewer tab with the attached PDF files of the book.</li>
-     */
-
-    private void populatePDFViewerTab(){
-        this.attachedFiles.getItems().setAll(this.book.getPdfFilePaths());
-    }
 }
+
+

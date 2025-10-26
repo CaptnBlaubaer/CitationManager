@@ -7,7 +7,7 @@ import de.apaschold.demo.additionals.AppTexts;
  * <li>Represents an unpublished article reference, extending the ArticleReference class.</li>
  */
 
-public class Unpublished extends ArticleReference {
+public class Unpublished extends Citation {
     //0. constants
 
     //1. attributes

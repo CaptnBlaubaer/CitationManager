@@ -7,7 +7,7 @@ import de.apaschold.demo.additionals.AppTexts;
  * <li>Represents a patent article reference, extending the ArticleReference class.</li>
  */
 
-public class Patent extends ArticleReference {
+public class Patent extends Citation {
     //0. constants
 
     //1. attributes

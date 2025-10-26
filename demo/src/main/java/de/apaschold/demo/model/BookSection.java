@@ -6,7 +6,7 @@ import de.apaschold.demo.additionals.AppTexts;
  * <h2>BookSection</h2>
  * <li>Represents a book section (chapter) article reference, extending the ArticleReference class.</li>
  */
-public class BookSection extends ArticleReference {
+public class BookSection extends Citation {
     //0. constants
 
     //1. attributes

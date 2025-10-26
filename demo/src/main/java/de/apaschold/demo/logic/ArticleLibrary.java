@@ -1,7 +1,7 @@
 package de.apaschold.demo.logic;
 
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
-import de.apaschold.demo.model.ArticleReference;
+import de.apaschold.demo.model.Citation;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public class ArticleLibrary {
     //0. constants
 
     //1. attributes
-    private List<ArticleReference> articles;
+    private List<Citation> articles;
 
     //2. constructors
     /**
@@ -23,22 +23,22 @@ public class ArticleLibrary {
     }
 
     //3. getter and setter methods
-    public List<ArticleReference> getArticles() {
+    public List<Citation> getArticles() {
         return this.articles;
     }
 
-    public ArticleReference getFirstArticle(){ return this.articles.isEmpty() ? null : this.articles.getFirst();}
+    public Citation getFirstArticle(){ return this.articles.isEmpty() ? null : this.articles.getFirst();}
 
     public boolean isEmpty(){ return this.articles.isEmpty();}
 
     //4. methods to modify list
     public void clear(){ this.articles.clear();}
 
-    public void addArticle(ArticleReference article){
+    public void addArticle(Citation article){
         this.articles.add(article);
     }
 
-    public void deleteArticle(ArticleReference article){ this.articles.remove(article);}
+    public void deleteArticle(Citation article){ this.articles.remove(article);}
 
     //5. export/import methods
     /**
@@ -50,7 +50,7 @@ public class ArticleLibrary {
     public String generateStringForBibTex (){
         StringBuilder libraryAsBibTex = new StringBuilder();
 
-        for(ArticleReference reference : this.articles) {
+        for(Citation reference : this.articles) {
             System.out.println("Exporting article: " + reference.getTitle());
             libraryAsBibTex.append(reference.exportAsBibTexString()).append("\n\n");
         }

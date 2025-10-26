@@ -3,7 +3,7 @@ package de.apaschold.demo.gui;
 import de.apaschold.demo.HelloApplication;
 import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
-import de.apaschold.demo.model.ArticleReference;
+import de.apaschold.demo.model.Citation;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,15 +34,15 @@ public class MainViewController implements Initializable {
 
     //2. FXML elements
     @FXML
-    private TableView<ArticleReference> articlesTable;
+    private TableView<Citation> articlesTable;
     @FXML
-    private TableColumn<ArticleReference, String> titleColumn;
+    private TableColumn<Citation, String> titleColumn;
     @FXML
-    private TableColumn<ArticleReference, String> authorsColumn;
+    private TableColumn<Citation, String> authorsColumn;
     @FXML
-    private TableColumn<ArticleReference, String> journalColumn;
+    private TableColumn<Citation, String> journalColumn;
     @FXML
-    private TableColumn<ArticleReference, Integer> yearColumn;
+    private TableColumn<Citation, Integer> yearColumn;
 
     @FXML
     private BorderPane articleView;
@@ -54,7 +54,7 @@ public class MainViewController implements Initializable {
     /**
      * <h2>initialize</h2>
      * <li>Sets up {@link TableView}</li>
-     * <li>Sets up {@link ArticleReference} view</li>
+     * <li>Sets up {@link Citation} view</li>
      * <li>Displays the active library file path in the upper </li>
      */
     @Override
@@ -193,7 +193,7 @@ public class MainViewController implements Initializable {
      * <li>Adds a selection listener to update the article view when an article is selected.</li>
      */
     protected void populateTable(){
-        List<ArticleReference> articles = GuiController.getInstance().getArticleList();
+        List<Citation> articles = GuiController.getInstance().getArticleList();
 
         this.articlesTable.getItems().clear();
 
@@ -211,7 +211,7 @@ public class MainViewController implements Initializable {
         this.articlesTable.getSelectionModel().selectedItemProperty().addListener(getSelectionListener());
     }
 
-    private ChangeListener<ArticleReference> getSelectionListener(){
+    private ChangeListener<Citation> getSelectionListener(){
         return (observable, oldArticle, newArticle) -> {
             GuiController.getInstance().setSelectedArticle(newArticle);
 
@@ -225,10 +225,10 @@ public class MainViewController implements Initializable {
      * <li>Dynamically loads the appropriate FXML subview for the article type.</li>
      */
     public void populateArticleView(){
-        ArticleReference selectedArticle = GuiController.getInstance().getSelectedArticle();
+        //Citation selectedArticle = GuiController.getInstance().getSelectedArticle();
 
-        if (selectedArticle != null) {
-            String fxmlFile = switch (selectedArticle.getArticleType()) {
+        if (GuiController.getInstance().getSelectedArticle() != null) {
+            /*String fxmlFile = switch (selectedArticle.getArticleType()) {
                 case JOURNAL_ARTICLE -> "journal-article-subview.fxml";
                 case BOOK_SECTION -> "book-section-subview.fxml";
                 case BOOK -> "book-subview.fxml";
@@ -236,16 +236,16 @@ public class MainViewController implements Initializable {
                 case PATENT -> "patent-subview.fxml";
                 case UNPUBLISHED -> "unpublished-subview.fxml";
                 default -> "";
-            };
+            };*/
 
-            if (!fxmlFile.isEmpty()) {
+            //if (!fxmlFile.isEmpty()) {
                 try {
-                    Parent articleDetailsView = FXMLLoader.load(HelloApplication.class.getResource(fxmlFile));
+                    Parent articleDetailsView = FXMLLoader.load(HelloApplication.class.getResource("main-citation-details-view.fxml"));
                     this.articleView.setCenter(articleDetailsView);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
+            //}
         }
     }
 }

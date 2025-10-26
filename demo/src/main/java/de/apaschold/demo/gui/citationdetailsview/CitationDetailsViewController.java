@@ -1,20 +1,22 @@
 package de.apaschold.demo.gui.citationdetailsview;
 
 import com.dansoftware.pdfdisplayer.PDFDisplayer;
+import de.apaschold.demo.HelloApplication;
 import de.apaschold.demo.additionals.AppTexts;
-import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.Alerts;
 import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.logic.filehandling.FileHandler;
 import de.apaschold.demo.logic.filehandling.SeleniumWebHandlerHeadless;
 import de.apaschold.demo.logic.filehandling.WebHandler;
+import de.apaschold.demo.model.Citation;
 import de.apaschold.demo.model.JournalArticle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -35,54 +37,25 @@ public class CitationDetailsViewController implements Initializable {
     //0. constants
 
     //1. attributes
-    private JournalArticle journalArticle;
+    private Citation citation;
     private PDFDisplayer displayer;
 
     //2. FXML elements
     @FXML
-    private Label articleType;
-    @FXML
-    private Label title;
-    @FXML
-    private Label authors;
-    @FXML
-    private Label journal;
-    @FXML
-    private Label journalShortForm;
-    @FXML
-    private Label year;
-    @FXML
-    private Label volume;
-    @FXML
-    private Label issue;
-    @FXML
-    private Label  pages;
-    @FXML
-    private Label doi;
+    private Label citationDetails;
 
     @FXML
-    private TextField titleChange;
-    @FXML
-    private TextArea authorsChange;
-    @FXML
-    private TextField journalChange;
-    @FXML
-    private TextField journalShortFormChange;
-    @FXML
-    private TextField yearChange;
-    @FXML
-    private TextField volumeChange;
-    @FXML
-    private TextField issueChange;
-    @FXML
-    private TextField pagesChange;
-    @FXML
-    private TextField doiChange;
+    private BorderPane editTab;
 
     @FXML
     private ComboBox<String> attachedFiles;
     @FXML
     private BorderPane pdfViewer;
+
+    @FXML
+    private Button updateCitationButton;
+    @FXML
+    private Button searchPDFButton;
 
     //3. constructors/initialize method
     /**<h2>initialize</h2>
@@ -94,9 +67,9 @@ public class CitationDetailsViewController implements Initializable {
      */
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
-        this.journalArticle = (JournalArticle) GuiController.getInstance().getSelectedArticle();
+        this.citation = GuiController.getInstance().getSelectedArticle();
 
-        populateJournalArticleView();
+        populateCitationDetailsView();
 
         this.displayer = new PDFDisplayer();
         this.pdfViewer.setCenter(displayer.toNode());
@@ -113,7 +86,7 @@ public class CitationDetailsViewController implements Initializable {
 
     @FXML
     private void checkForUpdates() throws IOException {
-        String pubMedString = this.journalArticle.createPubMedSearchTerm();
+        String pubMedString = this.citation.createPubMedSearchTerm();
 
         //returned String is %journal_title|year|||author_last_name|Art1|pub_med_id
         String pubMedId = WebHandler.getInstance().getPubMedId(pubMedString).split("Art1\\|")[1];
@@ -126,34 +99,6 @@ public class CitationDetailsViewController implements Initializable {
             GuiController.getInstance().loadMainMenu();
         } else {
             Alerts.showInformationRecordNotFound();
-        }
-    }
-
-    @FXML
-    /** <h2>saveChanges</h2>
-     * <li>Saves the changes made to the journal article reference manually.</li>
-     * <li>Updates the data in the MainView </li>
-     * <li>Linked to the Button in "Edit"-Tab</li>
-     *
-     * @throws IOException if an I/O error occurs during the save process.
-     */
-
-    private void saveChanges() throws IOException {
-        if (this.journalArticle != null){
-            this.journalArticle.setTitle( this.titleChange.getText());
-            this.journalArticle.setAuthors( this.authorsChange.getText().replace("\n", ", "));
-            this.journalArticle.setJournal( this.journalChange.getText());
-            this.journalArticle.setJournalShortForm( this.journalShortFormChange.getText());
-
-            this.journalArticle.setYear( MyLittleHelpers.convertStringInputToInteger(this.yearChange.getText()));
-            this.journalArticle.setVolume( MyLittleHelpers.convertStringInputToInteger(this.volumeChange.getText()));
-            this.journalArticle.setIssue( MyLittleHelpers.convertStringInputToInteger(this.issueChange.getText()));
-
-            this.journalArticle.setPages(this.pagesChange.getText());
-            this.journalArticle.setDoi(this.doiChange.getText());
-
-            //update the labels in the article overview
-            GuiController.getInstance().loadMainMenu();
         }
     }
 
@@ -211,10 +156,10 @@ public class CitationDetailsViewController implements Initializable {
         String chosenAttachment = this.attachedFiles.getValue();
 
         if (chosenAttachment != null){
-            String attachmentNamesAsString = String.join(",", this.journalArticle.getPdfFilePaths());
+            String attachmentNamesAsString = String.join(",", this.citation.getPdfFilePaths());
             attachmentNamesAsString = attachmentNamesAsString.replace(chosenAttachment,"");
 
-            this.journalArticle.setPdfFilePath(attachmentNamesAsString.split(","));
+            this.citation.setPdfFilePath(attachmentNamesAsString.split(","));
 
             populatePDFViewerTab();
 
@@ -234,7 +179,7 @@ public class CitationDetailsViewController implements Initializable {
     @FXML
     protected void searchPdfFile(){
         try {
-            SeleniumWebHandlerHeadless.getInstance().downloadPdfFrom(AppTexts.HTTPS_FOR_DOI + this.journalArticle.getDoi());
+            SeleniumWebHandlerHeadless.getInstance().downloadPdfFrom(AppTexts.HTTPS_FOR_DOI + this.citation.getDoi());
 
             String latestAddedFile = FileHandler.getInstance().determineLatestAddedFile();
             GuiController.getInstance().addNewAttachmentToArticleReference(latestAddedFile);
@@ -246,81 +191,56 @@ public class CitationDetailsViewController implements Initializable {
     }
 
     //5. other methods
-    /** <h2>populateJournalArticleView</h2>
-     * <li>Populates the journal article view with the details of the selected journal article.</li>
+    /** <h2>populateCitationDetailsView</h2>
+     * <li>Populates the citation details view with the details of the selected {@link Citation}.</li>
      * <li>Calls methods for each Tab</li>
+     * <li>Activates/Hide buttons</li>
      */
 
-    public void populateJournalArticleView(){
-        String yearAsString = "-";
-        if (this.journalArticle.getYear() != 0){
-            yearAsString = String.valueOf(this.journalArticle.getYear());
-        }
-
-        String volumeAsString = "-";
-        if (this.journalArticle.getVolume() != 0){
-            volumeAsString = String.valueOf(this.journalArticle.getVolume());
-        }
-
-        String issueAsString = "-";
-        if (this.journalArticle.getIssue() != 0){
-            issueAsString = String.valueOf(this.journalArticle.getIssue());
-        }
-
+    public void populateCitationDetailsView(){
         //populate the labels in the article overview
-        populateArticleOverviewTab(yearAsString, volumeAsString, issueAsString);
+        this.citationDetails.setText(this.citation.citationDetailsAsString());
 
         //populate the textfields in the article edit view
-        populateArticleEditTab(yearAsString, volumeAsString, issueAsString);
+        populateCitationEditTab();
 
         populatePDFViewerTab();
+
+        //activate/deactivate buttons
+        if (this.citation instanceof JournalArticle){
+            this.searchPDFButton.setVisible(true);
+            this.updateCitationButton.setVisible(true);
+        } else {
+            this.searchPDFButton.setVisible(false);
+            this.updateCitationButton.setVisible(false);
+        }
     }
 
-    /** <h2>populateArticleOverviewTab</h2>
-     * <li>Populates the article overview tab with the details of the journal article.</li>
-     *
-     * @param yearAsString   The year of publication as a string.
-     * @param volumeAsString The volume number as a string.
-     * @param issueAsString  The issue number as a string.
-     */
+    private void populateCitationEditTab() {
+        String fxmlFile = switch (this.citation.getArticleType()) {
+                case JOURNAL_ARTICLE -> "journal-article-subview.fxml";
+                case BOOK_SECTION -> "book-section-subview.fxml";
+                case BOOK -> "book-subview.fxml";
+                case THESIS -> "phd-thesis-subview.fxml";
+                case PATENT -> "patent-subview.fxml";
+                case UNPUBLISHED -> "unpublished-subview.fxml";
+                default -> "";
+            };
 
-    private void populateArticleOverviewTab(String yearAsString, String volumeAsString, String issueAsString) {
-        this.articleType.setText("Type: " + this.journalArticle.getArticleType().getDescription());
-        this.title.setText("Title: " + this.journalArticle.getTitle());
-        this.authors.setText("Authors: " + this.journalArticle.getAuthor().replace("; ", "\n"));
-        this.journal.setText("Journal: " + this.journalArticle.getJournal());
-        this.journalShortForm.setText("Journal abbreviation: " + this.journalArticle.getJournalShortForm());
-        this.year.setText("Year: " + yearAsString);
-        this.volume.setText("Volume: " + volumeAsString);
-        this.issue.setText("Issue: " + issueAsString);
-        this.pages.setText("Pages: " + this.journalArticle.getPages());
-        this.doi.setText("DOI: " + this.journalArticle.getDoi());
-    }
-
-    /** <h2>populateArticleEditTab</h2>
-     * <li>Populates the article edit tab with the details of the journal article.</li>
-     *
-     * @param yearAsString   The year of publication as a string.
-     * @param volumeAsString The volume number as a string.
-     * @param issueAsString  The issue number as a string.
-     */
-
-    private void populateArticleEditTab(String yearAsString,String volumeAsString,String issueAsString) {
-        this.titleChange.setText(this.journalArticle.getTitle());
-        this.authorsChange.setText(this.journalArticle.getAuthor().replace("; ", "\n"));
-        this.journalChange.setText(this.journalArticle.getJournal());
-        this.journalShortFormChange.setText(this.journalArticle.getJournalShortForm());
-        this.yearChange.setText(yearAsString);
-        this.volumeChange.setText(volumeAsString);
-        this.issueChange.setText(issueAsString);
-        this.pagesChange.setText(this.journalArticle.getPages());
-        this.doiChange.setText(this.journalArticle.getDoi());
+        if (!fxmlFile.isEmpty()) {
+            try {
+                Parent citationEditView = FXMLLoader.load(HelloApplication.class.getResource(fxmlFile));
+                this.editTab.setCenter(citationEditView);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /** <h2>populatePDFViewerTab</h2>
      * <li>Populates the PDF viewer tab with the attached PDF files of the journal article.</li>
      */
     private void populatePDFViewerTab(){
-        this.attachedFiles.getItems().setAll(this.journalArticle.getPdfFilePaths());
+        this.attachedFiles.getItems().setAll(this.citation.getPdfFilePaths());
     }
 }

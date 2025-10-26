@@ -6,15 +6,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.util.Arrays;
-
 /**
  * <h2>ArticleReference</h2>
  * <li>Abstract superclass for different types of article references (e.g., JournalArticle, BookArticle).</li>
  * <li>Holds common attributes and methods for article references.</li>
  */
 
-public abstract class ArticleReference {
+public abstract class Citation {
     //0. constants
 
     //1. attributes
@@ -27,7 +25,7 @@ public abstract class ArticleReference {
     protected String[] pdfFilePath;
 
     //2. constructors
-    public ArticleReference() {
+    public Citation() {
         this.title = AppTexts.PLACEHOLDER;
         this.author = AppTexts.PLACEHOLDER;
         this.journal = AppTexts.PLACEHOLDER;
@@ -36,7 +34,7 @@ public abstract class ArticleReference {
         this.pdfFilePath = AppTexts.PLACEHOLDER.split(",");
     }
 
-    public ArticleReference(ArticleType type, String title, String author, String journal, int year, String doi, String pdfFilePath) {
+    public Citation(ArticleType type, String title, String author, String journal, int year, String doi, String pdfFilePath) {
         this.articleType = type;
         this.title = title;
         this.author = author;
@@ -92,7 +90,11 @@ public abstract class ArticleReference {
     //4. other methods
     public String toCsvString(){ return "";}
 
+    public String citationDetailsAsString(){ return "";}
+
     public String exportAsBibTexString(){ return "";}
+
+    public String createPubMedSearchTerm(){ return "";}
 
     /**
      * <h2>createBibTexReference</h2>

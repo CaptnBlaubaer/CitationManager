@@ -7,7 +7,7 @@ import de.apaschold.demo.additionals.AppTexts;
  * <li>Represents a journal article reference, extending the ArticleReference class.</li>
  */
 
-public class JournalArticle extends ArticleReference {
+public class JournalArticle extends Citation {
     //0. constants
 
     //1. attributes
@@ -69,20 +69,17 @@ public class JournalArticle extends ArticleReference {
     //4. other methods
 
     @Override
-    public String toString() {
-        return "ArticleInfo{" +
-                "type='" + articleType + '\'' +
-                ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", journal='" + journal + '\'' +
-                ", journalShortForm='" + journalShortForm + '\'' +
-                ", year=" + year +
-                ", volume=" + volume +
-                ", issue=" + issue +
-                ", pages=" + pages +
-                ", doi='" + doi + '\'' +
-                ", pdfFilePath='" + String.join(",",pdfFilePath) + '\'' +
-                '}';
+    public String citationDetailsAsString() {
+        return "Citation type: \n" + articleType.getDescription() + "\n\n" +
+                "Title: \n" + title + "\n\n" +
+                "Author(s): \n" + author + "\n\n" +
+                "Journal: \n" + journal + "\n\n" +
+                "Journal abbreviation: \n" + journalShortForm + "\n\n" +
+                "Year: \n" + year + "\n\n" +
+                "Volume: \n" + volume + "\n\n" +
+                "Issue: \n" + issue + "\n\n" +
+                "Pages: \n" + pages + "\n\n" +
+                "DOI: \n" + doi + "\n\n";
     }
 
     public String toCsvString(){

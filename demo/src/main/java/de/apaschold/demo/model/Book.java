@@ -6,7 +6,7 @@ import de.apaschold.demo.additionals.AppTexts;
  * <h2>Book</h2>
  * <li>Represents a book article reference, extending the ArticleReference class.</li>
  */
-public class Book extends ArticleReference {
+public class Book extends Citation {
     //0. constants
 
     //1. attributes
@@ -31,17 +31,14 @@ public class Book extends ArticleReference {
     //4. other methods
 
     @Override
-    public String toString() {
-        return "ArticleInfo{" +
-                "type='" + articleType + '\'' +
-                ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", publisher='" + journal + '\'' +
-                ", year=" + year +
-                ", volume=" + volume +
-                ", doi='" + doi + '\'' +
-                ", pdfFilePath='" + String.join(",",pdfFilePath) + '\'' +
-                '}';
+    public String citationDetailsAsString() {
+        return "Citation type: \n" + articleType.getDescription() + "\n\n" +
+                "Title: \n" + title + "\n\n" +
+                "Author(s): \n" + author + "\n\n" +
+                "Publisher: \n" + journal + "\n\n" +
+                "Year: \n" + year + "\n\n" +
+                "Volume: \n" + volume + "\n\n" +
+                "DOI: \n" + doi + "\n\n";
     }
 
     @Override

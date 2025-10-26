@@ -7,7 +7,7 @@ import de.apaschold.demo.model.*;
 
 /**
  * <h2>ArticleFactory</h2>
- * <p>Factory class for creating {@link ArticleReference} objects from different input formats.</p>
+ * <p>Factory class for creating {@link Citation} objects from different input formats.</p>
  */
 
 public class ArticleFactory {
@@ -35,18 +35,18 @@ public class ArticleFactory {
     //methods for csv
     /**
      * <h2>createArticleReferenceFromCsvLine</h2>
-     * <li>Creates an {@link ArticleReference} object from a CSV line.</li>
+     * <li>Creates an {@link Citation} object from a CSV line.</li>
      * <li>Chooses dynamically method for the respective article Type</li>
      *
      * @param csvLine the CSV line containing article details
-     * @return the created {@link ArticleReference} object
+     * @return the created {@link Citation} object
      */
-    public static ArticleReference createArticleReferenceFromCsvLine(String csvLine){
+    public static Citation createArticleReferenceFromCsvLine(String csvLine){
         String[] separatedCsvLine = csvLine.split(";");
 
         ArticleType type = ArticleType.valueOf(separatedCsvLine[0]);
 
-        ArticleReference newArticle = switch (type) {
+        Citation newArticle = switch (type) {
             case JOURNAL_ARTICLE -> createJournalArticleFromCsvLine(separatedCsvLine);
             case BOOK -> createBookFromCsvLine(separatedCsvLine);
             case BOOK_SECTION ->  createBookSectionFromCsvLine(separatedCsvLine);
@@ -128,7 +128,7 @@ public class ArticleFactory {
      * @param separatedCsvLine the CSV line containing article details, already split into an array
      * @return the created {@link PhdThesis} object
      */
-    private static ArticleReference createPhdThesisFromCsvLine(String[] separatedCsvLine) {
+    private static Citation createPhdThesisFromCsvLine(String[] separatedCsvLine) {
         String title = separatedCsvLine[1];
         String authors = separatedCsvLine[2].replace(" and ", "; ");
         int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[3]);
@@ -144,7 +144,7 @@ public class ArticleFactory {
      * @param separatedCsvLine the CSV line containing article details, already split into an array
      * @return the created {@link Patent} object
      */
-    private static ArticleReference createPatentFromCsvLine(String[] separatedCsvLine) {
+    private static Citation createPatentFromCsvLine(String[] separatedCsvLine) {
         String title = separatedCsvLine[1];
         String authors = separatedCsvLine[2].replace(" and ", "; ");
         int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[3]);
@@ -160,7 +160,7 @@ public class ArticleFactory {
      * @param separatedCsvLine the CSV line containing article details, already split into an array
      * @return the created {@link Unpublished} object
      */
-    private static ArticleReference createUnpublishedFromCsvLine(String[] separatedCsvLine) {
+    private static Citation createUnpublishedFromCsvLine(String[] separatedCsvLine) {
         String title = separatedCsvLine[1];
         String authors = separatedCsvLine[2].replace(" and ", "; ");
         int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[3]);
@@ -171,20 +171,20 @@ public class ArticleFactory {
     //methods for BibTex
     /**
      * <h2>createArticleFromBibTex</h2>
-     * <li>Creates an {@link ArticleReference} object from a BibTex text.</li>
+     * <li>Creates an {@link Citation} object from a BibTex text.</li>
      * <li>Chooses dynamically method for the respective article Type</li>
      *
      * @param bibTexText the BibTex text containing article details
-     * @return the created {@link ArticleReference} object
+     * @return the created {@link Citation} object
      */
-    public static ArticleReference createArticleFromBibTex(String bibTexText){
+    public static Citation createArticleFromBibTex(String bibTexText){
         String[] articleTypeAndDetails = bibTexText.split("\\{", 2); //
 
         ArticleType importedArticleType = ArticleType.getArticleTypeFromBibTexImport(articleTypeAndDetails[0]);
 
         String[] articleDetails = articleTypeAndDetails[1].split("\n");
 
-        ArticleReference importedArticle = switch (importedArticleType) {
+        Citation importedArticle = switch (importedArticleType) {
             case JOURNAL_ARTICLE -> createJournalArticleFromBibTex(articleDetails);
             case BOOK -> createBookFromBibTex(articleDetails);
             case BOOK_SECTION -> createBookSectionFromBibTex(articleDetails);
@@ -204,7 +204,7 @@ public class ArticleFactory {
      * @param articleDetails the BibTex text containing article details, already split into an array
      * @return the created {@link JournalArticle} object
      */
-    private static ArticleReference createJournalArticleFromBibTex(String[] articleDetails) {
+    private static Citation createJournalArticleFromBibTex(String[] articleDetails) {
         JournalArticle importedJournalArticle = new JournalArticle();
 
         for (String rawDetail : articleDetails){
@@ -247,7 +247,7 @@ public class ArticleFactory {
      * @param articleDetails the BibTex text containing article details, already split into an array
      * @return the created {@link Book} object
      */
-    private static ArticleReference createBookFromBibTex(String[] articleDetails) {
+    private static Citation createBookFromBibTex(String[] articleDetails) {
         Book importedBook = new Book();
 
         for (String rawDetail : articleDetails){
@@ -284,7 +284,7 @@ public class ArticleFactory {
      * @param articleDetails the BibTex text containing article details, already split into an array
      * @return the created {@link BookSection} object
      */
-    private static ArticleReference createBookSectionFromBibTex(String[] articleDetails) {
+    private static Citation createBookSectionFromBibTex(String[] articleDetails) {
         BookSection importedBookSection = new BookSection();
 
         for (String rawDetail : articleDetails){
@@ -330,7 +330,7 @@ public class ArticleFactory {
      * @param articleDetails the BibTex text containing article details, already split into an array
      * @return the created {@link PhdThesis} object
      */
-    private static ArticleReference createPhdThesisFromBibTex(String[] articleDetails) {
+    private static Citation createPhdThesisFromBibTex(String[] articleDetails) {
         PhdThesis importedPhdThesis = new PhdThesis();
 
         for (String rawDetail : articleDetails){
@@ -361,7 +361,7 @@ public class ArticleFactory {
      * @param articleDetails the BibTex text containing article details, already split into an array
      * @return the created {@link Patent} object
      */
-    private static ArticleReference createPatentFromBibTex(String[] articleDetails) {
+    private static Citation createPatentFromBibTex(String[] articleDetails) {
         Patent importedPatent = new Patent();
 
         for (String rawDetail : articleDetails){
@@ -392,7 +392,7 @@ public class ArticleFactory {
      * @param articleDetails the BibTex text containing article details, already split into an array
      * @return the created {@link Unpublished} object
      */
-    private static ArticleReference createUnpublishedFromBibTex(String[] articleDetails) {
+    private static Citation createUnpublishedFromBibTex(String[] articleDetails) {
         Unpublished importedUnpublished = new Unpublished();
 
         for (String rawDetail : articleDetails){

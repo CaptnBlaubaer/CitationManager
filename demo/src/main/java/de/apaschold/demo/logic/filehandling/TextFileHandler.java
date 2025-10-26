@@ -1,7 +1,7 @@
 package de.apaschold.demo.logic.filehandling;
 
 import de.apaschold.demo.logic.ArticleFactory;
-import de.apaschold.demo.model.ArticleReference;
+import de.apaschold.demo.model.Citation;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -35,19 +35,19 @@ public class TextFileHandler {
     //3. read'n'write methods
     /**
      * <h2>importLibraryFromCsvFile</h2>
-     * <li>Reads a text file and returns its content as a list of {@link ArticleReference}.</li>
+     * <li>Reads a text file and returns its content as a list of {@link Citation}.</li>
      * <li>If there isn't an active library (filePath == null), default library is loaded.</li>
      *
      * @param filePath of the active library as String
      * @return a list of articles resembling the lines of the file
      */
-    public List<ArticleReference> importLibraryFromCmlFile(String filePath) {
+    public List<Citation> importLibraryFromCmlFile(String filePath) {
 
         if (filePath == null) {
             filePath = DEFAULT_LIBRARY_FILE_PATH;
         }
 
-        List<ArticleReference> articleReferences = new ArrayList<>();
+        List<Citation> citations = new ArrayList<>();
 
         File file = new File(filePath);
 
@@ -62,8 +62,8 @@ public class TextFileHandler {
                 if (fileLine == null) {
                     eof = true;
                 } else {
-                    ArticleReference articleReferenceFromCsv = ArticleFactory.createArticleReferenceFromCsvLine(fileLine);
-                    articleReferences.add(articleReferenceFromCsv);
+                    Citation citationFromCsv = ArticleFactory.createArticleReferenceFromCsvLine(fileLine);
+                    citations.add(citationFromCsv);
                 }
             }
 
@@ -71,20 +71,20 @@ public class TextFileHandler {
             System.err.println("Error reading file: " + file.getAbsolutePath());
         }
 
-        return articleReferences;
+        return citations;
     }
 
     /**
      * <h2>exportLibraryToCsv</h2>
-     * Writes a list of {@link ArticleReference} to a CSV file.
+     * Writes a list of {@link Citation} to a CSV file.
      *
-     * @param articleReferences the list of article information to write to the file
+     * @param citations the list of article information to write to the file
      */
-    public void exportLibraryToCml(List<ArticleReference> articleReferences, String activeLibraryFilePath) {
+    public void exportLibraryToCml(List<Citation> citations, String activeLibraryFilePath) {
 
         try (FileWriter writer = new FileWriter(activeLibraryFilePath, StandardCharsets.UTF_8)) {
-            for (ArticleReference articleReference : articleReferences) {
-                writer.write(articleReference.toCsvString() + "\n");
+            for (Citation citation : citations) {
+                writer.write(citation.toCsvString() + "\n");
             }
         } catch (IOException e) {
             System.err.println("Error saving to File: " + activeLibraryFilePath);
