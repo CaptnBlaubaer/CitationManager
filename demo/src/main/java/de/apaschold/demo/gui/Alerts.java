@@ -24,6 +24,8 @@ public class Alerts {
     public static final String CONFIRMATION_DELETE_CITATION_CONTENT = "Do you want to delete selected article?\nOK to confirm";
     public static final String INFORMATION_RECORD_NOT_FOUND_TITLE = "Record not found";
     public static final String INFORMATION_RECORD_NOT_FOUND_HEADER = "The record wasn't found in the PubMed database.";
+    public static final String INFORMATION_FILE_NOT_FOUND_TITLE = "Attachment not found";
+    public static final String INFORMATION_FILE_NOT_FOUND_HEADER = "The attachment doesn't exist.";
 
     //1. attributes
 
@@ -72,6 +74,13 @@ public class Alerts {
         Alert alert= new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(INFORMATION_RECORD_NOT_FOUND_TITLE);
         alert.setHeaderText(INFORMATION_RECORD_NOT_FOUND_HEADER);
+        alert.show();
+    }
+
+    public static void showInformationFileNotFoundInFolder(String fileName) {
+        Alert alert= new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(INFORMATION_FILE_NOT_FOUND_TITLE);
+        alert.setHeaderText(INFORMATION_FILE_NOT_FOUND_HEADER);
         alert.show();
     }
 }

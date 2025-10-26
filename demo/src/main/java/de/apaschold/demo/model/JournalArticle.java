@@ -93,7 +93,7 @@ public class JournalArticle extends Citation {
                 issue + ";" +
                 pages + ";" +
                 doi + ";" +
-                String.join(",",pdfFilePath);
+                String.join(",", pdfFilePaths);
     }
 
     @Override

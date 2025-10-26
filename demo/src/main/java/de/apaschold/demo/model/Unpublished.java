@@ -37,7 +37,7 @@ public class Unpublished extends Citation {
                 title + ";" +
                 author.replace("; ", " and ") + ";" +
                 year + ";" +
-                String.join(",",pdfFilePath);
+                String.join(",", pdfFilePaths);
     }
 
     @Override

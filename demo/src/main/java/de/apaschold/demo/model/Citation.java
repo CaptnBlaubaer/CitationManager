@@ -6,6 +6,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.util.Arrays;
+
 /**
  * <h2>Citation</h2>
  * <li>Abstract superclass for different types of citations (e.g., JournalArticle, Book).</li>
@@ -22,7 +24,7 @@ public abstract class Citation {
     protected String journal;
     protected int year;
     protected String doi;
-    protected String[] pdfFilePath;
+    protected String[] pdfFilePaths;
 
     //2. constructors
     public Citation() {
@@ -31,17 +33,17 @@ public abstract class Citation {
         this.journal = AppTexts.PLACEHOLDER;
         this.year = AppTexts.NUMBER_PLACEHOLDER;
         this.doi = AppTexts.PLACEHOLDER;
-        this.pdfFilePath = AppTexts.PLACEHOLDER.split(",");
+        this.pdfFilePaths = AppTexts.PLACEHOLDER.split(",");
     }
 
-    public Citation(CitationType type, String title, String author, String journal, int year, String doi, String pdfFilePath) {
+    public Citation(CitationType type, String title, String author, String journal, int year, String doi, String pdfFilePaths) {
         this.citationType = type;
         this.title = title;
         this.author = author;
         this.journal = journal;
         this.year = year;
         this.doi = doi;
-        this.pdfFilePath = pdfFilePath.split(",");
+        this.pdfFilePaths = pdfFilePaths.split(",");
     }
 
     //3. getter and setter methods
@@ -74,9 +76,9 @@ public abstract class Citation {
         this.doi = doi;
     }
 
-    public String[] getPdfFilePaths() { return pdfFilePath;}
+    public String[] getPdfFilePaths() { return pdfFilePaths;}
 
-    public void setPdfFilePath(String[] pdfFilePath) { this.pdfFilePath = pdfFilePath;}
+    public void setPdfFilePaths(String[] pdfFilePaths) { this.pdfFilePaths = pdfFilePaths;}
 
     //Property getters for TableView
     public StringProperty titleProperty() { return new SimpleStringProperty(title);}
@@ -121,14 +123,31 @@ public abstract class Citation {
      * @param newAttachement the file path of the new attachment to be added
      */
     public void addNewAttachment(String newAttachement){
-        String oldAttachmentsAsString = String.join(",", this.pdfFilePath);
+        System.out.println(Arrays.toString(this.pdfFilePaths));
+        String oldAttachmentsAsString = String.join(",", this.pdfFilePaths);
 
+        System.out.println(Arrays.toString(this.pdfFilePaths));
         if (oldAttachmentsAsString.equals(AppTexts.PLACEHOLDER)){
-            this.pdfFilePath = newAttachement.split(",");
+            this.pdfFilePaths = newAttachement.split(",");
         }
         else {
             oldAttachmentsAsString = oldAttachmentsAsString + "," + newAttachement;
-            this.pdfFilePath = oldAttachmentsAsString.split(",");
+            this.pdfFilePaths = oldAttachmentsAsString.split(",");
+        }
+
+        System.out.println(Arrays.toString(this.pdfFilePaths));
+    }
+
+    public void removeAttachment(String chosenAttachment){
+        String attachmentNamesAsString = String.join(",", this.pdfFilePaths);
+        attachmentNamesAsString = attachmentNamesAsString.replace(chosenAttachment,"");
+
+        String[] attachmentArray = attachmentNamesAsString.split(",");
+
+        if (attachmentArray[0].isEmpty()){
+            this.pdfFilePaths = AppTexts.PLACEHOLDER.split(",");
+        } else {
+            this.pdfFilePaths = attachmentArray;
         }
     }
 }

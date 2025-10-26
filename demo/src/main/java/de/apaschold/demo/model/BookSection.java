@@ -76,7 +76,7 @@ public class BookSection extends Citation {
                 volume + ";" +
                 pages + ";" +
                 doi + ";" +
-                String.join(",",pdfFilePath);
+                String.join(",", pdfFilePaths);
     }
 
     @Override

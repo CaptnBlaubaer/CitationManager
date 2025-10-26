@@ -50,7 +50,7 @@ public class Book extends Citation {
                 year + ";" +
                 volume + ";" +
                 doi + ";" +
-                String.join(",",pdfFilePath);
+                String.join(",", pdfFilePaths);
     }
 
     @Override

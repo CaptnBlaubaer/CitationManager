@@ -39,7 +39,7 @@ public class PhdThesis extends Citation {
                 author.replace("; ", " and ") + ";" +
                 year + ";" +
                 doi + ";" +
-                String.join(",",pdfFilePath);
+                String.join(",", pdfFilePaths);
     }
 
     @Override

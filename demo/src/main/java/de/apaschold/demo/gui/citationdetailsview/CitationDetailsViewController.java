@@ -25,6 +25,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 
 /**
  * <h2>JournalArticleSubViewController</h2>
@@ -110,13 +111,24 @@ public class CitationDetailsViewController implements Initializable {
      */
     @FXML
     private void selectAttachedFile() throws IOException{
-        //replace file format by the folder extension
-        String folderPath = GuiController.getInstance().getActiveLibraryFilePath()
-                .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.PDF_FOLDER_EXTENSION);
+        String fileName = this.attachedFiles.getValue();
 
-        String filePath = folderPath + this.attachedFiles.getValue();
+        if (!fileName.equals(AppTexts.PLACEHOLDER)) {
+            //replace file format by the folder extension
+            String folderPath = GuiController.getInstance().getActiveLibraryFilePath()
+                    .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.PDF_FOLDER_EXTENSION);
 
-        displayer.loadPDF(new File(filePath));
+            String filePath = folderPath + fileName;
+            File selectedFile = new File(filePath);
+
+            if (selectedFile.exists()) {
+                displayer.loadPDF(selectedFile);
+            } else {
+                Alerts.showInformationFileNotFoundInFolder(fileName);
+            }
+        } else {
+            Alerts.showInformationNoFileChoosen();
+        }
     }
 
     /** <h2>addNewAttachmentToArticleReference</h2>
@@ -156,10 +168,7 @@ public class CitationDetailsViewController implements Initializable {
         String chosenAttachment = this.attachedFiles.getValue();
 
         if (chosenAttachment != null){
-            String attachmentNamesAsString = String.join(",", this.citation.getPdfFilePaths());
-            attachmentNamesAsString = attachmentNamesAsString.replace(chosenAttachment,"");
-
-            this.citation.setPdfFilePath(attachmentNamesAsString.split(","));
+            this.citation.removeAttachment(chosenAttachment);
 
             populatePDFViewerTab();
 
@@ -238,7 +247,7 @@ public class CitationDetailsViewController implements Initializable {
     }
 
     /** <h2>populatePDFViewerTab</h2>
-     * <li>Populates the PDF viewer tab with the attached PDF files of the journal article.</li>
+     * <li>Populates the {@link ComboBox} PDF viewer tab with the attached PDF files of the {@link Citation}.</li>
      */
     private void populatePDFViewerTab(){
         this.attachedFiles.getItems().setAll(this.citation.getPdfFilePaths());
