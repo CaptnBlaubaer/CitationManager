@@ -15,23 +15,23 @@ import javafx.stage.Stage;
 import static de.apaschold.demo.additionals.MyLittleHelpers.*;
 
 /**
- * <h2>AddNewArticleViewController</h2>
- * <li>Controller for the add new article view.</li>
- * <li>Handles adding a new article references to the article library.</li>
+ * <h2>AddNewCitationViewController</h2>
+ * <li>Controller for the add new citation view.</li>
+ * <li>Handles adding a new {@link Citation} to the {@link de.apaschold.demo.logic.CitationLibrary}</li>
  */
 
-public class AddNewArticleViewController implements Initializable {
+public class AddNewCitationViewController implements Initializable {
     //0. constants
 
     //1. attributes
 
     //2. FXML elements
     @FXML
-    private ComboBox <CitationType> newArticleType;
+    private ComboBox <CitationType> newCitationType;
     @FXML
     private Button saveButton;
     @FXML
-    private VBox articleForm;
+    private VBox citationForm;
 
 
     //3. constructors/initialize method
@@ -40,27 +40,27 @@ public class AddNewArticleViewController implements Initializable {
      */
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
-        this.newArticleType.getItems().addAll(CitationType.values());
+        this.newCitationType.getItems().addAll(CitationType.values());
     }
 
     //4. FXML methods
-    /** <h2>chooseArticleType</h2>
-     * <li>Sets up the article form based on the selected ArticleType.</li>
+    /** <h2>chooseCitationType</h2>
+     * <li>Sets up the citation form based on the selected {@link CitationType}.</li>
      * <li>Activates the save button</li>
      */
     @FXML
-    protected void chooseArticleType(){
-        CitationType selectedType = this.newArticleType.getSelectionModel().getSelectedItem();
+    protected void chooseCitationType(){
+        CitationType selectedType = this.newCitationType.getSelectionModel().getSelectedItem();
 
-        this.articleForm.getChildren().clear();
+        this.citationForm.getChildren().clear();
 
         switch (selectedType) {
             case JOURNAL_ARTICLE -> setUpJournalArticleForm();
-            case BOOK -> setUpBookArticleForm();
-            case BOOK_SECTION -> setUpBookSectionArticleForm();
-            case PATENT -> setUpPatentArticleForm();
-            case THESIS -> setUpPhdThesisArticleForm();
-            case UNPUBLISHED -> setUpUnpublishedArticleForm();
+            case BOOK -> setUpBookForm();
+            case BOOK_SECTION -> setUpBookSectionForm();
+            case PATENT -> setUpPatentForm();
+            case THESIS -> setUpPhdThesisForm();
+            case UNPUBLISHED -> setUpUnpublishedForm();
             default -> System.out.println("Data type not known");
         }
 
@@ -68,7 +68,7 @@ public class AddNewArticleViewController implements Initializable {
     }
 
     private void setUpJournalArticleForm() {
-        articleForm.getChildren().addAll(
+        citationForm.getChildren().addAll(
                 createNewTextField("Article title"),
                 createNewTextArea("Author names"),
                 createNewTextField("Journal"),
@@ -81,8 +81,8 @@ public class AddNewArticleViewController implements Initializable {
         );
     }
 
-    private void setUpBookArticleForm() {
-        articleForm.getChildren().addAll(
+    private void setUpBookForm() {
+        citationForm.getChildren().addAll(
                 createNewTextField("Article title"),
                 createNewTextArea("Author names"),
                 createNewTextField("Publisher"),
@@ -92,8 +92,8 @@ public class AddNewArticleViewController implements Initializable {
         );
     }
 
-    private void setUpBookSectionArticleForm() {
-        articleForm.getChildren().addAll(
+    private void setUpBookSectionForm() {
+        citationForm.getChildren().addAll(
                 createNewTextField("Article title"),
                 createNewTextArea("Author names"),
                 createNewTextField("Book title"),
@@ -106,8 +106,8 @@ public class AddNewArticleViewController implements Initializable {
         );
     }
 
-    private void setUpPatentArticleForm() {
-        articleForm.getChildren().addAll(
+    private void setUpPatentForm() {
+        citationForm.getChildren().addAll(
                 createNewTextField("Article title"),
                 createNewTextArea("Author names"),
                 createNewTextField("Year"),
@@ -115,8 +115,8 @@ public class AddNewArticleViewController implements Initializable {
         );
     }
 
-    private void setUpPhdThesisArticleForm() {
-        articleForm.getChildren().addAll(
+    private void setUpPhdThesisForm() {
+        citationForm.getChildren().addAll(
                 createNewTextField("Article title"),
                 createNewTextArea("Author names"),
                 createNewTextField("Year"),
@@ -124,8 +124,8 @@ public class AddNewArticleViewController implements Initializable {
         );
     }
 
-    private void setUpUnpublishedArticleForm() {
-        articleForm.getChildren().addAll(
+    private void setUpUnpublishedForm() {
+        citationForm.getChildren().addAll(
                 createNewTextField("Article title"),
                 createNewTextArea("Author names"),
                 createNewTextField("Year")
@@ -133,16 +133,16 @@ public class AddNewArticleViewController implements Initializable {
     }
 
     /** <h2>saveNewArticle</h2>
-     * <li>Collects data from the article form and creates a new ArticleReference.</li>
-     * <li>Adds the new ArticleReference to the article library and closes the add new article view.</li>
+     * <li>Collects data from the citation form and creates a new {@link Citation}e.</li>
+     * <li>Adds the new {@link Citation} to the {@link de.apaschold.demo.logic.CitationLibrary} and closes the add new citation view.</li>
      */
     @FXML
-    protected void saveNewArticle() {
+    protected void saveNewCitation() {
         StringBuilder csvLine = new StringBuilder();
 
-        csvLine.append(this.newArticleType.getSelectionModel().getSelectedItem().toString()).append(";");
+        csvLine.append(this.newCitationType.getSelectionModel().getSelectedItem().toString()).append(";");
 
-        for (Node node: articleForm.getChildren()) {
+        for (Node node: citationForm.getChildren()) {
             if (node instanceof TextField textField) {
                 csvLine.append(textField.getText().replace(";", ",")).append(";");
             } else if (node instanceof TextArea textArea) {
@@ -155,7 +155,7 @@ public class AddNewArticleViewController implements Initializable {
 
         GuiController.getInstance().getCitationLibrary().addCitation(newArticle);
 
-        Stage stage = (Stage) newArticleType.getScene().getWindow();
+        Stage stage = (Stage) newCitationType.getScene().getWindow();
         stage.close();
     }
 }

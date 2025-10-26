@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 /**
  * <h2>CreateNewLibraryViewController</h2>
  * <li>Controller for the create new library view.</li>
- * <li>Handles creating a new article library file in the specified folder path.</li>
+ * <li>Handles creating a new {@link de.apaschold.demo.logic.CitationLibrary} file in the specified folder path.</li>
  */
 
 public class CreateNewLibraryViewController implements Initializable {
@@ -47,7 +47,7 @@ public class CreateNewLibraryViewController implements Initializable {
 
     //4. FXML methods
     /** <h2>createNewLibrary</h2>
-     * <li>Creates a new article library file and a folder for the pdfs with the specified name in the selected folder path.</li>
+     * <li>Creates a new {@link de.apaschold.demo.logic.CitationLibrary} file and a folder for the pdfs with the specified name in the selected folder path.</li>
      * <li>Updates the active library file path in the GuiController and saves it to a .txt file.</li>
      * <li>Closes the create new library view.</li>
      */

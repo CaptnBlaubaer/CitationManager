@@ -6,12 +6,12 @@
 <?import javafx.geometry.Insets?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="de.apaschold.demo.gui.AddNewArticleViewController"
+      fx:controller="de.apaschold.demo.gui.AddNewCitationViewController"
       prefHeight="630.0" prefWidth="300.0" spacing="10.0" alignment="TOP_CENTER" style="-fx-background-color: #FFDFCC">
 
-    <ComboBox fx:id="newArticleType" style="-fx-font-size: 12;" onAction="#chooseArticleType"/>
-    <VBox fx:id="articleForm" maxWidth="280.0" spacing="10.0"/>
-    <Button fx:id="saveButton" text="Save Changes" maxWidth="300.0" onAction="#saveNewArticle" visible="false"/>
+    <ComboBox fx:id="newCitationType" style="-fx-font-size: 12;" onAction="#chooseCitationType"/>
+    <VBox fx:id="citationForm" maxWidth="280.0" spacing="10.0"/>
+    <Button fx:id="saveButton" text="Save Changes" maxWidth="300.0" onAction="#saveNewCitation" visible="false"/>
 
     <padding>
         <Insets top="5.0" />

@@ -20,8 +20,8 @@ public class Alerts {
     public static final String ALERT_FILENAME_EXISTS_HEADER = "Filename already exists in this directory";
     public static final String INFORMATION_NO_FILE_CHOSEN_TITLE = "No file chosen";
     public static final String INFORMATION_NO_FILE_CHOSEN_HEADER = "There was no file chosen";
-    public static final String CONFIRMATION_DELETE_ARTICLE_TITLE = "Delete selected article";
-    public static final String CONFIRMATION_DELETE_ARTICLE_CONTENT = "Do you want to delete selected article?\nOK to confirm";
+    public static final String CONFIRMATION_DELETE_CITATION_TITLE = "Delete selected article";
+    public static final String CONFIRMATION_DELETE_CITATION_CONTENT = "Do you want to delete selected article?\nOK to confirm";
     public static final String INFORMATION_RECORD_NOT_FOUND_TITLE = "Record not found";
     public static final String INFORMATION_RECORD_NOT_FOUND_HEADER = "The record wasn't found in the PubMed database.";
 
@@ -63,8 +63,8 @@ public class Alerts {
     //5. conformation
     public static Optional<ButtonType> showConfirmationDeleteCitation() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(CONFIRMATION_DELETE_ARTICLE_TITLE);
-        alert.setHeaderText(CONFIRMATION_DELETE_ARTICLE_CONTENT);
+        alert.setTitle(CONFIRMATION_DELETE_CITATION_TITLE);
+        alert.setHeaderText(CONFIRMATION_DELETE_CITATION_CONTENT);
         return alert.showAndWait();
     }
 

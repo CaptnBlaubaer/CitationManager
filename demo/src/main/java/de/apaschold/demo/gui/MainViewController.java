@@ -131,7 +131,7 @@ public class MainViewController implements Initializable {
 
     /**
      * <h2>addNewCitation</h2>
-     * <li>Opens {@link AddNewArticleViewController}</li>
+     * <li>Opens {@link AddNewCitationViewController}</li>
      * <li>Adds a new {@link Citation} to the active {@link CitationLibrary} and refreshes the {@link TableView}.</li>
      */
     @FXML
