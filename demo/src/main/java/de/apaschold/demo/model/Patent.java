@@ -4,7 +4,7 @@ import de.apaschold.demo.additionals.AppTexts;
 
 /**
  * <h2>Patent</h2>
- * <li>Represents a patent article reference, extending the ArticleReference class.</li>
+ * <li>Represents a patent citation, extending the {@link Citation} class.</li>
  */
 
 public class Patent extends Citation {
@@ -14,27 +14,27 @@ public class Patent extends Citation {
 
     //2. constructors
     public Patent(){
-        super.setArticleType(ArticleType.PATENT);
+        super.setCitationType(CitationType.PATENT);
     }
 
     public Patent(String title, String author, int year, String doi, String pdfFilePath) {
-        super(ArticleType.PATENT, title, author, " - ", year, doi, pdfFilePath);
+        super(CitationType.PATENT, title, author, " - ", year, doi, pdfFilePath);
     }
 
     //4. other methods
 
     @Override
     public String citationDetailsAsString() {
-        return "Citation type: \n" + articleType.getDescription() + "\n\n" +
+        return "Citation type: \n" + citationType.getDescription() + "\n\n" +
                 "Title: \n" + title + "\n\n" +
                 "Author(s): \n" + author + "\n\n" +
                 "Year: \n" + year + "\n\n" +
-                "DOI: \n" + doi + "\n\n";
+                "URL: \n" + doi + "\n\n";
     }
 
     @Override
     public String toCsvString(){
-        return articleType + ";" +
+        return citationType + ";" +
                 title + ";" +
                 author.replace("; ", " and ") + ";" +
                 year + ";" +

@@ -4,7 +4,7 @@ import de.apaschold.demo.additionals.AppTexts;
 
 /**
  * <h2>Book</h2>
- * <li>Represents a book article reference, extending the ArticleReference class.</li>
+ * <li>Represents a book citation, extending the {@link Citation} class.</li>
  */
 public class Book extends Citation {
     //0. constants
@@ -14,12 +14,12 @@ public class Book extends Citation {
 
     //2. constructors
     public Book(){
-        super.setArticleType(ArticleType.BOOK);
+        super.setCitationType(CitationType.BOOK);
         this.volume = AppTexts.NUMBER_PLACEHOLDER;
     }
 
     public Book(String title, String author, String journal, int year, int volume, String doi, String pdfFilePath) {
-        super(ArticleType.BOOK, title, author, journal, year, doi, pdfFilePath);
+        super(CitationType.BOOK, title, author, journal, year, doi, pdfFilePath);
         this.volume = volume;
     }
 
@@ -32,7 +32,7 @@ public class Book extends Citation {
 
     @Override
     public String citationDetailsAsString() {
-        return "Citation type: \n" + articleType.getDescription() + "\n\n" +
+        return "Citation type: \n" + citationType.getDescription() + "\n\n" +
                 "Title: \n" + title + "\n\n" +
                 "Author(s): \n" + author + "\n\n" +
                 "Publisher: \n" + journal + "\n\n" +
@@ -43,7 +43,7 @@ public class Book extends Citation {
 
     @Override
     public String toCsvString(){
-        return articleType + ";" +
+        return citationType + ";" +
                 title + ";" +
                 author.replace("; ", " and ") + ";" +
                 journal + ";" +

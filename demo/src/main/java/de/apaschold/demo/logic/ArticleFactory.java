@@ -44,7 +44,7 @@ public class ArticleFactory {
     public static Citation createArticleReferenceFromCsvLine(String csvLine){
         String[] separatedCsvLine = csvLine.split(";");
 
-        ArticleType type = ArticleType.valueOf(separatedCsvLine[0]);
+        CitationType type = CitationType.valueOf(separatedCsvLine[0]);
 
         Citation newArticle = switch (type) {
             case JOURNAL_ARTICLE -> createJournalArticleFromCsvLine(separatedCsvLine);
@@ -180,11 +180,11 @@ public class ArticleFactory {
     public static Citation createArticleFromBibTex(String bibTexText){
         String[] articleTypeAndDetails = bibTexText.split("\\{", 2); //
 
-        ArticleType importedArticleType = ArticleType.getArticleTypeFromBibTexImport(articleTypeAndDetails[0]);
+        CitationType importedCitationType = CitationType.getArticleTypeFromBibTexImport(articleTypeAndDetails[0]);
 
         String[] articleDetails = articleTypeAndDetails[1].split("\n");
 
-        Citation importedArticle = switch (importedArticleType) {
+        Citation importedArticle = switch (importedCitationType) {
             case JOURNAL_ARTICLE -> createJournalArticleFromBibTex(articleDetails);
             case BOOK -> createBookFromBibTex(articleDetails);
             case BOOK_SECTION -> createBookSectionFromBibTex(articleDetails);

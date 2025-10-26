@@ -4,7 +4,7 @@ import de.apaschold.demo.additionals.AppTexts;
 
 /**
  * <h2>JournalArticle</h2>
- * <li>Represents a journal article reference, extending the ArticleReference class.</li>
+ * <li>Represents a journal article citation, extending the {@link Citation} class.</li>
  */
 
 public class JournalArticle extends Citation {
@@ -18,7 +18,7 @@ public class JournalArticle extends Citation {
 
     //2. constructors
     public JournalArticle(){
-        super.setArticleType(ArticleType.JOURNAL_ARTICLE);
+        super.setCitationType(CitationType.JOURNAL_ARTICLE);
         this.journalShortForm = AppTexts.PLACEHOLDER;
         this.volume = AppTexts.NUMBER_PLACEHOLDER;
         this.issue = AppTexts.NUMBER_PLACEHOLDER;
@@ -26,7 +26,7 @@ public class JournalArticle extends Citation {
     }
 
     public JournalArticle(String title, String author, String journal, String journalShortForm, int year, int volume, int issue, String pages, String doi, String pdfFilePath) {
-        super(ArticleType.JOURNAL_ARTICLE, title, author, journal, year, doi, pdfFilePath);
+        super(CitationType.JOURNAL_ARTICLE, title, author, journal, year, doi, pdfFilePath);
         this.journalShortForm = journalShortForm;
         this.volume = volume;
         this.issue = issue;
@@ -70,7 +70,7 @@ public class JournalArticle extends Citation {
 
     @Override
     public String citationDetailsAsString() {
-        return "Citation type: \n" + articleType.getDescription() + "\n\n" +
+        return "Citation type: \n" + citationType.getDescription() + "\n\n" +
                 "Title: \n" + title + "\n\n" +
                 "Author(s): \n" + author + "\n\n" +
                 "Journal: \n" + journal + "\n\n" +
@@ -83,7 +83,7 @@ public class JournalArticle extends Citation {
     }
 
     public String toCsvString(){
-        return articleType + ";" +
+        return citationType + ";" +
                 title + ";" +
                 author.replace("; ", " and ") + ";" +
                 journal + ";" +

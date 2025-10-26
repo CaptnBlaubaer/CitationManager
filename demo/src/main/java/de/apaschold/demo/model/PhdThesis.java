@@ -4,7 +4,7 @@ import de.apaschold.demo.additionals.AppTexts;
 
 /**
  * <h2>PhdThesis</h2>
- * <li>Represents a PhD thesis article reference, extending the ArticleReference class.</li>
+ * <li>Represents a PhD thesis citation, extending the {@link Citation} class.</li>
  */
 
 public class PhdThesis extends Citation {
@@ -14,18 +14,18 @@ public class PhdThesis extends Citation {
 
     //2. constructors
     public PhdThesis(){
-        super.setArticleType(ArticleType.THESIS);
+        super.setCitationType(CitationType.THESIS);
     }
 
     public PhdThesis(String title, String author, int year, String doi, String pdfFilePath) {
-        super(ArticleType.THESIS, title, author, " - ", year, doi, pdfFilePath);
+        super(CitationType.THESIS, title, author, " - ", year, doi, pdfFilePath);
     }
 
     //4. other methods
 
     @Override
     public String citationDetailsAsString() {
-        return "Citation type: \n" + articleType.getDescription() + "\n\n" +
+        return "Citation type: \n" + citationType.getDescription() + "\n\n" +
                 "Title: \n" + title + "\n\n" +
                 "Author(s): \n" + author + "\n\n" +
                 "Year: \n" + year + "\n\n" +
@@ -34,7 +34,7 @@ public class PhdThesis extends Citation {
 
     @Override
     public String toCsvString(){
-        return articleType + ";" +
+        return citationType + ";" +
                 title + ";" +
                 author.replace("; ", " and ") + ";" +
                 year + ";" +

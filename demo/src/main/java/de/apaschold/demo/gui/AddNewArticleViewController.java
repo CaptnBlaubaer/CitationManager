@@ -3,7 +3,7 @@ package de.apaschold.demo.gui;
 import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.logic.ArticleFactory;
 import de.apaschold.demo.model.Citation;
-import de.apaschold.demo.model.ArticleType;
+import de.apaschold.demo.model.CitationType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -27,7 +27,7 @@ public class AddNewArticleViewController implements Initializable {
 
     //2. FXML elements
     @FXML
-    private ComboBox <ArticleType> newArticleType;
+    private ComboBox <CitationType> newArticleType;
     @FXML
     private Button saveButton;
     @FXML
@@ -40,7 +40,7 @@ public class AddNewArticleViewController implements Initializable {
      */
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
-        this.newArticleType.getItems().addAll(ArticleType.values());
+        this.newArticleType.getItems().addAll(CitationType.values());
     }
 
     //4. FXML methods
@@ -50,7 +50,7 @@ public class AddNewArticleViewController implements Initializable {
      */
     @FXML
     protected void chooseArticleType(){
-        ArticleType selectedType = this.newArticleType.getSelectionModel().getSelectedItem();
+        CitationType selectedType = this.newArticleType.getSelectionModel().getSelectedItem();
 
         this.articleForm.getChildren().clear();
 

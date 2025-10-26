@@ -7,16 +7,16 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
- * <h2>ArticleReference</h2>
- * <li>Abstract superclass for different types of article references (e.g., JournalArticle, BookArticle).</li>
- * <li>Holds common attributes and methods for article references.</li>
+ * <h2>Citation</h2>
+ * <li>Abstract superclass for different types of citations (e.g., JournalArticle, Book).</li>
+ * <li>Holds common attributes and methods</li>
  */
 
 public abstract class Citation {
     //0. constants
 
     //1. attributes
-    protected ArticleType articleType;
+    protected CitationType citationType;
     protected String title;
     protected String author;
     protected String journal;
@@ -34,8 +34,8 @@ public abstract class Citation {
         this.pdfFilePath = AppTexts.PLACEHOLDER.split(",");
     }
 
-    public Citation(ArticleType type, String title, String author, String journal, int year, String doi, String pdfFilePath) {
-        this.articleType = type;
+    public Citation(CitationType type, String title, String author, String journal, int year, String doi, String pdfFilePath) {
+        this.citationType = type;
         this.title = title;
         this.author = author;
         this.journal = journal;
@@ -45,9 +45,9 @@ public abstract class Citation {
     }
 
     //3. getter and setter methods
-    public ArticleType getArticleType() { return articleType;}
+    public CitationType getCitationType() { return citationType;}
 
-    public void setArticleType(ArticleType articleType) { this.articleType = articleType;}
+    public void setCitationType(CitationType citationType) { this.citationType = citationType;}
 
     public String getTitle() { return title;}
 

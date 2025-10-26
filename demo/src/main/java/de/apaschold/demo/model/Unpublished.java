@@ -4,7 +4,7 @@ import de.apaschold.demo.additionals.AppTexts;
 
 /**
  * <h2>Unpublished</h2>
- * <li>Represents an unpublished article reference, extending the ArticleReference class.</li>
+ * <li>Represents an unpublished citation, extending the {@link Citation} class.</li>
  */
 
 public class Unpublished extends Citation {
@@ -14,18 +14,18 @@ public class Unpublished extends Citation {
 
     //2. constructors
     public Unpublished(){
-        super.setArticleType(ArticleType.UNPUBLISHED);
+        super.setCitationType(CitationType.UNPUBLISHED);
     }
 
     public Unpublished(String title, String author, int year, String pdfFilePath) {
-        super(ArticleType.UNPUBLISHED, title, author, " - ", year, " - ", pdfFilePath);
+        super(CitationType.UNPUBLISHED, title, author, " - ", year, " - ", pdfFilePath);
     }
 
     //4. other methods
 
     @Override
     public String citationDetailsAsString() {
-        return "Citation type: \n" + articleType.getDescription() + "\n\n" +
+        return "Citation type: \n" + citationType.getDescription() + "\n\n" +
                 "Title: \n" + title + "\n\n" +
                 "Author(s): \n" + author + "\n\n" +
                 "Year: \n" + year + "\n\n";
@@ -33,7 +33,7 @@ public class Unpublished extends Citation {
 
     @Override
     public String toCsvString(){
-        return articleType + ";" +
+        return citationType + ";" +
                 title + ";" +
                 author.replace("; ", " and ") + ";" +
                 year + ";" +

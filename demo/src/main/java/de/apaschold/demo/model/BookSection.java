@@ -4,7 +4,7 @@ import de.apaschold.demo.additionals.AppTexts;
 
 /**
  * <h2>BookSection</h2>
- * <li>Represents a book section (chapter) article reference, extending the ArticleReference class.</li>
+ * <li>Represents a book section (chapter) citation, extending the {@link Citation} class.</li>
  */
 public class BookSection extends Citation {
     //0. constants
@@ -17,7 +17,7 @@ public class BookSection extends Citation {
 
     //2. constructors
     public BookSection(){
-        super.setArticleType(ArticleType.BOOK_SECTION);
+        super.setCitationType(CitationType.BOOK_SECTION);
         this.volume = AppTexts.NUMBER_PLACEHOLDER;
         this.bookTitle = AppTexts.PLACEHOLDER;
         this.editor = AppTexts.PLACEHOLDER;
@@ -25,7 +25,7 @@ public class BookSection extends Citation {
     }
 
     public BookSection(String title, String author, String bookTitle, String editor, String journal, int year, int volume, String pages, String doi, String pdfFilePath) {
-        super(ArticleType.BOOK_SECTION, title, author, journal, year, doi, pdfFilePath);
+        super(CitationType.BOOK_SECTION, title, author, journal, year, doi, pdfFilePath);
         this.volume = volume;
         this.bookTitle = bookTitle;
         this.editor = editor;
@@ -53,7 +53,7 @@ public class BookSection extends Citation {
 
     @Override
     public String citationDetailsAsString() {
-        return "Citation type: \n" + articleType.getDescription() + "\n\n" +
+        return "Citation type: \n" + citationType.getDescription() + "\n\n" +
                 "Chapter title: \n" + title + "\n\n" +
                 "Author(s): \n" + author + "\n\n" +
                 "Book title: \n" + journal + "\n\n" +
@@ -66,7 +66,7 @@ public class BookSection extends Citation {
 
     @Override
     public String toCsvString(){
-        return articleType + ";" +
+        return citationType + ";" +
                 title + ";" +
                 author.replace("; ", " and ") + ";" +
                 bookTitle + ";" +

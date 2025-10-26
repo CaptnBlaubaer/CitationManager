@@ -217,7 +217,7 @@ public class CitationDetailsViewController implements Initializable {
     }
 
     private void populateCitationEditTab() {
-        String fxmlFile = switch (this.citation.getArticleType()) {
+        String fxmlFile = switch (this.citation.getCitationType()) {
                 case JOURNAL_ARTICLE -> "journal-article-subview.fxml";
                 case BOOK_SECTION -> "book-section-subview.fxml";
                 case BOOK -> "book-subview.fxml";
