@@ -153,7 +153,7 @@ public class AddNewArticleViewController implements Initializable {
 
         Citation newArticle = CitationFactory.createCitationFromCsvLine(csvLine.toString());
 
-        GuiController.getInstance().getArticleLibrary().addCitation(newArticle);
+        GuiController.getInstance().getCitationLibrary().addCitation(newArticle);
 
         Stage stage = (Stage) newArticleType.getScene().getWindow();
         stage.close();

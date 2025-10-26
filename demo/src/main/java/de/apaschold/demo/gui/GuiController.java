@@ -27,7 +27,7 @@ public class GuiController {
     private static GuiController instance;
     private Stage mainStage;
     private final CitationLibrary library;
-    private Citation selectedArticle;
+    private Citation selectedCitation;
     private String activeLibraryFilePath;
     private JSONObject referenceChanges;
 
@@ -35,7 +35,7 @@ public class GuiController {
 
     /**
      * Private constructor for singleton pattern.
-     * Loads the last used library file path from a .txt and initializes the article library.
+     * Loads the last used library file path from a .txt and initializes the {@link CitationLibrary}.
      * If the library is empty, sets the active library file path to the program directory.
      */
     private GuiController() {
@@ -43,9 +43,9 @@ public class GuiController {
 
         this.library = new CitationLibrary( this.activeLibraryFilePath);
 
-        this.selectedArticle = this.library.getFirstCitation();
+        this.selectedCitation = this.library.getFirstCitation();
 
-        if (this.selectedArticle == null){
+        if (this.selectedCitation == null){
             setActiveLibraryFilePath(System.getProperty("user.dir"));
         }
     }
@@ -66,13 +66,13 @@ public class GuiController {
         return this.library.getCitations();
     }
 
-    public CitationLibrary getArticleLibrary() {
+    public CitationLibrary getCitationLibrary() {
         return this.library;
     }
 
-    public Citation getSelectedCitation() { return this.selectedArticle;}
+    public Citation getSelectedCitation() { return this.selectedCitation;}
 
-    public void setSelectedCitation(Citation selectedArticle) { this.selectedArticle = selectedArticle;}
+    public void setSelectedCitation(Citation selectedCitation) { this.selectedCitation = selectedCitation;}
 
     public String getActiveLibraryFilePath() { return this.activeLibraryFilePath;}
 
@@ -98,17 +98,17 @@ public class GuiController {
     }
 
     /**
-     * <h2>loadAddNewArticleView</h2>
-     * Loads the view for adding a new article reference.
+     * <h2>loadAddNewCitationView</h2>
+     * Loads the view for adding a new {@link Citation}.
      */
     public void loadAddNewCitationView() {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("add-new-citation-view.fxml"));
         try {
             Scene scene = new Scene(fxmlLoader.load(), 320, 500);
-            Stage newArticleStage = new Stage();
-            newArticleStage.setTitle("Add New Article");
-            newArticleStage.setScene(scene);
-            newArticleStage.showAndWait();
+            Stage newCitationStage = new Stage();
+            newCitationStage.setTitle("Add New Citation");
+            newCitationStage.setScene(scene);
+            newCitationStage.showAndWait();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -117,16 +117,16 @@ public class GuiController {
 
     /**
      * <h2>loadReferenceUpdateView</h2>
-     * Loads the view for updating article references from PubMed.
+     * Loads the view for updating {@link Citation} from PubMed.
      */
     public void loadReferenceUpdateView() {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("reference-update-view.fxml"));
         try {
             Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
-            Stage newArticleStage = new Stage();
-            newArticleStage.setTitle("Reference update from PubMed");
-            newArticleStage.setScene(scene);
-            newArticleStage.showAndWait();
+            Stage citationUpdateStage = new Stage();
+            citationUpdateStage.setTitle("Reference update from PubMed");
+            citationUpdateStage.setScene(scene);
+            citationUpdateStage.showAndWait();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -135,16 +135,16 @@ public class GuiController {
 
     /**
      * <h2>loadImportFromBibTexView</h2>
-     * Loads the view for importing article references from a BibTex file.
+     * Loads the view for importing {@link Citation} from a BibTex file.
      */
     public void loadImportFromBibTexView() {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("import-from-bibtex-view.fxml"));
         try {
             Scene scene = new Scene(fxmlLoader.load(), 320, 250);
-            Stage newArticleStage = new Stage();
-            newArticleStage.setTitle("Import from BibTex");
-            newArticleStage.setScene(scene);
-            newArticleStage.showAndWait();
+            Stage bibTexImportStage = new Stage();
+            bibTexImportStage.setTitle("Import from BibTex");
+            bibTexImportStage.setScene(scene);
+            bibTexImportStage.showAndWait();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -153,16 +153,16 @@ public class GuiController {
 
     /**
      * <h2>loadCreateNewLibraryView</h2>
-     * Loads the view for creating a new empty article library.
+     * Loads the view for creating a new empty {@link CitationLibrary}.
      */
     public void loadCreateNewLibraryView() {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("create-new-library-view.fxml"));
         try {
             Scene scene = new Scene(fxmlLoader.load(), 300, 130);
-            Stage newArticleStage = new Stage();
-            newArticleStage.setTitle("Create empty library");
-            newArticleStage.setScene(scene);
-            newArticleStage.showAndWait();
+            Stage newCitationLibraryStage = new Stage();
+            newCitationLibraryStage.setTitle("Create empty library");
+            newCitationLibraryStage.setScene(scene);
+            newCitationLibraryStage.showAndWait();
 
             this.library.clear();
 
@@ -174,7 +174,7 @@ public class GuiController {
     //5. other
     /**
      * <h2>exportActiveLibraryToBibTex</h2>
-     * Exports the active article library to a BibTex file.
+     * Exports the active {@link CitationLibrary} to a BibTex file.
      * The BibTex file is created in the same directory as the active library file,
      * with the same name but with a .bib extension.
      *
@@ -195,7 +195,7 @@ public class GuiController {
 
     /**
      * <h2>saveActiveLibraryToCml</h2>
-     * Saves the current state of the active article library to the CML file.
+     * Saves the current state of the active {@link CitationLibrary} to the CML file.
      */
     public void saveActiveLibraryToCml(){
         TextFileHandler.getInstance().exportLibraryToCml(this.library.getCitations(), this.activeLibraryFilePath);
@@ -203,7 +203,7 @@ public class GuiController {
 
     /**
      * <h2>fillLibraryFromChosenFile</h2>
-     * Imports article references from the specified file into the active article library.
+     * Imports {@link Citation} from the specified file into the active {@link CitationLibrary}.
      *
      * @param activeLibraryFilePath the file path of the library file to import from
      */
@@ -212,14 +212,14 @@ public class GuiController {
     }
 
     /**
-     * <h2>deleteSelectedArticle</h2>
-     * Deletes the currently selected article reference from the active article library.
+     * <h2>deleteSelectedCitation</h2>
+     * Deletes the currently selected {@link Citation} from the active {@link CitationLibrary}.
      */
     public void deleteSelectedCitation() {
-        this.library.deleteCitation(this.selectedArticle);
+        this.library.deleteCitation(this.selectedCitation);
     }
 
-    public void addNewAttachmentToArticleReference(String newAttachment) {
-        this.selectedArticle.addNewAttachment(newAttachment);
+    public void addNewAttachmentToCitationReference(String newAttachment) {
+        this.selectedCitation.addNewAttachment(newAttachment);
     }
 }

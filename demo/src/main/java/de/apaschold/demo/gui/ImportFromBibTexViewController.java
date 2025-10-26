@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 /**
  * <h2>ImportFromBibTexViewController</h2>
  * <li>Controller for the import from BibTex view.</li>
- * <li>Handles importing article references from BibTex formatted text input.</li>
+ * <li>Handles importing {@link Citation} from BibTex formatted text input.</li>
  */
 
 public class ImportFromBibTexViewController {
@@ -25,7 +25,7 @@ public class ImportFromBibTexViewController {
 
     //4.FXML methods
     /** <h2>importButtonClick</h2>
-     * <li>Imports article references from the BibTex text input and closes the window.</li>
+     * <li>Imports {@link Citation} from the BibTex text input and closes the window.</li>
      */
     @FXML
     protected void importButtonClick() {
@@ -41,7 +41,7 @@ public class ImportFromBibTexViewController {
 
     //5. other methods
     /** <h2>importBibTex</h2>
-     * <li>Parses the BibTex formatted text and adds the corresponding article references to the article library.</li>
+     * <li>Parses the BibTex formatted text and adds the corresponding {@link Citation} to the {@link de.apaschold.demo.logic.CitationLibrary}.</li>
      * <li>Creates {@link Citation} through {@link CitationFactory}</li>
      * @param bibTexText The BibTex formatted text input.
      */
@@ -50,8 +50,8 @@ public class ImportFromBibTexViewController {
 
         for (String singleImport : separatedImports) {
             if (!singleImport.isEmpty()) {
-                Citation importedArticle = CitationFactory.createCitationFromBibTex(singleImport);
-                GuiController.getInstance().getArticleLibrary().addCitation(importedArticle);
+                Citation importedCitation = CitationFactory.createCitationFromBibTex(singleImport);
+                GuiController.getInstance().getCitationLibrary().addCitation(importedCitation);
             }
         }
     }

@@ -137,7 +137,7 @@ public class CitationDetailsViewController implements Initializable {
         File chosenFile = fileChooser.showOpenDialog(stage);
 
         if (chosenFile != null) {
-            GuiController.getInstance().addNewAttachmentToArticleReference(chosenFile.getName());
+            GuiController.getInstance().addNewAttachmentToCitationReference(chosenFile.getName());
 
             populatePDFViewerTab();
 
@@ -182,7 +182,7 @@ public class CitationDetailsViewController implements Initializable {
             SeleniumWebHandlerHeadless.getInstance().downloadPdfFrom(AppTexts.HTTPS_FOR_DOI + this.citation.getDoi());
 
             String latestAddedFile = FileHandler.getInstance().determineLatestAddedFile();
-            GuiController.getInstance().addNewAttachmentToArticleReference(latestAddedFile);
+            GuiController.getInstance().addNewAttachmentToCitationReference(latestAddedFile);
 
             populatePDFViewerTab();
         } catch (Exception e){
