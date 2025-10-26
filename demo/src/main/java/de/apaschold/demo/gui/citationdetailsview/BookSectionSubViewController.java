@@ -27,30 +27,8 @@ public class BookSectionSubViewController implements Initializable {
 
     //1. attributes
     private BookSection bookSection;
-    private PDFDisplayer displayer;
 
     //2. FXML elements
-    @FXML
-    private Label articleType;
-    @FXML
-    private Label title;
-    @FXML
-    private Label authors;
-    @FXML
-    private Label bookTitle;
-    @FXML
-    private Label editors;
-    @FXML
-    private Label publisher;
-    @FXML
-    private Label year;
-    @FXML
-    private Label volume;
-    @FXML
-    private Label  pages;
-    @FXML
-    private Label doi;
-
     @FXML
     private TextField titleChange;
     @FXML
@@ -70,11 +48,6 @@ public class BookSectionSubViewController implements Initializable {
     @FXML
     private TextField doiChange;
 
-    @FXML
-    private ComboBox<String> attachedFiles;
-    @FXML
-    private BorderPane pdfViewer;
-
     //3. constructors/initialize method
     /** <h2>initialize</h2>
      * Initializes the controller, populating the view with the selected book section's details.
@@ -87,10 +60,7 @@ public class BookSectionSubViewController implements Initializable {
     public void initialize(URL location, java.util.ResourceBundle resources) {
         this.bookSection = (BookSection) GuiController.getInstance().getSelectedArticle();
 
-        populateJournalArticleView();
-
-        this.displayer = new PDFDisplayer();
-        this.pdfViewer.setCenter(displayer.toNode());
+        populateBookSectionView();
     }
 
     //4. FXML methods
@@ -120,28 +90,12 @@ public class BookSectionSubViewController implements Initializable {
         }
     }
 
-    /** <h2>selectAttachedFile</h2>
-     * <li>Loads the selected attached PDF file into the PDF viewer.</li>
-     *
-     * @throws IOException if an I/O error occurs during file loading.
-     */
-    @FXML
-    private void selectAttachedFile() throws IOException{
-        //replace file format by the folder extension
-        String folderPath = GuiController.getInstance().getActiveLibraryFilePath()
-                .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.PDF_FOLDER_EXTENSION);
-
-        String filePath = folderPath + this.attachedFiles.getValue();
-
-        displayer.loadPDF(new File(filePath));
-    }
-
     //5. other methods
-    /** <h2>populateJournalArticleView</h2>
-     * <li>Populates the book section view with the details of the selected book section.</li>
+    /** <h2>populateBookSectionView</h2>
+     * <li>Populates the book section view with the details of the selected {@link BookSection}.</li>
      * <li>Calls method for each tab</li>
      */
-    public void populateJournalArticleView(){
+    public void populateBookSectionView(){
         String yearAsString = "-";
         if (this.bookSection.getYear() != 0){
             yearAsString = String.valueOf(this.bookSection.getYear());
@@ -152,56 +106,14 @@ public class BookSectionSubViewController implements Initializable {
             volumeAsString = String.valueOf(this.bookSection.getVolume());
         }
 
-        //populate the labels in the article overview
-        populateArticleOverviewTab(yearAsString, volumeAsString);
-
-        //populate the textfields in the article edit view
-        populateArticleEditTab(yearAsString, volumeAsString);
-
-        populatePDFViewerTab();
-    }
-
-    /** <h2>populateArticleOverviewTab</h2>
-     * <li>Populates the article overview tab with the book section details.</li>
-     *
-     * @param yearAsString   The year of publication as a string.
-     * @param volumeAsString The volume number as a string.
-     */
-    private void populateArticleOverviewTab(String yearAsString, String volumeAsString) {
-        this.articleType.setText("Type: " + this.bookSection.getArticleType().getDescription());
-        this.title.setText("Title: " + this.bookSection.getTitle());
-        this.authors.setText("Authors: " + this.bookSection.getAuthor().replace("; ", "\n"));
-        this.bookTitle.setText("Book title: " + this.bookSection.getBookTitle());
-        this.editors.setText("Authors: " + this.bookSection.getEditor().replace("; ", "\n"));
-        this.publisher.setText("Publisher: " + this.bookSection.getJournal());
-        this.year.setText("Year: " + yearAsString);
-        this.volume.setText("Volume: " + volumeAsString);
-        this.pages.setText("Pages: " + this.bookSection.getPages());
-        this.doi.setText("DOI: " + this.bookSection.getDoi());
-    }
-
-    /** <h2>populateArticleEditTab</h2>
-     * <li>Populates the article edit tab with the book section details.</li>
-     *
-     * @param yearAsString   The year of publication as a string.
-     * @param volumeAsString The volume number as a string.
-     */
-    private void populateArticleEditTab(String yearAsString,String volumeAsString) {
         this.titleChange.setText(this.bookSection.getTitle());
         this.authorsChange.setText(this.bookSection.getAuthor().replace("; ", "\n"));
-        this.bookTitleChange.setText("Title: " + this.bookSection.getBookTitle());
-        this.editorsChange.setText("Authors: " + this.bookSection.getEditor().replace("; ", "\n"));
+        this.bookTitleChange.setText(this.bookSection.getBookTitle());
+        this.editorsChange.setText(this.bookSection.getEditor().replace("; ", "\n"));
         this.publisherChange.setText(this.bookSection.getJournal());
         this.yearChange.setText(yearAsString);
         this.volumeChange.setText(volumeAsString);
         this.pagesChange.setText(this.bookSection.getPages());
         this.doiChange.setText(this.bookSection.getDoi());
-    }
-
-    /** <h2>populatePDFViewerTab</h2>
-     * <li>Populates the PDF viewer tab with the list of attached PDF files.</li>
-     */
-    private void populatePDFViewerTab(){
-        this.attachedFiles.getItems().setAll(this.bookSection.getPdfFilePaths());
     }
 }

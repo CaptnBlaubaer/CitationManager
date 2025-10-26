@@ -24,14 +24,11 @@ public class Unpublished extends Citation {
     //4. other methods
 
     @Override
-    public String toString() {
-        return "ArticleInfo{" +
-                "type='" + articleType + '\'' +
-                ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", year=" + year +
-                ", pdfFilePath='" + String.join(",",pdfFilePath) + '\'' +
-                '}';
+    public String citationDetailsAsString() {
+        return "Citation type: \n" + articleType.getDescription() + "\n\n" +
+                "Title: \n" + title + "\n\n" +
+                "Author(s): \n" + author + "\n\n" +
+                "Year: \n" + year + "\n\n";
     }
 
     @Override

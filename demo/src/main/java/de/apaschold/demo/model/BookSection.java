@@ -52,20 +52,16 @@ public class BookSection extends Citation {
     //4. other methods
 
     @Override
-    public String toString() {
-        return "ArticleInfo{" +
-                "type='" + articleType + '\'' +
-                ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", book title='" + bookTitle + '\'' +
-                ", editor='" + editor + '\'' +
-                ", publisher='" + journal + '\'' +
-                ", year=" + year +
-                ", volume=" + volume +
-                ", pages=" + pages +
-                ", doi='" + doi + '\'' +
-                ", pdfFilePath='" + String.join(",",pdfFilePath) + '\'' +
-                '}';
+    public String citationDetailsAsString() {
+        return "Citation type: \n" + articleType.getDescription() + "\n\n" +
+                "Chapter title: \n" + title + "\n\n" +
+                "Author(s): \n" + author + "\n\n" +
+                "Book title: \n" + journal + "\n\n" +
+                "Editor(s): \n" + editor + "\n\n" +
+                "Year: \n" + year + "\n\n" +
+                "Volume: \n" + volume + "\n\n" +
+                "Pages: \n" + pages + "\n\n" +
+                "DOI: \n" + doi + "\n\n";
     }
 
     @Override

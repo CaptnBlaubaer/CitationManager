@@ -1,49 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-        <?import javafx.scene.control.*?>
-        <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
+<VBox spacing="10.0" style="-fx-padding: 10px;" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="de.apaschold.demo.gui.citationdetailsview.PatentSubViewController">
+    <Label text="Title"/>
+    <TextField fx:id="titleChange" style="-fx-font-size: 12;"/>
+    <Label text="Author(s)"/>
+    <TextArea fx:id="authorsChange" style="-fx-font-size: 12;"/>
+    <Label text="Year"/>
+    <TextField fx:id="yearChange" style="-fx-font-size: 12;"/>
+    <Label text="URL"/>
+    <TextField fx:id="urlChange" style="-fx-font-size: 12;"/>
+    <Button text="Save Changes" onAction="#saveChanges"/>
+</VBox>
 
-<TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx"
-         xmlns:fx="http://javafx.com/fxml"
-         fx:controller="de.apaschold.demo.gui.citationdetailsview.PatentSubViewController">
-    <tabs>
-        <Tab text="Article Info">
-            <content>
-                <VBox  spacing="10.0" style="-fx-padding: 10px;">
-                    <Label fx:id="articleType" style="-fx-font-size: 12;"/>
-                    <Label fx:id="title" style="-fx-font-size: 12;"/>
-                    <Label fx:id="authors" style="-fx-font-size: 12;"/>
-                    <Label fx:id="year" style="-fx-font-size: 12;"/>
-                    <Label fx:id="url" style="-fx-font-size: 12;"/>
-                </VBox>
-            </content>
-        </Tab>
-        <Tab text="Edit">
-            <content>
-                <VBox spacing="10.0" style="-fx-padding: 10px;">
-                    <Label text="Title"/>
-                    <TextField fx:id="titleChange" style="-fx-font-size: 12;"/>
-                    <Label text="Author(s)"/>
-                    <TextArea fx:id="authorsChange" style="-fx-font-size: 12;"/>
-                    <Label text="Year"/>
-                    <TextField fx:id="yearChange" style="-fx-font-size: 12;"/>
-                    <Label text="URL"/>
-                    <TextField fx:id="urlChange" style="-fx-font-size: 12;"/>
-                    <Button text="Save Changes" onAction="#saveChanges"/>
-                </VBox>
-            </content>
-        </Tab>
-        <Tab text="Attached Files">
-            <content>
-                <VBox spacing="10.0" style="-fx-padding: 10px;">
-                    <ComboBox fx:id="attachedFiles" onAction="#selectAttachedFile"/>
-                    <BorderPane fx:id="pdfViewer" prefHeight="1000.0"/>
-                </VBox>
-            </content>
-        </Tab>
-    </tabs>
-
-
-</TabPane>
 
