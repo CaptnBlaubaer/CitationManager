@@ -42,7 +42,7 @@ public class Patent extends Citation {
 
     @Override
     public String toCsvString(){
-        return String.format(AppTexts.CSV_STRING_PROMPT,
+        return String.format(AppTexts.CSV_STRING_TEMPLATE,
                 citationType + "",
                 title,
                 author.replace("; ", " and "),
@@ -63,7 +63,7 @@ public class Patent extends Citation {
     public String exportAsBibTexString(){
         String bibTexReference = createBibTexReference();
 
-        return String.format(AppTexts.PATENT_BIB_TEX_EXPORT_PROMPT,
+        return String.format(AppTexts.PATENT_BIB_TEX_EXPORT_TEMPLATE,
                 bibTexReference,
                 this.author,
                 this.title,

@@ -1,7 +1,5 @@
 package de.apaschold.demo.additionals;
 
-import de.apaschold.demo.model.CitationType;
-
 public class AppTexts {
     //0. constants
     public static final String PLACEHOLDER = " - ";
@@ -14,9 +12,9 @@ public class AppTexts {
 
     //General CSV Format
     //CitationType;Title;Authors;Journal/Publisher;Year;DOI/URL;Attached files;Journal abbreviation;Volume;Issue;Pages;Book title;Editor
-    public static final String CSV_STRING_PROMPT = "%s;%s;%s;%s;%d;%s;%s;%s;%d;%d;%s;%s;%s";
+    public static final String CSV_STRING_TEMPLATE = "%s;%s;%s;%s;%d;%s;%s;%s;%d;%d;%s;%s;%s";
 
-    public static final String JOURNAL_ARTICLE_BIB_TEX_EXPORT_PROMPT = "@article{%s,\n" +
+    public static final String JOURNAL_ARTICLE_BIB_TEX_EXPORT_TEMPLATE = "@article{%s,\n" +
             "\tauthor={%s},\n" +
             "\ttitle={%s},\n" +
             "\tjournal={%s},\n" +
@@ -26,14 +24,14 @@ public class AppTexts {
             "\tDOI={%s},\n" +
             "\tyear={%d},\n" +
             "\ttype={Journal Article}\n}";
-    public static final String BOOK_BIB_TEX_EXPORT_PROMPT = "@book{%s,\n" +
+    public static final String BOOK_BIB_TEX_EXPORT_TEMPLATE = "@book{%s,\n" +
             "\tauthor={%s},\n" +
             "\ttitle={%s},\n" +
             "\tpublisher={%s},\n" +
             "\tDOI={%s},\n" +
             "\tyear={%d},\n" +
             "\ttype={Book}\n}";
-    public static final String BOOK_SECTION_BIB_TEX_EXPORT_PROMPT = "@inbook{%s,\n" +
+    public static final String BOOK_SECTION_BIB_TEX_EXPORT_TEMPLATE = "@inbook{%s,\n" +
             "\tauthor={%s},\n" +
             "\ttitle={%s},\n" +
             "\tbooktitel={%s},\n" +
@@ -44,19 +42,19 @@ public class AppTexts {
             "\tDOI={%s},\n" +
             "\tyear={%d},\n" +
             "\ttype={Book Section}\n}";
-    public static final String PATENT_BIB_TEX_EXPORT_PROMPT = "@misc{%s,\n" +
+    public static final String PATENT_BIB_TEX_EXPORT_TEMPLATE = "@misc{%s,\n" +
             "\tauthor={%s},\n" +
             "\ttitle={%s},\n" +
             "\turl={%s},\n" +
             "\tyear={%d},\n" +
             "\ttype={Patent}\n}";
-    public static final String THESIS_BIB_TEX_EXPORT_PROMPT = "@phdthesis{%s,\n" +
+    public static final String THESIS_BIB_TEX_EXPORT_TEMPLATE = "@phdthesis{%s,\n" +
             "\tauthor={%s},\n" +
             "\ttitle={%s},\n" +
             "\tDOI={%s},\n" +
             "\tyear={%d},\n" +
             "\ttype={Thesis}\n}";
-    public static final String UNPUBLISHED_BIB_TEX_EXPORT_PROMPT = "@phdthesis{%s,\n" +
+    public static final String UNPUBLISHED_BIB_TEX_EXPORT_TEMPLATE = "@phdthesis{%s,\n" +
             "\tauthor={%s},\n" +
             "\ttitle={%s},\n" +
             "\tyear={%d},\n" +
