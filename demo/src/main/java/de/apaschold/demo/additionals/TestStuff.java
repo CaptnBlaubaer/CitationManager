@@ -1,7 +1,9 @@
 package de.apaschold.demo.additionals;
 
+import de.apaschold.demo.logic.CitationLibrary;
 import de.apaschold.demo.logic.filehandling.FileHandler;
 import de.apaschold.demo.logic.filehandling.SeleniumWebHandlerHeadless;
+import de.apaschold.demo.model.Citation;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,25 +18,9 @@ public class TestStuff {
 
 
     public static void main(String[] args) throws IOException {
-        /*File file = new File("C:\\Users\\Hein\\Downloads\\s41586-025-09495-w.pdf");
+        CitationLibrary library = new CitationLibrary("C:\\Users\\apasc\\OneDrive\\Desktop\\ProgrammierStuff\\CitationManagerJava\\Libraries\\MyFirstLibrary.cml");
+        Citation citation = library.getFirstCitation();
 
-        System.out.println(file.exists());
-        System.out.println(file.toPath());
-
-        Path path = file.toPath();
-
-        System.out.println(file.lastModified());
-
-        BasicFileAttributeView view
-                = Files.getFileAttributeView(
-                path, BasicFileAttributeView.class);
-
-        BasicFileAttributes attribute
-                = view.readAttributes();
-
-        System.out.print("Creation Time of the file: ");
-        System.out.println(attribute.creationTime());*/
-
-        System.out.println(FileHandler.getInstance().determineLatestAddedFile());
+        System.out.println(citation);
     }
 }

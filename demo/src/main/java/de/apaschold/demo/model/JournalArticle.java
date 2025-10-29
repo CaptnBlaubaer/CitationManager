@@ -67,6 +67,19 @@ public class JournalArticle extends Citation {
     }
 
     //4. other methods
+    @Override
+    public String toString(){
+        return "Citation type: " + citationType.getDescription() + "\n" +
+                "Title: " + title + "\n" +
+                "Author(s): " + author + "\n" +
+                "Journal: " + journal + "\n" +
+                "Journal abbreviation: " + journalShortForm + "\n" +
+                "Year: " + year + "\n" +
+                "Volume: " + volume + "\n" +
+                "Issue: " + issue + "\n" +
+                "Pages: " + pages + "\n" +
+                "DOI: " + doi + "\n";
+    }
 
     @Override
     public String citationDetailsAsString() {
@@ -122,4 +135,6 @@ public class JournalArticle extends Citation {
                 this.pages + "|" +
                 lastAuthor.split(",")[0] + "|Art1|";
     }
+
+
 }

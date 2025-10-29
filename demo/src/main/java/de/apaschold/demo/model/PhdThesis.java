@@ -22,6 +22,14 @@ public class PhdThesis extends Citation {
     }
 
     //4. other methods
+    @Override
+    public String toString() {
+        return "Citation type: " + citationType.getDescription() + "\n" +
+                "Title: " + title + "\n" +
+                "Author(s): " + author + "\n" +
+                "Year: " + year + "\n" +
+                "DOI: " + doi + "\n";
+    }
 
     @Override
     public String citationDetailsAsString() {

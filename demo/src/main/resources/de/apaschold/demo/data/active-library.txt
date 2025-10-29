@@ -1,1 +1,1 @@
-C:\Users\Hein\Desktop\Programmierstuff\JAva\CitationManagerTestLibrary\my-first-library.cml
+C:\Users\apasc\OneDrive\Desktop\ProgrammierStuff\CitationManagerJava\Libraries\MyFirstLibrary.cml

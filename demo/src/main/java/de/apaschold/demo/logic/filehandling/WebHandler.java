@@ -1,6 +1,7 @@
 package de.apaschold.demo.logic.filehandling;
 
 import de.apaschold.demo.additionals.AppTexts;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -89,7 +90,7 @@ public class WebHandler {
      * @param pubMedId the PubMed ID of the article
      * @return the article records as a JSONObject
      */
-    public JSONObject getRecordsFromPubMedId(String pubMedId){
+    public JSONObject getRecordsFromPubMedId(String pubMedId) throws JSONException {
         String webResponse = webRequest(PUB_MED_ENDPOINT_URL + String.format(PUB_MED_GET_RECORDS_PROMPT, pubMedId));
 
         JSONObject webResponseAsJsonObject = new JSONObject(webResponse);

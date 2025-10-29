@@ -50,6 +50,18 @@ public class BookSection extends Citation {
     public void setPages(String pages) { this.pages = pages;}
 
     //4. other methods
+    @Override
+    public String toString() {
+        return "Citation type: " + citationType.getDescription() + "\n" +
+                "Chapter title: " + title + "\n" +
+                "Author(s): " + author + "\n" +
+                "Book title: " + journal + "\n" +
+                "Editor(s): " + editor + "\n" +
+                "Year: " + year + "\n" +
+                "Volume: " + volume + "\n" +
+                "Pages: " + pages + "\n" +
+                "DOI: " + doi + "\n";
+    }
 
     @Override
     public String citationDetailsAsString() {

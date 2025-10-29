@@ -92,8 +92,9 @@ public class CitationDetailsViewController implements Initializable {
         //returned String is %journal_title|year|||author_last_name|Art1|pub_med_id
         String pubMedId = WebHandler.getInstance().getPubMedId(pubMedString).split("Art1\\|")[1];
 
-        if(!pubMedId.equals("NOT_FOUND")) {
+        if(!pubMedId.contains("NOT_FOUND")) {
             JSONObject recordsFromPubMedId = WebHandler.getInstance().getRecordsFromPubMedId(pubMedId);
+
             GuiController.getInstance().setReferenceChanges(recordsFromPubMedId);
             GuiController.getInstance().loadReferenceUpdateView();
 

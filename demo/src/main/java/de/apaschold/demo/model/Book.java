@@ -29,6 +29,16 @@ public class Book extends Citation {
     public void setVolume(int volume){ this.volume = volume;}
 
     //4. other methods
+    @Override
+    public String toString() {
+        return "Citation type: " + citationType.getDescription() + "\n" +
+                "Title: " + title + "\n" +
+                "Author(s): " + author + "\n" +
+                "Publisher: " + journal + "\n" +
+                "Year: " + year + "\n" +
+                "Volume: " + volume + "\n" +
+                "DOI: " + doi + "\n";
+    }
 
     @Override
     public String citationDetailsAsString() {
