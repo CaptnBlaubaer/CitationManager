@@ -90,6 +90,28 @@ public abstract class Citation {
     public IntegerProperty yearProperty() { return new SimpleIntegerProperty(year);}
 
     //4. other methods
+
+    /**
+     * <h2>toCsvString</h2>
+     * <li>returns the citation as a csv String representation for export</li>
+     * <li>General form of the csv String, parameters not used by the citation are returned as placeholder " - "</li>
+     * <ul>
+     *     <p>{@link CitationType}</p>
+     *     <p>Title</p>
+     *     <p>Authors</p>
+     *     <p>Journal/Publisher</p>
+     *     <p>Year</p>
+     *     <p>DOI/URL</p>
+     *     <p>Attached files</p>
+     *     <p>Journal abbreviation</p>
+     *     <p>Volume</p>
+     *     <p>Issue</p>
+     *     <p>Pages</p>
+     *     <p>Book title</p>
+     *     <p>Editor</p>
+     * </ul>
+     * @return Citation as csv String
+     */
     public String toCsvString(){ return "";}
 
     public String citationDetailsAsString(){ return "";}

@@ -1,5 +1,7 @@
 package de.apaschold.demo.additionals;
 
+import de.apaschold.demo.model.CitationType;
+
 public class AppTexts {
     //0. constants
     public static final String PLACEHOLDER = " - ";
@@ -9,6 +11,11 @@ public class AppTexts {
     public static final String BIBTEX_FILE_FORMAT = ".bib";
     public static final String PDF_FOLDER_EXTENSION = "-pdfs\\";
     public static final String HTTPS_FOR_DOI = "https://doi.org/";
+
+    //General CSV Format
+    //CitationType;Title;Authors;Journal/Publisher;Year;DOI/URL;Attached files;Journal abbreviation;Volume;Issue;Page;Book title;Editor
+
+    public static final String CSV_STRING_PROMPT = "%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s";
 
     public static final String JOURNAL_ARTICLE_BIB_TEX_EXPORT_PROMPT = "@article{%s,\n" +
             "\tauthor={%s},\n" +

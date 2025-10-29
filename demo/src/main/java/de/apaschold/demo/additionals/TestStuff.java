@@ -1,9 +1,12 @@
 package de.apaschold.demo.additionals;
 
+import de.apaschold.demo.logic.CitationFactory;
 import de.apaschold.demo.logic.CitationLibrary;
 import de.apaschold.demo.logic.filehandling.FileHandler;
 import de.apaschold.demo.logic.filehandling.SeleniumWebHandlerHeadless;
 import de.apaschold.demo.model.Citation;
+import de.apaschold.demo.model.CitationType;
+import de.apaschold.demo.model.Unpublished;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +24,16 @@ public class TestStuff {
         CitationLibrary library = new CitationLibrary("C:\\Users\\apasc\\OneDrive\\Desktop\\ProgrammierStuff\\CitationManagerJava\\Libraries\\MyFirstLibrary.cml");
         Citation citation = library.getFirstCitation();
 
-        System.out.println(citation);
+        System.out.println(citation.toCsvString());
+
+        citation.setCitationType(CitationType.PATENT);
+        String csvString = citation.toCsvString();
+
+        System.out.println(csvString);
+
+        Citation newCitation = CitationFactory.createCitationFromCsvLine(csvString);
+        System.out.println(newCitation);
+
+
     }
 }
