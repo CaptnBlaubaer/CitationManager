@@ -55,8 +55,9 @@ public class BookSection extends Citation {
         return "Citation type: " + citationType.getDescription() + "\n" +
                 "Chapter title: " + title + "\n" +
                 "Author(s): " + author + "\n" +
-                "Book title: " + journal + "\n" +
+                "Book title: " + bookTitle + "\n" +
                 "Editor(s): " + editor + "\n" +
+                "Publisher: " + journal + "\n" +
                 "Year: " + year + "\n" +
                 "Volume: " + volume + "\n" +
                 "Pages: " + pages + "\n" +
@@ -78,17 +79,21 @@ public class BookSection extends Citation {
 
     @Override
     public String toCsvString(){
-        return citationType + ";" +
-                title + ";" +
-                author.replace("; ", " and ") + ";" +
-                bookTitle + ";" +
-                editor.replace("; ", " and ") + ";" +
-                journal + ";" +
-                year + ";" +
-                volume + ";" +
-                pages + ";" +
-                doi + ";" +
-                String.join(",", pdfFilePaths);
+        return String.format(AppTexts.CSV_STRING_PROMPT,
+                citationType + "",
+                title,
+                author.replace("; ", " and "),
+                journal,
+                year,
+                doi,
+                String.join(",",pdfFilePaths),
+                AppTexts.PLACEHOLDER,
+                volume,
+                AppTexts.NUMBER_PLACEHOLDER,
+                pages,
+                bookTitle,
+                editor
+        );
     }
 
     @Override

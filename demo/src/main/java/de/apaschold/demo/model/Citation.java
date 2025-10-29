@@ -114,6 +114,8 @@ public abstract class Citation {
      */
     public String toCsvString(){ return "";}
 
+    public String toCsvStringTest(){ return "";}
+
     public String citationDetailsAsString(){ return "";}
 
     public String exportAsBibTexString(){ return "";}

@@ -24,16 +24,6 @@ public class TestStuff {
         CitationLibrary library = new CitationLibrary("C:\\Users\\apasc\\OneDrive\\Desktop\\ProgrammierStuff\\CitationManagerJava\\Libraries\\MyFirstLibrary.cml");
         Citation citation = library.getFirstCitation();
 
-        System.out.println(citation.toCsvString());
-
-        citation.setCitationType(CitationType.PATENT);
-        String csvString = citation.toCsvString();
-
-        System.out.println(csvString);
-
-        Citation newCitation = CitationFactory.createCitationFromCsvLine(csvString);
-        System.out.println(newCitation);
-
-
+        System.out.println(citation.toCsvStringTest());
     }
 }

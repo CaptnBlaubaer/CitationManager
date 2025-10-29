@@ -40,11 +40,21 @@ public class Unpublished extends Citation {
 
     @Override
     public String toCsvString(){
-        return citationType + ";" +
-                title + ";" +
-                author.replace("; ", " and ") + ";" +
-                year + ";" +
-                String.join(",", pdfFilePaths);
+        return String.format(AppTexts.CSV_STRING_PROMPT,
+                citationType + "",
+                title,
+                author.replace("; ", " and "),
+                AppTexts.PLACEHOLDER,
+                year,
+                AppTexts.PLACEHOLDER,
+                String.join(",",pdfFilePaths),
+                AppTexts.PLACEHOLDER,
+                AppTexts.NUMBER_PLACEHOLDER,
+                AppTexts.NUMBER_PLACEHOLDER,
+                AppTexts.PLACEHOLDER,
+                AppTexts.PLACEHOLDER,
+                AppTexts.PLACEHOLDER
+        );
     }
 
     @Override

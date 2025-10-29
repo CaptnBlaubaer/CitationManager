@@ -95,18 +95,23 @@ public class JournalArticle extends Citation {
                 "DOI: \n" + doi + "\n\n";
     }
 
+    @Override
     public String toCsvString(){
-        return citationType + ";" +
-                title + ";" +
-                author.replace("; ", " and ") + ";" +
-                journal + ";" +
-                journalShortForm + ";" +
-                year + ";" +
-                volume + ";" +
-                issue + ";" +
-                pages + ";" +
-                doi + ";" +
-                String.join(",", pdfFilePaths);
+        return String.format(AppTexts.CSV_STRING_PROMPT,
+                citationType + "",
+                title,
+                author.replace("; ", " and "),
+                journal,
+                year,
+                doi,
+                String.join(",",pdfFilePaths),
+                journalShortForm,
+                volume,
+                issue,
+                pages,
+                AppTexts.PLACEHOLDER,
+                AppTexts.PLACEHOLDER
+                );
     }
 
     @Override

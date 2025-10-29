@@ -13,9 +13,8 @@ public class AppTexts {
     public static final String HTTPS_FOR_DOI = "https://doi.org/";
 
     //General CSV Format
-    //CitationType;Title;Authors;Journal/Publisher;Year;DOI/URL;Attached files;Journal abbreviation;Volume;Issue;Page;Book title;Editor
-
-    public static final String CSV_STRING_PROMPT = "%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s";
+    //CitationType;Title;Authors;Journal/Publisher;Year;DOI/URL;Attached files;Journal abbreviation;Volume;Issue;Pages;Book title;Editor
+    public static final String CSV_STRING_PROMPT = "%s;%s;%s;%s;%d;%s;%s;%s;%d;%d;%s;%s;%s";
 
     public static final String JOURNAL_ARTICLE_BIB_TEX_EXPORT_PROMPT = "@article{%s,\n" +
             "\tauthor={%s},\n" +

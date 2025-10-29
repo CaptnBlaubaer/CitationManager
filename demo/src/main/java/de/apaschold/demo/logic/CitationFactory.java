@@ -68,13 +68,13 @@ public class CitationFactory {
         String title = separatedCsvLine[1];
         String authors = separatedCsvLine[2].replace(" and ", "; ");
         String journal = separatedCsvLine[3];
-        String journalShortForm = separatedCsvLine[4];
-        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[5]);
-        int volume = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[6]);
-        int issue = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[7]);
-        String pages = separatedCsvLine[8];
-        String doi = separatedCsvLine[9];
-        String pdfFilePath = separatedCsvLine[10];
+        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[4]);
+        String doi = separatedCsvLine[5];
+        String pdfFilePath = separatedCsvLine[6];
+        String journalShortForm = separatedCsvLine[7];
+        int volume = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[8]);
+        int issue = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[9]);
+        String pages = separatedCsvLine[10];
 
         return new JournalArticle(title, authors, journal, journalShortForm, year, volume, issue, pages, doi, pdfFilePath);
     }
@@ -91,9 +91,9 @@ public class CitationFactory {
         String authors = separatedCsvLine[2].replace(" and ", "; ");
         String journal = separatedCsvLine[3];
         int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[4]);
-        int volume = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[5]);
-        String doi = separatedCsvLine[6];
-        String pdfFilePath = separatedCsvLine[7];
+        String doi = separatedCsvLine[5];
+        String pdfFilePath = separatedCsvLine[6];
+        int volume = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[8]);
         return new Book(title, authors, journal, year, volume, doi, pdfFilePath);
     }
 
@@ -107,14 +107,14 @@ public class CitationFactory {
     private static BookSection createBookSectionFromCsvLine(String[] separatedCsvLine){
         String title = separatedCsvLine[1];
         String authors = separatedCsvLine[2].replace(" and ", "; ");
-        String bookTitle = separatedCsvLine[3];
-        String editor = separatedCsvLine[4].replace(" and ", "; ");
         String journal = separatedCsvLine[5];
-        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[6]);
-        int volume = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[7]);
-        String pages = separatedCsvLine[8];
-        String doi = separatedCsvLine[9];
-        String pdfFilePath = separatedCsvLine[10];
+        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[4]);
+        String doi = separatedCsvLine[5];
+        String pdfFilePath = separatedCsvLine[6];
+        int volume = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[8]);
+        String pages = separatedCsvLine[10];
+        String bookTitle = separatedCsvLine[11];
+        String editor = separatedCsvLine[12].replace(" and ", "; ");
 
         return new BookSection(title, authors, bookTitle, editor, journal, year, volume, pages, doi, pdfFilePath);
     }
@@ -129,9 +129,9 @@ public class CitationFactory {
     private static Citation createPhdThesisFromCsvLine(String[] separatedCsvLine) {
         String title = separatedCsvLine[1];
         String authors = separatedCsvLine[2].replace(" and ", "; ");
-        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[3]);
-        String doi = separatedCsvLine[4];
-        String pdfFilePath = separatedCsvLine[5];
+        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[4]);
+        String doi = separatedCsvLine[5];
+        String pdfFilePath = separatedCsvLine[6];
         return new PhdThesis(title, authors, year, doi, pdfFilePath);
     }
 
@@ -145,9 +145,9 @@ public class CitationFactory {
     private static Citation createPatentFromCsvLine(String[] separatedCsvLine) {
         String title = separatedCsvLine[1];
         String authors = separatedCsvLine[2].replace(" and ", "; ");
-        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[3]);
-        String doi = separatedCsvLine[4];
-        String pdfFilePath = separatedCsvLine[5];
+        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[4]);
+        String doi = separatedCsvLine[5];
+        String pdfFilePath = separatedCsvLine[6];
         return new Patent(title, authors, year, doi, pdfFilePath);
     }
 
@@ -161,8 +161,8 @@ public class CitationFactory {
     private static Citation createUnpublishedFromCsvLine(String[] separatedCsvLine) {
         String title = separatedCsvLine[1];
         String authors = separatedCsvLine[2].replace(" and ", "; ");
-        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[3]);
-        String pdfFilePath = separatedCsvLine[4];
+        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[4]);
+        String pdfFilePath = separatedCsvLine[6];
         return new Unpublished (title, authors, year, pdfFilePath);
     }
 

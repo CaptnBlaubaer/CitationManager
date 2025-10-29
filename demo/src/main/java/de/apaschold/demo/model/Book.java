@@ -53,14 +53,21 @@ public class Book extends Citation {
 
     @Override
     public String toCsvString(){
-        return citationType + ";" +
-                title + ";" +
-                author.replace("; ", " and ") + ";" +
-                journal + ";" +
-                year + ";" +
-                volume + ";" +
-                doi + ";" +
-                String.join(",", pdfFilePaths);
+        return String.format(AppTexts.CSV_STRING_PROMPT,
+                citationType + "",
+                title,
+                author.replace("; ", " and "),
+                journal,
+                year,
+                doi,
+                String.join(",",pdfFilePaths),
+                AppTexts.PLACEHOLDER,
+                volume,
+                AppTexts.NUMBER_PLACEHOLDER,
+                AppTexts.PLACEHOLDER,
+                AppTexts.PLACEHOLDER,
+                AppTexts.PLACEHOLDER
+        );
     }
 
     @Override
