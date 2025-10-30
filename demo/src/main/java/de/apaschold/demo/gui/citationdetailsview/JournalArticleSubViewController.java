@@ -55,7 +55,7 @@ public class JournalArticleSubViewController implements Initializable {
      */
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
-        this.journalArticle = (JournalArticle) GuiController.getInstance().getSelectedCitation();
+        this.journalArticle = (JournalArticle) GuiController.getInstance().getDummyCitationToEdit();
 
         populateEditView();
     }
@@ -83,6 +83,8 @@ public class JournalArticleSubViewController implements Initializable {
 
             this.journalArticle.setPages(this.pagesChange.getText());
             this.journalArticle.setDoi(this.doiChange.getText());
+
+            GuiController.getInstance().updateLibraryWithEditedCitation(this.journalArticle);
 
             //update the labels in the article overview
             GuiController.getInstance().loadMainMenu();

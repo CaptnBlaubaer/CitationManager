@@ -2,6 +2,7 @@ package de.apaschold.demo.gui.citationdetailsview;
 
 import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.GuiController;
+import de.apaschold.demo.model.Citation;
 import de.apaschold.demo.model.Unpublished;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -41,15 +42,16 @@ public class UnpublishedSubViewController implements Initializable {
 
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
-        this.unpublished = (Unpublished) GuiController.getInstance().getSelectedCitation();
+        this.unpublished = (Unpublished) GuiController.getInstance().getDummyCitationToEdit();
 
         populateEditView();
     }
 
     //4. FXML methods
     /** <h2>saveChanges</h2>
-     * <li>Saves the changes made to the {@link Unpublished} details.</li>
-     * <li>Updates the main menu to reflect the changes.</li>
+     * <li>Saves changes made to the book section details back to the dummy {@link Citation}</li>
+     * <li>Sets the updated citation as the selected citation in the {@link GuiController}.</li>
+     * <li>Updates the main menu view.</li>
      * @throws IOException if an I/O error occurs while loading the main menu.
      */
 
@@ -60,6 +62,8 @@ public class UnpublishedSubViewController implements Initializable {
             this.unpublished.setAuthors( this.authorsChange.getText().replace("\n", "; "));
 
             this.unpublished.setYear( MyLittleHelpers.convertStringInputToInteger(this.yearChange.getText()));
+
+            GuiController.getInstance().updateLibraryWithEditedCitation(this.unpublished);
 
             //update the labels in the article overview
             GuiController.getInstance().loadMainMenu();

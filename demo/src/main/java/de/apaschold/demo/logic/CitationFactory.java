@@ -108,7 +108,7 @@ public class CitationFactory {
     private static BookSection createBookSectionFromCsvLine(String[] separatedCsvLine){
         String title = separatedCsvLine[1];
         String authors = separatedCsvLine[2].replace(" and ", "; ");
-        String journal = separatedCsvLine[5];
+        String journal = separatedCsvLine[3];
         int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[4]);
         String doi = separatedCsvLine[5];
         String pdfFilePath = separatedCsvLine[6];
@@ -356,7 +356,6 @@ public class CitationFactory {
                 refinedDetail = refinedDetail.replace(BIBTEX_DOI_KEY,"");
                 importedPhdThesis.setDoi(refinedDetail);
             }
-
         }
 
         return importedPhdThesis;

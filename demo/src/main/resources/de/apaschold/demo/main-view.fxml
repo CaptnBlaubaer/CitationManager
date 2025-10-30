@@ -23,7 +23,7 @@
    </left>
    <bottom>
        <HBox alignment="TOP_CENTER" prefHeight="20.0" prefWidth="200.0" spacing="20.0" style="-fx-background-color: #E0E0E0; -fx-padding: 5px;" BorderPane.alignment="CENTER">
-           <Label text="Citation Manager 2025 v0.1" />
+           <Label text="Citation Manager 2025 v1.0" />
            <Label text=" Author: André Paschold" />
        </HBox>
    </bottom>

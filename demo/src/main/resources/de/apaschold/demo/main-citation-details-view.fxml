@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 
 <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.apaschold.demo.gui.citationdetailsview.CitationDetailsViewController">
     <tabs>
@@ -10,24 +10,31 @@
             <content>
                 <VBox spacing="10.0" style="-fx-padding: 10px;">
                     <Label fx:id="citationDetails" style="-fx-font-size: 12;" />
-                    <Button fx:id="updateCitationButton" text="Update citation" prefWidth="100.0" prefHeight="20.0" onAction="#checkForUpdates" visible="false"/>
+                    <Button fx:id="updateCitationButton" onAction="#checkForUpdates" prefHeight="20.0" prefWidth="100.0" text="Update citation" visible="false" />
                 </VBox>
             </content>
         </Tab>
         <Tab text="Edit">
-            <BorderPane fx:id="editTab"/>
+            <BorderPane fx:id="editTab">
+                <top>
+                    <ComboBox fx:id="editCitationType" onAction="#changeCitationType" prefWidth="150.0"/>
+                </top>
+            <padding>
+               <Insets left="10.0" top="10.0" />
+            </padding>
+            </BorderPane>
         </Tab>
         <Tab text="Attached Files">
             <content>
                 <VBox spacing="10.0" style="-fx-padding: 10px;">
-                    <HBox spacing="10.0" alignment="CENTER_LEFT">
-                        <ComboBox fx:id="attachedFiles" onAction="#selectAttachedFile" prefWidth="400.0"/>
-                        <Button text="Attach new file" prefHeight="20.0" prefWidth="120.0" onAction="#addNewAttachmentToArticleReference"/>
-                        <Button text="Delete file" prefHeight="20.0" prefWidth="100.0" onAction="#deleteAttachment"/>
-                        <Button fx:id="searchPDFButton" text="Search for Pdf" prefHeight="20.0" prefWidth="120.0" onAction="#searchPdfFile" visible="false"/>
+                    <HBox alignment="CENTER_LEFT" spacing="10.0">
+                        <ComboBox fx:id="attachedFiles" onAction="#selectAttachedFile" prefWidth="400.0" />
+                        <Button onAction="#addNewAttachmentToArticleReference" prefHeight="20.0" prefWidth="120.0" text="Attach new file" />
+                        <Button onAction="#deleteAttachment" prefHeight="20.0" prefWidth="100.0" text="Delete file" />
+                        <Button fx:id="searchPDFButton" onAction="#searchPdfFile" prefHeight="20.0" prefWidth="120.0" text="Search for Pdf" visible="false" />
                     </HBox>
 
-                    <BorderPane fx:id="pdfViewer" prefHeight="1000.0"/>
+                    <BorderPane fx:id="pdfViewer" prefHeight="1000.0" />
                 </VBox>
             </content>
         </Tab>

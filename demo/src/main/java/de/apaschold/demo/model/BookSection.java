@@ -69,8 +69,9 @@ public class BookSection extends Citation {
         return "Citation type: \n" + citationType.getDescription() + "\n\n" +
                 "Chapter title: \n" + title + "\n\n" +
                 "Author(s): \n" + author.replaceAll("; ", "\n") + "\n\n" +
-                "Book title: \n" + journal + "\n\n" +
+                "Book title: \n" + bookTitle + "\n\n" +
                 "Editor(s): \n" + editor.replaceAll("; ", "\n") + "\n\n" +
+                "Publisher: \n" + journal + "\n\n" +
                 "Year: \n" + year + "\n\n" +
                 "Volume: \n" + volume + "\n\n" +
                 "Pages: \n" + pages + "\n\n" +

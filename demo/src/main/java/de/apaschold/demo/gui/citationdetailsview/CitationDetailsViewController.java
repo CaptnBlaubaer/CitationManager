@@ -5,10 +5,12 @@ import de.apaschold.demo.HelloApplication;
 import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.gui.Alerts;
 import de.apaschold.demo.gui.GuiController;
+import de.apaschold.demo.logic.CitationFactory;
 import de.apaschold.demo.logic.filehandling.FileHandler;
 import de.apaschold.demo.logic.filehandling.SeleniumWebHandlerHeadless;
 import de.apaschold.demo.logic.filehandling.WebHandler;
 import de.apaschold.demo.model.Citation;
+import de.apaschold.demo.model.CitationType;
 import de.apaschold.demo.model.JournalArticle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +27,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
 
 /**
  * <h2>JournalArticleSubViewController</h2>
@@ -47,6 +48,8 @@ public class CitationDetailsViewController implements Initializable {
 
     @FXML
     private BorderPane editTab;
+    @FXML
+    private ComboBox<CitationType> editCitationType;
 
     @FXML
     private ComboBox<String> attachedFiles;
@@ -69,6 +72,8 @@ public class CitationDetailsViewController implements Initializable {
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
         this.citation = GuiController.getInstance().getSelectedCitation();
+
+        createDummyCitationToEdit();
 
         populateCitationDetailsView();
 
@@ -201,6 +206,29 @@ public class CitationDetailsViewController implements Initializable {
         }
     }
 
+    /** <h2>changeCitationType</h2>
+     * <li>Changes the {@link CitationType} of the dummy {@link Citation} to edit.</li>
+     * <li>Recreates the dummy citation with the new citation type and updates the GUI accordingly.</li>
+     * <li>Linked to the {@link ComboBox} in "Edit"-Tab</li>
+     */
+    @FXML
+    protected void changeCitationType(){
+        Citation dummyCitation = GuiController.getInstance().getDummyCitationToEdit();
+
+        CitationType newType = this.editCitationType.getValue();
+
+        if (dummyCitation.getCitationType() != newType){
+            dummyCitation.setCitationType(newType);
+
+            String csvStringOfDummyCitationWithNewCitationType = dummyCitation.toCsvString();
+
+            Citation dummyCitationWithNewCitationType = CitationFactory.createCitationFromCsvLine(csvStringOfDummyCitationWithNewCitationType);
+            GuiController.getInstance().setDummyCitationToEdit(dummyCitationWithNewCitationType);
+
+            populateCitationEditTab();
+        }
+    }
+
     //5. other methods
     /** <h2>populateCitationDetailsView</h2>
      * <li>Populates the citation details view with the details of the selected {@link Citation}.</li>
@@ -212,8 +240,11 @@ public class CitationDetailsViewController implements Initializable {
         //populate the labels in the article overview
         this.citationDetails.setText(this.citation.citationDetailsAsString());
 
-        //populate the textfields in the article edit view
+        //populate the article edit view
+        this.editCitationType.getItems().setAll(CitationType.values());
+        this.editCitationType.setValue(GuiController.getInstance().getDummyCitationToEdit().getCitationType());
         populateCitationEditTab();
+
 
         populatePDFViewerTab();
 
@@ -227,8 +258,12 @@ public class CitationDetailsViewController implements Initializable {
         }
     }
 
+    /** <h2>populateCitationEditTab</h2>
+     * <li>Populates the citation edit tab with the appropriate subview based on the citation type.</li>
+     */
+
     private void populateCitationEditTab() {
-        String fxmlFile = switch (this.citation.getCitationType()) {
+        String fxmlFile = switch (GuiController.getInstance().getDummyCitationToEdit().getCitationType()) {
                 case JOURNAL_ARTICLE -> "journal-article-subview.fxml";
                 case BOOK_SECTION -> "book-section-subview.fxml";
                 case BOOK -> "book-subview.fxml";
@@ -246,6 +281,19 @@ public class CitationDetailsViewController implements Initializable {
                 e.printStackTrace();
             }
         }
+    }
+
+    /** <h2>createDummyCitationToEdit</h2>
+     * <li>Creates a dummy {@link Citation} to edit by converting the selected citation to a CSV string
+     * and then creating a new citation from that string.</li>
+     * <li>Sets the dummy citation as the citation to edit in the {@link GuiController}.</li>
+     */
+    private void createDummyCitationToEdit() {
+        String csvStringOfSelectedCitation = this.citation.toCsvString();
+
+        Citation dummyCitationToEdit = CitationFactory.createCitationFromCsvLine(csvStringOfSelectedCitation);
+
+        GuiController.getInstance().setDummyCitationToEdit(dummyCitationToEdit);
     }
 
     /** <h2>populatePDFViewerTab</h2>

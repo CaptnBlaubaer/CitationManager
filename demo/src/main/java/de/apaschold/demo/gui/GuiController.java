@@ -5,6 +5,7 @@ import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.logic.CitationLibrary;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import de.apaschold.demo.model.Citation;
+import de.apaschold.demo.model.JournalArticle;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -28,6 +29,7 @@ public class GuiController {
     private Stage mainStage;
     private final CitationLibrary library;
     private Citation selectedCitation;
+    private Citation dummyCitationToEdit;
     private String activeLibraryFilePath;
     private JSONObject referenceChanges;
 
@@ -73,6 +75,10 @@ public class GuiController {
     public Citation getSelectedCitation() { return this.selectedCitation;}
 
     public void setSelectedCitation(Citation selectedCitation) { this.selectedCitation = selectedCitation;}
+
+    public Citation getDummyCitationToEdit() { return this.dummyCitationToEdit;}
+
+    public void setDummyCitationToEdit(Citation dummyCitationToEdit) { this.dummyCitationToEdit = dummyCitationToEdit;}
 
     public String getActiveLibraryFilePath() { return this.activeLibraryFilePath;}
 
@@ -219,7 +225,23 @@ public class GuiController {
         this.library.deleteCitation(this.selectedCitation);
     }
 
+    /** <h2>addNewAttachmentToCitationReference</h2>
+     * <li>Adds a new attachment to the currently selected {@link Citation}.</li>
+     *
+     * @param newAttachment the file path of the new attachment to add
+     */
     public void addNewAttachmentToCitationReference(String newAttachment) {
         this.selectedCitation.addNewAttachment(newAttachment);
+    }
+
+    /** <h2>updateLibraryWithEditedCitation</h2>
+     * <li>Updates the active {@link CitationLibrary} with the changes made to the selected {@link Citation}.</li>
+     *
+     * @param editedCitation the edited {@link Citation} to update in the library
+     */
+    public void updateLibraryWithEditedCitation(Citation editedCitation) {
+        this.library.updateSelectedCitation(editedCitation);
+
+        setSelectedCitation(editedCitation);
     }
 }

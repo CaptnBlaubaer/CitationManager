@@ -2,6 +2,7 @@ package de.apaschold.demo.gui.citationdetailsview;
 
 import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.GuiController;
+import de.apaschold.demo.model.Citation;
 import de.apaschold.demo.model.PhdThesis;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -40,14 +41,16 @@ public class PhdThesisSubViewController implements Initializable {
      */
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
-        this.phdThesis = (PhdThesis) GuiController.getInstance().getSelectedCitation();
+        this.phdThesis = (PhdThesis) GuiController.getInstance().getDummyCitationToEdit();
 
         populateEditView();
     }
 
     //4. FXML methods
     /** <h2>saveChanges</h2>
-     * <li>Saves the changes made to the {@link PhdThesis} details.</li>
+     * <li>Saves changes made to the thesis details back to the dummy {@link Citation}</li>
+     * <li>Sets the updated citation as the selected citation in the {@link GuiController}.</li>
+     * <li>Updates the main menu view.</li>
      * @throws IOException if an I/O error occurs.
      */
     @FXML
@@ -60,6 +63,7 @@ public class PhdThesisSubViewController implements Initializable {
 
             this.phdThesis.setDoi(this.doiChange.getText());
 
+            GuiController.getInstance().updateLibraryWithEditedCitation(this.phdThesis);
             //update the labels in the article overview
             GuiController.getInstance().loadMainMenu();
         }

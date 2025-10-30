@@ -1,5 +1,6 @@
 package de.apaschold.demo.logic;
 
+import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import de.apaschold.demo.model.Citation;
 
@@ -65,5 +66,17 @@ public class CitationLibrary {
      */
     public void importLibraryFromFile(String activeLibraryFilePath){
         this.citations = TextFileHandler.getInstance().importLibraryFromCmlFile(activeLibraryFilePath);
+    }
+
+
+    public void updateSelectedCitation(Citation editedCitation) {
+        Citation oldCitation = GuiController.getInstance().getSelectedCitation();
+
+        for(int index = 0; index < this.citations.size(); index++) {
+            if(this.citations.get(index).equals(oldCitation)) {
+                this.citations.set(index, editedCitation);
+                break;
+            }
+        }
     }
 }

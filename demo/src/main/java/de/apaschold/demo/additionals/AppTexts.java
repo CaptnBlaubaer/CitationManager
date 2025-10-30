@@ -62,6 +62,8 @@ public class AppTexts {
 
 
     public static final String TABLE_VIEW_PLACEHOLDER = "Active Library could not been found.";
+
+    public static final String ERROR_CONNECTING_TO_DATABASE = "Failed connecting to the database :";
     //1. attributes
 
     //2. constructors
