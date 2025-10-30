@@ -1,0 +1,125 @@
+package de.apaschold.demo.logic.databasehandling;
+
+import de.apaschold.demo.additionals.AppTexts;
+import de.apaschold.demo.additionals.MyLittleHelpers;
+import de.apaschold.demo.model.Citation;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+//TODO add alerts for catch Blocks
+public class SqlWriter {
+    //0. constants
+    private static final String CREATE_NEW_LIBRARY_TABLE_PROMPT =
+            "CREATE TABLE IF NOT EXISTS %s (" +
+                    "id INT AUTO_INCREMENT PRIMARY KEY," +
+                    "citation_type VARCHAR(255) NOT NULL," +
+                    "title TEXT," +
+                    "author TEXT," +
+                    "journal TEXT," +
+                    "year VARCHAR(4)," +
+                    "doi TEXT," +
+                    "pdf_file_path TEXT," +
+                    "journal_abbreviation TEXT," +
+                    "volume TEXT," +
+                    "issue TEXT," +
+                    "pages TEXT," +
+                    "book_title TEXT," +
+                    "editor TEXT" +
+                    ");";
+
+    private static final String ADD_NEW_CITATION_TO_LIBRARY_TABLE_PROMPT =
+            "INSERT INTO %s (citation_type, title, author, journal, year, doi, pdf_file_path, journal_abbreviation, volume, issue, pages, book_title, editor) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+
+    private static final String UPDATE_CITATION_IN_LIBRARY_TABLE_PROMPT =
+            "UPDATE %s SET citation_type = ?, title = ?, author = ?, journal = ?, year = ?, doi = ?, pdf_file_path = ?, journal_abbreviation = ?, volume = ?, issue = ?, pages = ?, book_title = ?, editor = ? " +
+                    "WHERE id = ?;";
+
+    //1. attributes
+
+    //2. constructors
+    private SqlWriter() {}
+
+    //3. write methods
+    public static void createNewLibraryTable(String tableName){
+        String createNewLibraryTableStatement = String.format(CREATE_NEW_LIBRARY_TABLE_PROMPT, tableName);
+
+        try(Connection connection = SqlManager.getInstance().getDatabaseConnection()){;
+            try(PreparedStatement preparedStatement = connection.prepareStatement(createNewLibraryTableStatement)){
+
+                preparedStatement.executeUpdate();
+
+            } catch (Exception ee){
+                ee.printStackTrace();
+            }
+        } catch (Exception e) {
+            System.out.println("Hello world");
+        }
+    }
+
+    public static void addNewCitationToLibraryTable(String tableName, Citation citationToAdd){
+        String addNewCitationToLibraryStatement = String.format(ADD_NEW_CITATION_TO_LIBRARY_TABLE_PROMPT, tableName);
+        String[] citationDataInArray = citationToAdd.toCsvString()
+                .replaceAll(AppTexts.PLACEHOLDER,"NULL")
+                .split(";");
+
+        try(Connection connection = SqlManager.getInstance().getDatabaseConnection()){;
+            try(PreparedStatement preparedStatement = connection.prepareStatement(addNewCitationToLibraryStatement)){
+                preparedStatement.setString(1, citationDataInArray[1]); // CitationType
+                preparedStatement.setString(2, citationDataInArray[2]); // Title
+                preparedStatement.setString(3, citationDataInArray[3]); // Author
+                preparedStatement.setString(4, citationDataInArray[4]); // Journal/Publisher
+                preparedStatement.setString(5, citationDataInArray[5]); // Year
+                preparedStatement.setString(6, citationDataInArray[6]); // DOI
+                preparedStatement.setString(7, citationDataInArray[7]); // PDF
+                preparedStatement.setString(8, citationDataInArray[8]); // Journal
+                preparedStatement.setString(9, citationDataInArray[9]); // Volume
+                preparedStatement.setString(10, citationDataInArray[10]); // Issue
+                preparedStatement.setString(11, citationDataInArray[11]); // Pages
+                preparedStatement.setString(12, citationDataInArray[12]); // Book Title
+                preparedStatement.setString(13, citationDataInArray[13]); // Editor
+
+                preparedStatement.executeUpdate();
+            } catch (Exception ee){
+                ee.printStackTrace();
+            }
+        } catch (Exception e) {
+            System.out.println("Hello world");
+        }
+    }
+
+    public static void updateCitationInLibrary(String tableName, Citation citationToUpdate){
+        String updateCitationInLibraryStatement = String.format(UPDATE_CITATION_IN_LIBRARY_TABLE_PROMPT, tableName);
+
+        String[] citationDataInArray = citationToUpdate.toCsvString()
+                .replaceAll(AppTexts.PLACEHOLDER,"NULL")
+                .split(";");
+
+        try(Connection connection = SqlManager.getInstance().getDatabaseConnection()){;
+            try(PreparedStatement preparedStatement = connection.prepareStatement(updateCitationInLibraryStatement)){
+                preparedStatement.setString(1, citationDataInArray[1]); // CitationType
+                preparedStatement.setString(2, citationDataInArray[2]); // Title
+                preparedStatement.setString(3, citationDataInArray[3]); // Author
+                preparedStatement.setString(4, citationDataInArray[4]); // Journal/Publisher
+                preparedStatement.setString(5, citationDataInArray[5]); // Year
+                preparedStatement.setString(6, citationDataInArray[6]); // DOI
+                preparedStatement.setString(7, citationDataInArray[7]); // PDF
+                preparedStatement.setString(8, citationDataInArray[8]); // Journal
+                preparedStatement.setString(9, citationDataInArray[9]); // Volume
+                preparedStatement.setString(10, citationDataInArray[10]); // Issue
+                preparedStatement.setString(11, citationDataInArray[11]); // Pages
+                preparedStatement.setString(12, citationDataInArray[12]); // Book Title
+                preparedStatement.setString(13, citationDataInArray[13]); // Editor
+
+                preparedStatement.setInt(14,
+                        MyLittleHelpers.convertStringInputToInteger(citationDataInArray[0])); //id
+                preparedStatement.executeUpdate();
+            } catch (Exception ee){
+                ee.printStackTrace();
+            }
+        } catch (Exception e) {
+            System.out.println("Hello world");
+        }
+    }
+}
