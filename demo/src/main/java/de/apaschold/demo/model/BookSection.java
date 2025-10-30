@@ -24,8 +24,8 @@ public class BookSection extends Citation {
         this.pages = AppTexts.PLACEHOLDER;
     }
 
-    public BookSection(String title, String author, String bookTitle, String editor, String journal, int year, int volume, String pages, String doi, String pdfFilePath) {
-        super(CitationType.BOOK_SECTION, title, author, journal, year, doi, pdfFilePath);
+    public BookSection(int id, String title, String author, String bookTitle, String editor, String journal, int year, int volume, String pages, String doi, String pdfFilePath) {
+        super(id, CitationType.BOOK_SECTION, title, author, journal, year, doi, pdfFilePath);
         this.volume = volume;
         this.bookTitle = bookTitle;
         this.editor = editor;
@@ -81,6 +81,7 @@ public class BookSection extends Citation {
     @Override
     public String toCsvString(){
         return String.format(AppTexts.CSV_STRING_TEMPLATE,
+                id,
                 citationType + "",
                 title,
                 author.replace("; ", " and "),

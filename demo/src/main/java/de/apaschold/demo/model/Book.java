@@ -18,8 +18,8 @@ public class Book extends Citation {
         this.volume = AppTexts.NUMBER_PLACEHOLDER;
     }
 
-    public Book(String title, String author, String journal, int year, int volume, String doi, String pdfFilePath) {
-        super(CitationType.BOOK, title, author, journal, year, doi, pdfFilePath);
+    public Book(int id, String title, String author, String journal, int year, int volume, String doi, String pdfFilePath) {
+        super(id, CitationType.BOOK, title, author, journal, year, doi, pdfFilePath);
         this.volume = volume;
     }
 
@@ -54,6 +54,7 @@ public class Book extends Citation {
     @Override
     public String toCsvString(){
         return String.format(AppTexts.CSV_STRING_TEMPLATE,
+                id,
                 citationType + "",
                 title,
                 author.replace("; ", " and "),

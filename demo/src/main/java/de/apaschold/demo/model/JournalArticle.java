@@ -25,8 +25,8 @@ public class JournalArticle extends Citation {
         this.pages = AppTexts.PLACEHOLDER;
     }
 
-    public JournalArticle(String title, String author, String journal, String journalShortForm, int year, int volume, int issue, String pages, String doi, String pdfFilePath) {
-        super(CitationType.JOURNAL_ARTICLE, title, author, journal, year, doi, pdfFilePath);
+    public JournalArticle(int id, String title, String author, String journal, String journalShortForm, int year, int volume, int issue, String pages, String doi, String pdfFilePath) {
+        super(id, CitationType.JOURNAL_ARTICLE, title, author, journal, year, doi, pdfFilePath);
         this.journalShortForm = journalShortForm;
         this.volume = volume;
         this.issue = issue;
@@ -98,6 +98,7 @@ public class JournalArticle extends Citation {
     @Override
     public String toCsvString(){
         return String.format(AppTexts.CSV_STRING_TEMPLATE,
+                id,
                 citationType + "",
                 title,
                 author.replace("; ", " and "),

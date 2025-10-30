@@ -17,8 +17,8 @@ public class Unpublished extends Citation {
         super.setCitationType(CitationType.UNPUBLISHED);
     }
 
-    public Unpublished(String title, String author, int year, String pdfFilePath) {
-        super(CitationType.UNPUBLISHED, title, author, " - ", year, " - ", pdfFilePath);
+    public Unpublished(int id, String title, String author, int year, String pdfFilePath) {
+        super(id, CitationType.UNPUBLISHED, title, author, " - ", year, " - ", pdfFilePath);
     }
 
     //4. other methods
@@ -41,6 +41,7 @@ public class Unpublished extends Citation {
     @Override
     public String toCsvString(){
         return String.format(AppTexts.CSV_STRING_TEMPLATE,
+                id,
                 citationType + "",
                 title,
                 author.replace("; ", " and "),

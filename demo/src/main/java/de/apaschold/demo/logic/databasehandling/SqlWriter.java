@@ -45,16 +45,13 @@ public class SqlWriter {
     public static void createNewLibraryTable(String tableName){
         String createNewLibraryTableStatement = String.format(CREATE_NEW_LIBRARY_TABLE_PROMPT, tableName);
 
-        try(Connection connection = SqlManager.getInstance().getDatabaseConnection()){;
-            try(PreparedStatement preparedStatement = connection.prepareStatement(createNewLibraryTableStatement)){
+        try(Connection connection = SqlManager.getInstance().getDatabaseConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(createNewLibraryTableStatement)){
 
                 preparedStatement.executeUpdate();
 
-            } catch (Exception ee){
-                ee.printStackTrace();
-            }
-        } catch (Exception e) {
-            System.out.println("Hello world");
+        } catch (Exception ee){
+            ee.printStackTrace();
         }
     }
 
@@ -64,26 +61,25 @@ public class SqlWriter {
                 .replaceAll(AppTexts.PLACEHOLDER,"NULL")
                 .split(";");
 
-        try(Connection connection = SqlManager.getInstance().getDatabaseConnection()){;
-            try(PreparedStatement preparedStatement = connection.prepareStatement(addNewCitationToLibraryStatement)){
-                preparedStatement.setString(1, citationDataInArray[1]); // CitationType
-                preparedStatement.setString(2, citationDataInArray[2]); // Title
-                preparedStatement.setString(3, citationDataInArray[3]); // Author
-                preparedStatement.setString(4, citationDataInArray[4]); // Journal/Publisher
-                preparedStatement.setString(5, citationDataInArray[5]); // Year
-                preparedStatement.setString(6, citationDataInArray[6]); // DOI
-                preparedStatement.setString(7, citationDataInArray[7]); // PDF
-                preparedStatement.setString(8, citationDataInArray[8]); // Journal
-                preparedStatement.setString(9, citationDataInArray[9]); // Volume
-                preparedStatement.setString(10, citationDataInArray[10]); // Issue
-                preparedStatement.setString(11, citationDataInArray[11]); // Pages
-                preparedStatement.setString(12, citationDataInArray[12]); // Book Title
-                preparedStatement.setString(13, citationDataInArray[13]); // Editor
+        try(Connection connection = SqlManager.getInstance().getDatabaseConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(addNewCitationToLibraryStatement)){
 
-                preparedStatement.executeUpdate();
-            } catch (Exception ee){
-                ee.printStackTrace();
-            }
+            preparedStatement.setString(1, citationDataInArray[1]); // CitationType
+            preparedStatement.setString(2, citationDataInArray[2]); // Title
+            preparedStatement.setString(3, citationDataInArray[3]); // Author
+            preparedStatement.setString(4, citationDataInArray[4]); // Journal/Publisher
+            preparedStatement.setString(5, citationDataInArray[5]); // Year
+            preparedStatement.setString(6, citationDataInArray[6]); // DOI
+            preparedStatement.setString(7, citationDataInArray[7]); // PDF
+            preparedStatement.setString(8, citationDataInArray[8]); // Journal
+            preparedStatement.setString(9, citationDataInArray[9]); // Volume
+            preparedStatement.setString(10, citationDataInArray[10]); // Issue
+            preparedStatement.setString(11, citationDataInArray[11]); // Pages
+            preparedStatement.setString(12, citationDataInArray[12]); // Book Title
+            preparedStatement.setString(13, citationDataInArray[13]); // Editor
+
+            preparedStatement.executeUpdate();
+
         } catch (Exception e) {
             System.out.println("Hello world");
         }
@@ -96,28 +92,27 @@ public class SqlWriter {
                 .replaceAll(AppTexts.PLACEHOLDER,"NULL")
                 .split(";");
 
-        try(Connection connection = SqlManager.getInstance().getDatabaseConnection()){;
-            try(PreparedStatement preparedStatement = connection.prepareStatement(updateCitationInLibraryStatement)){
-                preparedStatement.setString(1, citationDataInArray[1]); // CitationType
-                preparedStatement.setString(2, citationDataInArray[2]); // Title
-                preparedStatement.setString(3, citationDataInArray[3]); // Author
-                preparedStatement.setString(4, citationDataInArray[4]); // Journal/Publisher
-                preparedStatement.setString(5, citationDataInArray[5]); // Year
-                preparedStatement.setString(6, citationDataInArray[6]); // DOI
-                preparedStatement.setString(7, citationDataInArray[7]); // PDF
-                preparedStatement.setString(8, citationDataInArray[8]); // Journal
-                preparedStatement.setString(9, citationDataInArray[9]); // Volume
-                preparedStatement.setString(10, citationDataInArray[10]); // Issue
-                preparedStatement.setString(11, citationDataInArray[11]); // Pages
-                preparedStatement.setString(12, citationDataInArray[12]); // Book Title
-                preparedStatement.setString(13, citationDataInArray[13]); // Editor
+        try(Connection connection = SqlManager.getInstance().getDatabaseConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(updateCitationInLibraryStatement)){
 
-                preparedStatement.setInt(14,
+            preparedStatement.setString(1, citationDataInArray[1]); // CitationType
+            preparedStatement.setString(2, citationDataInArray[2]); // Title
+            preparedStatement.setString(3, citationDataInArray[3]); // Author
+            preparedStatement.setString(4, citationDataInArray[4]); // Journal/Publisher
+            preparedStatement.setString(5, citationDataInArray[5]); // Year
+            preparedStatement.setString(6, citationDataInArray[6]); // DOI
+            preparedStatement.setString(7, citationDataInArray[7]); // PDF
+            preparedStatement.setString(8, citationDataInArray[8]); // Journal
+            preparedStatement.setString(9, citationDataInArray[9]); // Volume
+            preparedStatement.setString(10, citationDataInArray[10]); // Issue
+            preparedStatement.setString(11, citationDataInArray[11]); // Pages
+            preparedStatement.setString(12, citationDataInArray[12]); // Book Title
+            preparedStatement.setString(13, citationDataInArray[13]); // Editor
+
+            preparedStatement.setInt(14,
                         MyLittleHelpers.convertStringInputToInteger(citationDataInArray[0])); //id
-                preparedStatement.executeUpdate();
-            } catch (Exception ee){
-                ee.printStackTrace();
-            }
+            preparedStatement.executeUpdate();
+
         } catch (Exception e) {
             System.out.println("Hello world");
         }

@@ -12,7 +12,7 @@ public class AppTexts {
 
     //General CSV Format
     //CitationType;Title;Authors;Journal/Publisher;Year;DOI/URL;Attached files;Journal abbreviation;Volume;Issue;Pages;Book title;Editor
-    public static final String CSV_STRING_TEMPLATE = "%s;%s;%s;%s;%d;%s;%s;%s;%d;%d;%s;%s;%s";
+    public static final String CSV_STRING_TEMPLATE = "%d;%s;%s;%s;%s;%d;%s;%s;%s;%d;%d;%s;%s;%s";
 
     public static final String JOURNAL_ARTICLE_BIB_TEX_EXPORT_TEMPLATE = "@article{%s,\n" +
             "\tauthor={%s},\n" +
