@@ -13,6 +13,7 @@ import java.util.List;
 public class SqlReader {
     //0. constants
     private static final String ALL_CITATIONS_FROM_TABLE_QUERY_TEMPLATE = "SELECT * FROM %s;";
+    private static final String CHECK_TABLE_EXISTS_QUERY_TEMPLATE = "SHOW TABLES LIKE '%s';";
 
     //1. attributes
 
@@ -51,5 +52,30 @@ public class SqlReader {
         }
 
         return importedCitations;
+    }
+
+    /**
+     * <h2>checkIfLibraryTableExist</h2>
+     * <li>Checks if a library table with the given name exists in the database.</li>
+     *
+     * @param tableName name of the library table to check
+     * @return true if the table exists, false otherwise
+     */
+    public static boolean checkIfLibraryTableExist(String tableName) {
+        String checkTableExistsQuery = String.format(CHECK_TABLE_EXISTS_QUERY_TEMPLATE, tableName);
+        boolean tableExists = false;
+
+        try (Connection connection = SqlManager.getInstance().getDatabaseConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(checkTableExistsQuery)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            tableExists = resultSet.next();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return tableExists;
     }
 }

@@ -51,6 +51,8 @@ public abstract class Citation {
     }
 
     //3. getter and setter methods
+    public int getId(){ return id;}
+
     public CitationType getCitationType() { return citationType;}
 
     public void setCitationType(CitationType citationType) { this.citationType = citationType;}

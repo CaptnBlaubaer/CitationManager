@@ -134,7 +134,7 @@ public class CitationDetailsViewController implements Initializable {
                 Alerts.showInformationFileNotFoundInFolder(fileName);
             }
         } else {
-            Alerts.showInformationNoFileChoosen();
+            Alerts.showInformationNoFileChosen();
         }
     }
 
@@ -162,7 +162,7 @@ public class CitationDetailsViewController implements Initializable {
 
             FileHandler.getInstance().copySelectedAttachmentToPdfFolder(chosenFile);
         } else {
-            Alerts.showInformationNoFileChoosen();
+            Alerts.showInformationNoFileChosen();
         }
     }
 
@@ -181,7 +181,7 @@ public class CitationDetailsViewController implements Initializable {
 
             FileHandler.getInstance().deleteSelectedAttachmentFromFolder(chosenAttachment);
         } else {
-            Alerts.showInformationNoFileChoosen();
+            Alerts.showInformationNoFileChosen();
         }
     }
 
@@ -220,9 +220,8 @@ public class CitationDetailsViewController implements Initializable {
         if (dummyCitation.getCitationType() != newType){
             dummyCitation.setCitationType(newType);
 
-            String csvStringOfDummyCitationWithNewCitationType = dummyCitation.toCsvString();
-
-            Citation dummyCitationWithNewCitationType = CitationFactory.createCitationFromCsvLine(csvStringOfDummyCitationWithNewCitationType);
+            Citation dummyCitationWithNewCitationType = CitationFactory
+                    .createCitationFromCsvLine(dummyCitation.toCsvString());
             GuiController.getInstance().setDummyCitationToEdit(dummyCitationWithNewCitationType);
 
             populateCitationEditTab();

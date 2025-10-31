@@ -6,8 +6,14 @@ import de.apaschold.demo.model.Citation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.List;
 
 //TODO add alerts for catch Blocks
+/**
+ * <h2>SqlWriter</h2>
+ * <li>Handles writing operations to the SQL database, including creating library tables,
+ * adding new citations, deleting citations, and updating existing citations.</li>
+ */
 public class SqlWriter {
     //0. constants
     private static final String CREATE_NEW_LIBRARY_TABLE_PROMPT =
@@ -42,6 +48,12 @@ public class SqlWriter {
     private SqlWriter() {}
 
     //3. write methods
+    /**
+     * <h2>createNewLibraryTable</h2>
+     * <li>Creates a new library table in the database with the specified name.</li>
+     *
+     * @param tableName the name of the new library table
+     */
     public static void createNewLibraryTable(String tableName){
         String createNewLibraryTableStatement = String.format(CREATE_NEW_LIBRARY_TABLE_PROMPT, tableName);
 
@@ -55,6 +67,13 @@ public class SqlWriter {
         }
     }
 
+    /**
+     * <h2>addNewCitationToLibraryTable</h2>
+     * <li>Adds a new citation to the specified library table in the database.</li>
+     *
+     * @param tableName      the name of the library table
+     * @param citationToAdd  the citation to be added
+     */
     public static void addNewCitationToLibraryTable(String tableName, Citation citationToAdd){
         String addNewCitationToLibraryStatement = String.format(ADD_NEW_CITATION_TO_LIBRARY_TABLE_PROMPT, tableName);
         String[] citationDataInArray = citationToAdd.toCsvString()
@@ -85,6 +104,34 @@ public class SqlWriter {
         }
     }
 
+    /**
+     * <h2>deleteCitationFromLibrary</h2>
+     * <li>Deletes a citation from the specified library table in the database.</li>
+     *
+     * @param tableName        the name of the library table
+     * @param citationToDelete the citation to be deleted
+     */
+    public static void deleteCitationFromLibrary(String tableName, Citation citationToDelete){
+        String deleteCitationFromLibraryStatement = String.format("DELETE FROM %s WHERE id = ?;",tableName);
+
+        try(Connection connection = SqlManager.getInstance().getDatabaseConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteCitationFromLibraryStatement)){
+
+            preparedStatement.setInt(1, citationToDelete.getId());
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println("Hello world");
+        }
+    }
+
+    /**
+     * <h2>updateCitationInLibrary</h2>
+     * <li>Updates an existing citation in the specified library table in the database.</li>
+     *
+     * @param tableName        the name of the library table
+     * @param citationToUpdate the citation with updated information
+     */
     public static void updateCitationInLibrary(String tableName, Citation citationToUpdate){
         String updateCitationInLibraryStatement = String.format(UPDATE_CITATION_IN_LIBRARY_TABLE_PROMPT, tableName);
 
@@ -115,6 +162,19 @@ public class SqlWriter {
 
         } catch (Exception e) {
             System.out.println("Hello world");
+        }
+    }
+
+    /**
+     * <h2>addCitationLibraryToTable</h2>
+     * <li>Adds a list of {@link Citation} to the specified library table in the database.</li>
+     *
+     * @param tableName       the name of the library table
+     * @param citationsToAdd  the list of citations to be added
+     */
+    public static void addCitationListToLibraryTable(String tableName, List<Citation> citationsToAdd){
+        for(Citation citation : citationsToAdd){
+            addNewCitationToLibraryTable(tableName, citation);
         }
     }
 }

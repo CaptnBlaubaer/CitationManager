@@ -51,7 +51,7 @@ public class ImportFromBibTexViewController {
         for (String singleImport : separatedImports) {
             if (!singleImport.isEmpty()) {
                 Citation importedCitation = CitationFactory.createCitationFromBibTex(singleImport);
-                GuiController.getInstance().getCitationLibrary().addCitation(importedCitation);
+                GuiController.getInstance().addCitationToLibrary(importedCitation);
             }
         }
     }

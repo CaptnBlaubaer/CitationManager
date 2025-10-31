@@ -138,22 +138,36 @@ public class AddNewCitationViewController implements Initializable {
      */
     @FXML
     protected void saveNewCitation() {
-        StringBuilder csvLine = new StringBuilder();
-
-        csvLine.append(this.newCitationType.getSelectionModel().getSelectedItem().toString()).append(";");
+        StringBuilder citationDetailsFromManualInputAsString = new StringBuilder();
+        citationDetailsFromManualInputAsString
+                .append(this.newCitationType.getSelectionModel().getSelectedItem().toString())
+                .append(";");
 
         for (Node node: citationForm.getChildren()) {
             if (node instanceof TextField textField) {
-                csvLine.append(textField.getText().replace(";", ",")).append(";");
+                String inputText = textField.getText();
+                if (inputText.isEmpty()) {
+                    inputText = AppTexts.PLACEHOLDER;
+                }
+                citationDetailsFromManualInputAsString
+                        .append(inputText.replace(";", ","))
+                        .append(";");
+
             } else if (node instanceof TextArea textArea) {
-                csvLine.append(textArea.getText().replace(";", ",").replace("\n",",")).append(";");
+                String inputText = textArea.getText();
+                if (inputText.isEmpty()) {
+                    inputText = AppTexts.PLACEHOLDER;
+                }
+
+                citationDetailsFromManualInputAsString
+                        .append(inputText.replace(";", ",").replace("\n", ","))
+                        .append(";");
             }
         }
-        csvLine.append(AppTexts.PLACEHOLDER);
 
-        Citation newArticle = CitationFactory.createCitationFromCsvLine(csvLine.toString());
+        Citation newArticle = CitationFactory.createCitationFromManualDataInput(citationDetailsFromManualInputAsString.toString());
 
-        GuiController.getInstance().getCitationLibrary().addCitation(newArticle);
+        GuiController.getInstance().addCitationToLibrary(newArticle);
 
         Stage stage = (Stage) newCitationType.getScene().getWindow();
         stage.close();

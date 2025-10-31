@@ -97,21 +97,21 @@ public class TextFileHandler {
      *
      * @return file path of active library
      */
-    public String loadLibraryFilePath(){
-        String libraryFilePath = "";
+    public String[] loadLibraryFilePathAndName(){
+        String libraryFilePathAndName = "";
 
         File file = new File(ACTIVE_LIBRARY_FILE_PATH);
 
         try(FileReader reader = new FileReader(file);
             BufferedReader in = new BufferedReader(reader)) {
 
-            libraryFilePath = in.readLine();
+            libraryFilePathAndName = in.readLine();
 
         } catch (IOException e){
             System.err.println("Error reading file: " + file.getAbsolutePath());
         }
 
-        return libraryFilePath;
+        return libraryFilePathAndName.split(";");
     }
 
     /** <h2>saveNewActiveLibraryPath</h2>
@@ -119,9 +119,9 @@ public class TextFileHandler {
      *
      * @param newFilePath the new file path to save
      */
-    public void saveNewActiveLibraryPath (String newFilePath){
+    public void saveNewActiveLibraryPath (String newFilePath, String newFileName){
         try (FileWriter writer = new FileWriter(ACTIVE_LIBRARY_FILE_PATH, StandardCharsets.UTF_8)) {
-            writer.write(newFilePath);
+            writer.write(newFilePath + ";" + newFileName);
         } catch (IOException e) {
             System.err.println("Error saving to File: " );
         }
