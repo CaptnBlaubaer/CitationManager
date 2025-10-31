@@ -17,8 +17,8 @@ public class Patent extends Citation {
         super.setCitationType(CitationType.PATENT);
     }
 
-    public Patent(String title, String author, int year, String doi, String pdfFilePath) {
-        super(CitationType.PATENT, title, author, " - ", year, doi, pdfFilePath);
+    public Patent(int id, String title, String author, int year, String doi, String pdfFilePath) {
+        super(id,CitationType.PATENT, title, author, " - ", year, doi, pdfFilePath);
     }
 
     //4. other methods
@@ -43,6 +43,7 @@ public class Patent extends Citation {
     @Override
     public String toCsvString(){
         return String.format(AppTexts.CSV_STRING_TEMPLATE,
+                id,
                 citationType + "",
                 title,
                 author.replace("; ", " and "),

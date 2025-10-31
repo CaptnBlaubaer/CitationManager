@@ -42,6 +42,10 @@ public class CreateNewLibraryViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resourceBundle){
         this.folderPath = GuiController.getInstance().getActiveLibraryFilePath().replaceAll(AppTexts.REGEX_REPLACE_CML_FILENAME,"");
 
+        System.out.println(this.folderPath);
+
+        this.folderPath = "C:\\Users\\Hein\\Desktop\\Programmierstuff\\JAva\\CitationManager";
+
         this.folderPathLabel.setText(this.folderPath);
     }
 
@@ -63,8 +67,10 @@ public class CreateNewLibraryViewController implements Initializable {
 
             if (!newLibraryFile.exists()) {
                 FileHandler.getInstance().createEmptyLibrary(newLibraryFile);
-                TextFileHandler.getInstance().saveNewActiveLibraryPath(filePath);
-                GuiController.getInstance().setActiveLibraryFilePath(filePath);
+
+                TextFileHandler.getInstance().saveNewActiveLibraryPath(filePath, fileName);
+
+                GuiController.getInstance().changeActiveLibrary(fileName, filePath);
             } else {
                 Alerts.showAlertFileNameAlreadyExists();
             }
@@ -82,18 +88,22 @@ public class CreateNewLibraryViewController implements Initializable {
      */
 
     @FXML
-    protected void changeFolderPath(){
+    protected void changeFolderPath() {
         Stage stage = (Stage) this.newLibraryName.getScene().getWindow();
 
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("");
         directoryChooser.setInitialDirectory(new File(this.folderPath));
+
         File selectedDirectory = directoryChooser.showDialog(stage);
 
-        this.folderPath = selectedDirectory.getAbsolutePath();
-        this.folderPathLabel.setText(selectedDirectory.getAbsolutePath());
+        if (selectedDirectory.exists()) {
+            this.folderPath = selectedDirectory.getAbsolutePath();
+            this.folderPathLabel.setText(selectedDirectory.getAbsolutePath());
+        } else {
+            Alerts.showInformationNoFolderChosen();
+        }
     }
-
     //5. other Methods
 
 }

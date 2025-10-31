@@ -9,10 +9,10 @@
             fx:controller="de.apaschold.demo.gui.CreateNewLibraryViewController">
     <Label fx:id="folderPathLabel"/>
 
-    <Button text="Change folder path" onAction="#changeFolderPath" prefHeight="20.0" prefWidth="100.0"/>
+    <Button text="Change folder path" onAction="#changeFolderPath" prefHeight="20.0" prefWidth="150.0"/>
 
     <TextField fx:id="newLibraryName" promptText="Enter new library name" prefHeight="20.0"/>
 
-    <Button text="Create new library" onAction="#createNewLibrary" prefHeight="20.0" prefWidth="100.0"/>
+    <Button text="Create new library" onAction="#createNewLibrary" prefHeight="20.0" prefWidth="150.0"/>
 
 </VBox>

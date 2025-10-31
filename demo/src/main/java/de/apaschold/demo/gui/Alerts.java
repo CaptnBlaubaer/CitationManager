@@ -18,14 +18,20 @@ public class Alerts {
     public static final String ALERT_INVALID_FILENAME_HEADER = "Filename can't contain whitespace character and can't be empty";
     public static final String ALERT_FILENAME_EXISTS_TITLE = "Filename already exists";
     public static final String ALERT_FILENAME_EXISTS_HEADER = "Filename already exists in this directory";
+
     public static final String INFORMATION_NO_FILE_CHOSEN_TITLE = "No file chosen";
     public static final String INFORMATION_NO_FILE_CHOSEN_HEADER = "There was no file chosen";
-    public static final String CONFIRMATION_DELETE_CITATION_TITLE = "Delete selected article";
-    public static final String CONFIRMATION_DELETE_CITATION_CONTENT = "Do you want to delete selected article?\nOK to confirm";
+    public static final String INFORMATION_NO_FOLDER_CHOSEN_TITLE = "No file chosen";
+    public static final String INFORMATION_NO_FOLDER_CHOSEN_HEADER = "There was no file chosen";
     public static final String INFORMATION_RECORD_NOT_FOUND_TITLE = "Record not found";
     public static final String INFORMATION_RECORD_NOT_FOUND_HEADER = "The record wasn't found in the PubMed database.";
     public static final String INFORMATION_FILE_NOT_FOUND_TITLE = "Attachment not found";
     public static final String INFORMATION_FILE_NOT_FOUND_HEADER = "The attachment doesn't exist.";
+
+    public static final String CONFIRMATION_DELETE_CITATION_TITLE = "Delete selected article";
+    public static final String CONFIRMATION_DELETE_CITATION_CONTENT = "Do you want to delete selected article?\nOK to confirm";
+
+
 
     //1. attributes
 
@@ -55,20 +61,20 @@ public class Alerts {
     }
 
     //4. information
-    public static void showInformationNoFileChoosen(){
+    public static void showInformationNoFileChosen(){
         Alert alert= new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(INFORMATION_NO_FILE_CHOSEN_TITLE);
         alert.setHeaderText(INFORMATION_NO_FILE_CHOSEN_HEADER);
         alert.show();
     }
 
-    //5. conformation
-    public static Optional<ButtonType> showConfirmationDeleteCitation() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(CONFIRMATION_DELETE_CITATION_TITLE);
-        alert.setHeaderText(CONFIRMATION_DELETE_CITATION_CONTENT);
-        return alert.showAndWait();
+    public static void showInformationNoFolderChosen(){
+        Alert alert= new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(INFORMATION_NO_FOLDER_CHOSEN_TITLE);
+        alert.setHeaderText(INFORMATION_NO_FOLDER_CHOSEN_HEADER);
+        alert.show();
     }
+
 
     public static void showInformationRecordNotFound() {
         Alert alert= new Alert(Alert.AlertType.INFORMATION);
@@ -83,4 +89,13 @@ public class Alerts {
         alert.setHeaderText(INFORMATION_FILE_NOT_FOUND_HEADER);
         alert.show();
     }
+
+    //5. conformation
+    public static Optional<ButtonType> showConfirmationDeleteCitation() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(CONFIRMATION_DELETE_CITATION_TITLE);
+        alert.setHeaderText(CONFIRMATION_DELETE_CITATION_CONTENT);
+        return alert.showAndWait();
+    }
+
 }

@@ -18,6 +18,7 @@ public abstract class Citation {
     //0. constants
 
     //1. attributes
+    protected int id;
     protected CitationType citationType;
     protected String title;
     protected String author;
@@ -26,8 +27,10 @@ public abstract class Citation {
     protected String doi;
     protected String[] pdfFilePaths;
 
+
     //2. constructors
     public Citation() {
+        this.id = -1;
         this.title = AppTexts.PLACEHOLDER;
         this.author = AppTexts.PLACEHOLDER;
         this.journal = AppTexts.PLACEHOLDER;
@@ -36,7 +39,8 @@ public abstract class Citation {
         this.pdfFilePaths = AppTexts.PLACEHOLDER.split(",");
     }
 
-    public Citation(CitationType type, String title, String author, String journal, int year, String doi, String pdfFilePaths) {
+    public Citation(int id, CitationType type, String title, String author, String journal, int year, String doi, String pdfFilePaths) {
+        this.id = id;
         this.citationType = type;
         this.title = title;
         this.author = author;
@@ -47,6 +51,8 @@ public abstract class Citation {
     }
 
     //3. getter and setter methods
+    public int getId(){ return id;}
+
     public CitationType getCitationType() { return citationType;}
 
     public void setCitationType(CitationType citationType) { this.citationType = citationType;}
@@ -113,8 +119,6 @@ public abstract class Citation {
      * @return Citation as csv String
      */
     public String toCsvString(){ return "";}
-
-    public String toCsvStringTest(){ return "";}
 
     public String citationDetailsAsString(){ return "";}
 

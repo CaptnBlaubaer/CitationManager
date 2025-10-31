@@ -1,5 +1,6 @@
 package de.apaschold.demo.logic;
 
+import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.model.*;
 
@@ -43,7 +44,7 @@ public class CitationFactory {
     public static Citation createCitationFromCsvLine(String csvLine){
         String[] separatedCsvLine = csvLine.split(";");
 
-        CitationType type = CitationType.valueOf(separatedCsvLine[0]);
+        CitationType type = CitationType.valueOf(separatedCsvLine[1]);
 
         Citation newCitation = switch (type) {
             case JOURNAL_ARTICLE -> createJournalArticleFromCsvLine(separatedCsvLine);
@@ -66,18 +67,19 @@ public class CitationFactory {
      * @return the created {@link JournalArticle} object
      */
     private static JournalArticle createJournalArticleFromCsvLine(String[] separatedCsvLine){
-        String title = separatedCsvLine[1];
-        String authors = separatedCsvLine[2].replace(" and ", "; ");
-        String journal = separatedCsvLine[3];
-        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[4]);
-        String doi = separatedCsvLine[5];
-        String pdfFilePath = separatedCsvLine[6];
-        String journalShortForm = separatedCsvLine[7];
-        int volume = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[8]);
-        int issue = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[9]);
-        String pages = separatedCsvLine[10];
+        int id = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[0]);
+        String title = separatedCsvLine[2];
+        String authors = separatedCsvLine[3].replace(" and ", "; ");
+        String journal = separatedCsvLine[4];
+        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[5]);
+        String doi = separatedCsvLine[6];
+        String pdfFilePath = separatedCsvLine[7];
+        String journalShortForm = separatedCsvLine[8];
+        int volume = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[9]);
+        int issue = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[10]);
+        String pages = separatedCsvLine[11];
 
-        return new JournalArticle(title, authors, journal, journalShortForm, year, volume, issue, pages, doi, pdfFilePath);
+        return new JournalArticle(id, title, authors, journal, journalShortForm, year, volume, issue, pages, doi, pdfFilePath);
     }
 
     /**
@@ -88,14 +90,15 @@ public class CitationFactory {
      * @return the created {@link Book} object
      */
     private static Book createBookFromCsvLine(String[] separatedCsvLine){
-        String title = separatedCsvLine[1];
-        String authors = separatedCsvLine[2].replace(" and ", "; ");
-        String journal = separatedCsvLine[3];
-        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[4]);
-        String doi = separatedCsvLine[5];
-        String pdfFilePath = separatedCsvLine[6];
-        int volume = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[8]);
-        return new Book(title, authors, journal, year, volume, doi, pdfFilePath);
+        int id = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[0]);
+        String title = separatedCsvLine[2];
+        String authors = separatedCsvLine[3].replace(" and ", "; ");
+        String journal = separatedCsvLine[4];
+        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[5]);
+        String doi = separatedCsvLine[6];
+        String pdfFilePath = separatedCsvLine[7];
+        int volume = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[9]);
+        return new Book(id, title, authors, journal, year, volume, doi, pdfFilePath);
     }
 
     /**
@@ -106,18 +109,19 @@ public class CitationFactory {
      * @return the created {@link BookSection} object
      */
     private static BookSection createBookSectionFromCsvLine(String[] separatedCsvLine){
-        String title = separatedCsvLine[1];
-        String authors = separatedCsvLine[2].replace(" and ", "; ");
-        String journal = separatedCsvLine[3];
-        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[4]);
-        String doi = separatedCsvLine[5];
-        String pdfFilePath = separatedCsvLine[6];
-        int volume = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[8]);
-        String pages = separatedCsvLine[10];
-        String bookTitle = separatedCsvLine[11];
-        String editor = separatedCsvLine[12].replace(" and ", "; ");
+        int id = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[0]);
+        String title = separatedCsvLine[2];
+        String authors = separatedCsvLine[3].replace(" and ", "; ");
+        String journal = separatedCsvLine[4];
+        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[5]);
+        String doi = separatedCsvLine[6];
+        String pdfFilePath = separatedCsvLine[7];
+        int volume = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[9]);
+        String pages = separatedCsvLine[11];
+        String bookTitle = separatedCsvLine[12];
+        String editor = separatedCsvLine[13].replace(" and ", "; ");
 
-        return new BookSection(title, authors, bookTitle, editor, journal, year, volume, pages, doi, pdfFilePath);
+        return new BookSection(id, title, authors, bookTitle, editor, journal, year, volume, pages, doi, pdfFilePath);
     }
 
     /**
@@ -128,12 +132,13 @@ public class CitationFactory {
      * @return the created {@link PhdThesis} object
      */
     private static Citation createPhdThesisFromCsvLine(String[] separatedCsvLine) {
-        String title = separatedCsvLine[1];
-        String authors = separatedCsvLine[2].replace(" and ", "; ");
-        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[4]);
-        String doi = separatedCsvLine[5];
-        String pdfFilePath = separatedCsvLine[6];
-        return new PhdThesis(title, authors, year, doi, pdfFilePath);
+        int id = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[0]);
+        String title = separatedCsvLine[2];
+        String authors = separatedCsvLine[3].replace(" and ", "; ");
+        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[5]);
+        String doi = separatedCsvLine[6];
+        String pdfFilePath = separatedCsvLine[7];
+        return new PhdThesis(id, title, authors, year, doi, pdfFilePath);
     }
 
     /**
@@ -144,12 +149,13 @@ public class CitationFactory {
      * @return the created {@link Patent} object
      */
     private static Citation createPatentFromCsvLine(String[] separatedCsvLine) {
-        String title = separatedCsvLine[1];
-        String authors = separatedCsvLine[2].replace(" and ", "; ");
-        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[4]);
-        String doi = separatedCsvLine[5];
-        String pdfFilePath = separatedCsvLine[6];
-        return new Patent(title, authors, year, doi, pdfFilePath);
+        int id = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[0]);
+        String title = separatedCsvLine[2];
+        String authors = separatedCsvLine[3].replace(" and ", "; ");
+        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[5]);
+        String doi = separatedCsvLine[6];
+        String pdfFilePath = separatedCsvLine[7];
+        return new Patent(id, title, authors, year, doi, pdfFilePath);
     }
 
     /**
@@ -160,11 +166,12 @@ public class CitationFactory {
      * @return the created {@link Unpublished} object
      */
     private static Citation createUnpublishedFromCsvLine(String[] separatedCsvLine) {
-        String title = separatedCsvLine[1];
-        String authors = separatedCsvLine[2].replace(" and ", "; ");
-        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[4]);
-        String pdfFilePath = separatedCsvLine[6];
-        return new Unpublished (title, authors, year, pdfFilePath);
+        int id = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[0]);
+        String title = separatedCsvLine[2];
+        String authors = separatedCsvLine[3].replace(" and ", "; ");
+        int year = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[5]);
+        String pdfFilePath = separatedCsvLine[7];
+        return new Unpublished (id, title, authors, year, pdfFilePath);
     }
 
     //methods for BibTex
@@ -183,7 +190,7 @@ public class CitationFactory {
 
         String[] citationDetails = citationTypeAndDetails[1].split("\n");
 
-        Citation importedCitation = switch (importedCitationType) {
+        return switch (importedCitationType) {
             case JOURNAL_ARTICLE -> createJournalArticleFromBibTex(citationDetails);
             case BOOK -> createBookFromBibTex(citationDetails);
             case BOOK_SECTION -> createBookSectionFromBibTex(citationDetails);
@@ -192,8 +199,6 @@ public class CitationFactory {
             case UNPUBLISHED -> createUnpublishedFromBibTex(citationDetails);
             default -> null;
         };
-
-        return importedCitation;
     }
 
     /**
@@ -422,5 +427,148 @@ public class CitationFactory {
         }
 
         return importedUnpublished;
+    }
+
+    /**
+     * <h2>createCitationFromManualDataInput</h2>
+     * <li>Creates an {@link Citation} object from a manually entered data string.</li>
+     * <li>Chooses dynamically method for the respective {@link CitationType}</li>
+     *
+     * @param citationDetailsAsString the string containing citation details separated by semicolons
+     * @return the created {@link Citation} object
+     */
+    public static Citation createCitationFromManualDataInput(String citationDetailsAsString) {
+        String[] citationDetailsAsArray = citationDetailsAsString.split(";");
+
+        CitationType citationType = CitationType.valueOf(citationDetailsAsArray[0]);
+
+        return switch (citationType) {
+            case JOURNAL_ARTICLE -> createJournalArticleFromManualDataInput(citationDetailsAsArray);
+            case BOOK -> createBookFromManualDataInput(citationDetailsAsArray);
+            case BOOK_SECTION -> createBookSectionFromManualDataInput(citationDetailsAsArray);
+            case THESIS -> createPhdThesisFromManualDataInput(citationDetailsAsArray);
+            case PATENT -> createPatentFromManualDataInput(citationDetailsAsArray);
+            case UNPUBLISHED -> createUnpublishedFromManualDataInput(citationDetailsAsArray);
+            default -> null;
+        };
+    }
+
+    /**
+     * <h2>createJournalArticleFromManualDataInput</h2>
+     * <li>Creates a {@link JournalArticle} object from a manually entered data string.</li>
+     *
+     * @param citationDetails the array containing citation details
+     * @return the created {@link JournalArticle} object
+     */
+    private static Citation createJournalArticleFromManualDataInput(String[] citationDetails) {
+        return new JournalArticle(
+                -1,
+                citationDetails[1], //title
+                citationDetails[2], //authors
+                citationDetails[3], //journal
+                citationDetails[4], //journalShortForm
+                MyLittleHelpers.convertStringInputToInteger(citationDetails[5]), //year
+                MyLittleHelpers.convertStringInputToInteger(citationDetails[6]), //volume
+                MyLittleHelpers.convertStringInputToInteger(citationDetails[7]), //issue
+                citationDetails[8], //pages
+                citationDetails[9], //doi
+                AppTexts.PLACEHOLDER
+        );
+    }
+
+    /**
+     * <h2>createBookFromManualDataInput</h2>
+     * <li>Creates a {@link Book} object from a manually entered data string.</li>
+     *
+     * @param citationDetails the array containing citation details
+     * @return the created {@link Book} object
+     */
+    private static Citation createBookFromManualDataInput(String[] citationDetails) {
+        return new Book(
+                -1,
+                citationDetails[1], //title
+                citationDetails[2], //authors
+                citationDetails[3], //publisher
+                MyLittleHelpers.convertStringInputToInteger(citationDetails[4]), //year
+                MyLittleHelpers.convertStringInputToInteger(citationDetails[5]), //volume
+                citationDetails[6], //doi
+                AppTexts.PLACEHOLDER
+        );
+    }
+
+    /**
+     * <h2>createBookSectionFromManualDataInput</h2>
+     * <li>Creates a {@link BookSection} object from a manually entered data string.</li>
+     *
+     * @param citationDetails the array containing citation details
+     * @return the created {@link BookSection} object
+     */
+    private static Citation createBookSectionFromManualDataInput(String[] citationDetails) {
+        return new BookSection(
+                -1,
+                citationDetails[1], //title
+                citationDetails[2], //authors
+                citationDetails[3], //bookTitle
+                citationDetails[4], //editor
+                citationDetails[5], //publisher
+                MyLittleHelpers.convertStringInputToInteger(citationDetails[6]), //year
+                MyLittleHelpers.convertStringInputToInteger(citationDetails[7]), //volume
+                citationDetails[8], //pages
+                citationDetails[9], //doi
+                AppTexts.PLACEHOLDER
+        );
+    }
+
+    /**
+     * <h2>createPhdThesisFromManualDataInput</h2>
+     * <li>Creates a {@link PhdThesis} object from a manually entered data string.</li>
+     *
+     * @param citationDetails the array containing citation details
+     * @return the created {@link PhdThesis} object
+     */
+    private static Citation createPhdThesisFromManualDataInput(String[] citationDetails) {
+        return new PhdThesis(
+                -1,
+                citationDetails[1], //title
+                citationDetails[2], //authors
+                MyLittleHelpers.convertStringInputToInteger(citationDetails[3]), //year
+                citationDetails[4], //doi
+                AppTexts.PLACEHOLDER
+        );
+    }
+
+    /**
+     * <h2>createPatentFromManualDataInput</h2>
+     * <li>Creates a {@link Patent} object from a manually entered data string.</li>
+     *
+     * @param citationDetails the array containing citation details
+     * @return the created {@link Patent} object
+     */
+    private static Citation createPatentFromManualDataInput(String[] citationDetails) {
+        return new Patent(
+                -1,
+                citationDetails[1], //title
+                citationDetails[2], //authors
+                MyLittleHelpers.convertStringInputToInteger(citationDetails[3]), //year
+                citationDetails[4], //doi
+                AppTexts.PLACEHOLDER
+        );
+    }
+
+    /**
+     * <h2>createUnpublishedFromManualDataInput</h2>
+     * <li>Creates a {@link Unpublished} object from a manually entered data string.</li>
+     *
+     * @param citationDetails the array containing citation details
+     * @return the created {@link Unpublished} object
+     */
+    private static Citation createUnpublishedFromManualDataInput(String[] citationDetails) {
+        return new Unpublished(
+                -1,
+                citationDetails[1], //title
+                citationDetails[2], //authors
+                MyLittleHelpers.convertStringInputToInteger(citationDetails[3]), //year
+                AppTexts.PLACEHOLDER
+        );
     }
 }

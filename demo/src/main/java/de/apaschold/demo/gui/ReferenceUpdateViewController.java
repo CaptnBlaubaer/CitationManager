@@ -118,6 +118,7 @@ public class ReferenceUpdateViewController implements Initializable {
     @FXML
     protected void confirmChanges() {
         updateReference();
+        GuiController.getInstance().updateLibraryWithEditedCitation(this.journalArticle);
 
         Stage stage = (Stage) this.checkAuthors.getScene().getWindow();
 

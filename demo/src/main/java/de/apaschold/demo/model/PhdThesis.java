@@ -17,8 +17,8 @@ public class PhdThesis extends Citation {
         super.setCitationType(CitationType.THESIS);
     }
 
-    public PhdThesis(String title, String author, int year, String doi, String pdfFilePath) {
-        super(CitationType.THESIS, title, author, " - ", year, doi, pdfFilePath);
+    public PhdThesis(int id, String title, String author, int year, String doi, String pdfFilePath) {
+        super(id, CitationType.THESIS, title, author, " - ", year, doi, pdfFilePath);
     }
 
     //4. other methods
@@ -43,6 +43,7 @@ public class PhdThesis extends Citation {
     @Override
     public String toCsvString(){
         return String.format(AppTexts.CSV_STRING_TEMPLATE,
+                id,
                 citationType + "",
                 title,
                 author.replace("; ", " and "),

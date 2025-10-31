@@ -92,16 +92,17 @@ public class MainViewController implements Initializable {
 
         if (chosenFile != null) {
             String chosenLibraryPath = chosenFile.getAbsolutePath();
-                GuiController.getInstance().setActiveLibraryFilePath(chosenLibraryPath);
-                GuiController.getInstance().fillLibraryFromChosenFile(chosenLibraryPath);
+            String chosenLibraryName = chosenFile.getName().replaceAll(AppTexts.LIBRARY_FILE_FORMAT,"");
 
-                TextFileHandler.getInstance().saveNewActiveLibraryPath(chosenLibraryPath);
+                GuiController.getInstance().openLibraryFile(chosenLibraryPath, chosenLibraryName);
+
+                TextFileHandler.getInstance().saveNewActiveLibraryPath(chosenLibraryPath, chosenLibraryName);
 
                 populateTable();
 
                 this.activeLibraryPath.setText(chosenLibraryPath);
         } else {
-            Alerts.showInformationNoFileChoosen();
+            Alerts.showInformationNoFileChosen();
         }
     }
 
