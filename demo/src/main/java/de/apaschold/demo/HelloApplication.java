@@ -18,6 +18,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         GuiController.getInstance().setMainStage(stage);
+        GuiController.getInstance().initializeLibrary();
         GuiController.getInstance().loadMainMenu();
     }
 

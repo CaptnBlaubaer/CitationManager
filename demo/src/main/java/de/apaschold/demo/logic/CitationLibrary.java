@@ -43,7 +43,7 @@ public class CitationLibrary {
     //5. export/import methods
 
     private void importLibraryFromSql(String activeLibraryName) {
-        this.citations = SqlReader.importCitationsFromLibraryTable(activeLibraryName);
+        this.citations = SqlReader.importCitationsFromLibraryTableSqlite(activeLibraryName);
     }
 
     /**
@@ -69,7 +69,7 @@ public class CitationLibrary {
      * @param activeLibraryName name of the active library
      */
     public void refreshLibraryFromDatabase(String activeLibraryName) {
-        this.citations = SqlReader.importCitationsFromLibraryTable(activeLibraryName);
+        this.citations = SqlReader.importCitationsFromLibraryTableSqlite(activeLibraryName);
     }
 
     /**

@@ -28,7 +28,7 @@ public class GuiController {
     //1. attributes
     private static GuiController instance;
     private Stage mainStage;
-    private final CitationLibrary library;
+    private CitationLibrary library;
     private Citation selectedCitation;
     private Citation dummyCitationToEdit;
     private String activeLibraryName;
@@ -43,14 +43,9 @@ public class GuiController {
      * If the library is empty, sets the active library file path to the program directory.
      */
     private GuiController() {
-        String[] libraryFilePathAndName = TextFileHandler.getInstance().loadLibraryFilePathAndName();
+        this.activeLibraryFilePath = TextFileHandler.getInstance().loadLibraryFilePath();
 
-        this.activeLibraryFilePath = libraryFilePathAndName[0];
-        this.activeLibraryName = libraryFilePathAndName[1];
-
-        this.library = new CitationLibrary( this.activeLibraryName);
-
-        this.selectedCitation = this.library.getFirstCitation();
+        this.activeLibraryName = AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS;
     }
 
     public static synchronized GuiController getInstance() {
@@ -61,17 +56,9 @@ public class GuiController {
     }
 
     //3. getter and setter methods
-    public void setMainStage(Stage mainStage) {
-        this.mainStage = mainStage;
-    }
+    public void setMainStage(Stage mainStage) { this.mainStage = mainStage;}
 
-    public List<Citation> getCitationList() {
-        return this.library.getCitations();
-    }
-
-    public CitationLibrary getCitationLibrary() {
-        return this.library;
-    }
+    public List<Citation> getCitationList() { return this.library.getCitations();}
 
     public Citation getSelectedCitation() { return this.selectedCitation;}
 
@@ -90,6 +77,12 @@ public class GuiController {
     public void setReferenceChanges(JSONObject referenceChanges){ this.referenceChanges = referenceChanges;}
 
     //4. open view methods
+    public void initializeLibrary(){
+        this.library = new CitationLibrary(this.activeLibraryName);
+
+        this.selectedCitation = this.library.getFirstCitation();
+    }
+
     /**
      * <h2>loadMainMenu</h2>
      * Loads the main menu view of the application.

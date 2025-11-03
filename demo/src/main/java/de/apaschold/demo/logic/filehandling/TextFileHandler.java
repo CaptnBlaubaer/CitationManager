@@ -97,21 +97,21 @@ public class TextFileHandler {
      *
      * @return file path of active library
      */
-    public String[] loadLibraryFilePathAndName(){
-        String libraryFilePathAndName = "";
+    public String loadLibraryFilePath(){
+        String libraryFilePath = "";
 
         File file = new File(ACTIVE_LIBRARY_FILE_PATH);
 
         try(FileReader reader = new FileReader(file);
             BufferedReader in = new BufferedReader(reader)) {
 
-            libraryFilePathAndName = in.readLine();
+            libraryFilePath = in.readLine();
 
         } catch (IOException e){
             System.err.println("Error reading file: " + file.getAbsolutePath());
         }
 
-        return libraryFilePathAndName.split(";");
+        return libraryFilePath;
     }
 
     /** <h2>saveNewActiveLibraryPath</h2>
