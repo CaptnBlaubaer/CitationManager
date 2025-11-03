@@ -13,7 +13,7 @@ public class SqlManager {
     private static final String DB_LOCAL_NAME = "citation_manager";
 
     private static final String SQLITE_DB_LOCAL_CONNECTION_URL_TEMPLATE =
-            "jdbc:sqlite:%s.db";
+            "jdbc:sqlite:%s";
 
     private static final String DB_LOCAL_CONNECTION_URL =
             "jdbc:mysql://" + DB_LOCAL_SERVER_IP_ADDRESS + DB_LOCAL_NAME;
@@ -64,7 +64,9 @@ public class SqlManager {
         return connection;
     }
 
-    public Connection getSqliteDatabaseConnection(String dbFilePath) throws SQLException {
+    public Connection getSqliteDatabaseConnection() throws SQLException {
+        String dbFilePath = "C:\\Users\\Hein\\Desktop\\Programmierstuff\\JAva\\CitationManagerTestLibrary\\test.db";
+
         String sqliteConnectionUrl = String.format(SQLITE_DB_LOCAL_CONNECTION_URL_TEMPLATE, dbFilePath);
         Connection connection = null;
 

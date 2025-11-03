@@ -6,6 +6,7 @@ import de.apaschold.demo.model.Citation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 //TODO add alerts for catch Blocks
@@ -18,7 +19,7 @@ public class SqlWriter {
     //0. constants
     private static final String CREATE_NEW_LIBRARY_TABLE_PROMPT =
             "CREATE TABLE IF NOT EXISTS %s (" +
-                    "id INT AUTO_INCREMENT PRIMARY KEY," +
+                    "id INT AUTOINCREMENT PRIMARY KEY," +
                     "citation_type VARCHAR(255) NOT NULL," +
                     "title TEXT," +
                     "author TEXT," +
@@ -32,6 +33,24 @@ public class SqlWriter {
                     "pages TEXT," +
                     "book_title TEXT," +
                     "editor TEXT" +
+                    ");";
+
+    private static final String CREATE_NEW_LIBRARY_TABLE_PROMPT_SQLITE =
+            "CREATE TABLE IF NOT EXISTS %s (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                    "citation_type text NOT NULL," +
+                    "title text," +
+                    "author text," +
+                    "journal text," +
+                    "year text," +
+                    "doi text," +
+                    "pdf_file_path text," +
+                    "journal_abbreviation text," +
+                    "volume text," +
+                    "issue text," +
+                    "pages text," +
+                    "book_title text," +
+                    "editor text" +
                     ");";
 
     private static final String ADD_NEW_CITATION_TO_LIBRARY_TABLE_PROMPT =
@@ -48,6 +67,14 @@ public class SqlWriter {
     private SqlWriter() {}
 
     //3. write methods
+    public static void createNewLibraryDatabase(){
+        try {
+            SqlManager.getInstance().getSqliteDatabaseConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * <h2>createNewLibraryTable</h2>
      * <li>Creates a new library table in the database with the specified name.</li>
@@ -61,6 +88,19 @@ public class SqlWriter {
             PreparedStatement preparedStatement = connection.prepareStatement(createNewLibraryTableStatement)){
 
                 preparedStatement.executeUpdate();
+
+        } catch (Exception ee){
+            ee.printStackTrace();
+        }
+    }
+
+    public static void createNewLibraryTableSqlite(String tableName){
+        String createNewLibraryTableStatement = String.format(CREATE_NEW_LIBRARY_TABLE_PROMPT_SQLITE, tableName);
+
+        try(Connection connection = SqlManager.getInstance().getSqliteDatabaseConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(createNewLibraryTableStatement)){
+
+            preparedStatement.executeUpdate();
 
         } catch (Exception ee){
             ee.printStackTrace();
