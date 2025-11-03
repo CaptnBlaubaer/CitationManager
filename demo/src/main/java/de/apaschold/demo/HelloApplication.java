@@ -12,7 +12,7 @@ import java.io.IOException;
   TODO import of empty fields cause problems
   TODO delete pdf file, when citation is deleted
 
-  TODO add Junit Methods
+  TODO add Junit Methods SQL
  */
 
 

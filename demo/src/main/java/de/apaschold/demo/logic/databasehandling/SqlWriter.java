@@ -177,7 +177,7 @@ public class SqlWriter {
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            System.out.println("Hello world");
+            e.printStackTrace();
         }
     }
 
@@ -188,10 +188,10 @@ public class SqlWriter {
      * @param tableName        the name of the library table
      * @param citationToDelete the citation to be deleted
      */
-    public static void deleteCitationFromLibrary(String tableName, Citation citationToDelete){
+    public static void deleteCitationFromLibrarySqlite(String tableName, Citation citationToDelete){
         String deleteCitationFromLibraryStatement = String.format("DELETE FROM %s WHERE id = ?;",tableName);
 
-        try(Connection connection = SqlManager.getInstance().getDatabaseConnection();
+        try(Connection connection = SqlManager.getInstance().getSqliteDatabaseConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(deleteCitationFromLibraryStatement)){
 
             preparedStatement.setInt(1, citationToDelete.getId());
@@ -239,6 +239,39 @@ public class SqlWriter {
 
         } catch (Exception e) {
             System.out.println("Hello world");
+        }
+    }
+
+    public static void updateCitationInLibrarySqlite(String tableName, Citation citationToUpdate){
+        String updateCitationInLibraryStatement = String.format(UPDATE_CITATION_IN_LIBRARY_TABLE_PROMPT, tableName);
+
+        String[] citationDataInArray = citationToUpdate.toCsvString()
+                .replaceAll(AppTexts.PLACEHOLDER,"NULL")
+                .split(";");
+
+        try(Connection connection = SqlManager.getInstance().getSqliteDatabaseConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(updateCitationInLibraryStatement)){
+
+            preparedStatement.setString(1, citationDataInArray[1]); // CitationType
+            preparedStatement.setString(2, citationDataInArray[2]); // Title
+            preparedStatement.setString(3, citationDataInArray[3]); // Author
+            preparedStatement.setString(4, citationDataInArray[4]); // Journal/Publisher
+            preparedStatement.setString(5, citationDataInArray[5]); // Year
+            preparedStatement.setString(6, citationDataInArray[6]); // DOI
+            preparedStatement.setString(7, citationDataInArray[7]); // PDF
+            preparedStatement.setString(8, citationDataInArray[8]); // Journal
+            preparedStatement.setString(9, citationDataInArray[9]); // Volume
+            preparedStatement.setString(10, citationDataInArray[10]); // Issue
+            preparedStatement.setString(11, citationDataInArray[11]); // Pages
+            preparedStatement.setString(12, citationDataInArray[12]); // Book Title
+            preparedStatement.setString(13, citationDataInArray[13]); // Editor
+
+            preparedStatement.setInt(14,
+                    MyLittleHelpers.convertStringInputToInteger(citationDataInArray[0])); //id
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

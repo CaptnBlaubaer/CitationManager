@@ -234,10 +234,9 @@ public class GuiController {
      * Deletes the currently selected {@link Citation} from the active {@link CitationLibrary}.
      */
     public void deleteSelectedCitation() {
-        SqlWriter.deleteCitationFromLibrary(this.activeLibraryTableName, this.selectedCitation);
+        SqlWriter.deleteCitationFromLibrarySqlite(this.activeLibraryTableName, this.selectedCitation);
 
         this.library.refreshLibraryFromDatabase(this.activeLibraryTableName);
-        saveActiveLibraryToCml();
     }
 
     /** <h2>addNewAttachmentToCitationReference</h2>
@@ -258,18 +257,16 @@ public class GuiController {
      * @param editedCitation the edited {@link Citation} to update in the library
      */
     public void updateLibraryWithEditedCitation(Citation editedCitation) {
-        SqlWriter.updateCitationInLibrary(this.activeLibraryTableName, editedCitation);
+        SqlWriter.updateCitationInLibrarySqlite(this.activeLibraryTableName, editedCitation);
 
         this.library.refreshLibraryFromDatabase(this.activeLibraryTableName);
-        saveActiveLibraryToCml();
 
         setSelectedCitation(editedCitation);
     }
 
     public void addCitationToLibrary(Citation newCitation) {
-        SqlWriter.addNewCitationToLibraryTable(this.activeLibraryTableName, newCitation);
+        SqlWriter.addNewCitationToLibraryTableSqlite(this.activeLibraryTableName, newCitation);
 
         this.library.refreshLibraryFromDatabase(this.activeLibraryTableName);
-        saveActiveLibraryToCml();
     }
 }
