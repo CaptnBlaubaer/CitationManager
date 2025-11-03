@@ -81,22 +81,21 @@ public class MainViewController implements Initializable {
     protected void openLibrary(){
         Stage stage = (Stage) this.citationView.getScene().getWindow();
 
-        String folderPath = GuiController.getInstance().getActiveLibraryFilePath().replaceAll(AppTexts.REGEX_REPLACE_CML_FILENAME,"");
+        String folderPath = GuiController.getInstance().getActiveLibraryFilePath().replaceAll(AppTexts.REGEX_REPLACE_DB_FILENAME,"");
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(folderPath));
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Citation Manager Library",
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("SQLite Database",
                 "*" + AppTexts.LIBRARY_FILE_FORMAT));
         fileChooser.setTitle("Choose library");
         File chosenFile = fileChooser.showOpenDialog(stage);
 
         if (chosenFile != null) {
             String chosenLibraryPath = chosenFile.getAbsolutePath();
-            String chosenLibraryName = chosenFile.getName().replaceAll(AppTexts.LIBRARY_FILE_FORMAT,"");
 
-                GuiController.getInstance().openLibraryFile(chosenLibraryPath, chosenLibraryName);
+                GuiController.getInstance().openLibraryFile(chosenLibraryPath);
 
-                TextFileHandler.getInstance().saveNewActiveLibraryPath(chosenLibraryPath, chosenLibraryName);
+                TextFileHandler.getInstance().saveNewActiveLibraryPath(chosenLibraryPath);
 
                 populateTable();
 

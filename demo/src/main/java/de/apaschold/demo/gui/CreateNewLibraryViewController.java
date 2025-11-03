@@ -40,7 +40,7 @@ public class CreateNewLibraryViewController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle){
-        this.folderPath = GuiController.getInstance().getActiveLibraryFilePath().replaceAll(AppTexts.REGEX_REPLACE_CML_FILENAME,"");
+        this.folderPath = GuiController.getInstance().getActiveLibraryFilePath().replaceAll(AppTexts.REGEX_REPLACE_DB_FILENAME,"");
 
         System.out.println(this.folderPath);
 
@@ -68,9 +68,9 @@ public class CreateNewLibraryViewController implements Initializable {
             if (!newLibraryFile.exists()) {
                 FileHandler.getInstance().createEmptyLibrary(newLibraryFile);
 
-                TextFileHandler.getInstance().saveNewActiveLibraryPath(filePath, fileName);
+                TextFileHandler.getInstance().saveNewActiveLibraryPath(filePath);
 
-                GuiController.getInstance().changeActiveLibrary(fileName, filePath);
+                GuiController.getInstance().changeActiveLibraryFile(filePath);
             } else {
                 Alerts.showAlertFileNameAlreadyExists();
             }

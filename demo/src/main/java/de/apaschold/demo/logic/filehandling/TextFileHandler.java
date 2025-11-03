@@ -119,9 +119,9 @@ public class TextFileHandler {
      *
      * @param newFilePath the new file path to save
      */
-    public void saveNewActiveLibraryPath (String newFilePath, String newFileName){
+    public void saveNewActiveLibraryPath (String newFilePath){
         try (FileWriter writer = new FileWriter(ACTIVE_LIBRARY_FILE_PATH, StandardCharsets.UTF_8)) {
-            writer.write(newFilePath + ";" + newFileName);
+            writer.write(newFilePath);
         } catch (IOException e) {
             System.err.println("Error saving to File: " );
         }

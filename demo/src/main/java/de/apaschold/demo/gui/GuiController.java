@@ -31,7 +31,7 @@ public class GuiController {
     private CitationLibrary library;
     private Citation selectedCitation;
     private Citation dummyCitationToEdit;
-    private String activeLibraryName;
+    private String activeLibraryTableName;
     private String activeLibraryFilePath;
     private JSONObject referenceChanges;
 
@@ -45,7 +45,7 @@ public class GuiController {
     private GuiController() {
         this.activeLibraryFilePath = TextFileHandler.getInstance().loadLibraryFilePath();
 
-        this.activeLibraryName = AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS;
+        this.activeLibraryTableName = AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS;
     }
 
     public static synchronized GuiController getInstance() {
@@ -78,7 +78,7 @@ public class GuiController {
 
     //4. open view methods
     public void initializeLibrary(){
-        this.library = new CitationLibrary(this.activeLibraryName);
+        this.library = new CitationLibrary(this.activeLibraryTableName);
 
         this.selectedCitation = this.library.getFirstCitation();
     }
@@ -177,14 +177,14 @@ public class GuiController {
      * <li>Changes the active {@link CitationLibrary} to the specified file.</li>
      * <li>Creates a new library table in the SQL database if it does not exist.</
      *
-     * @param fileName the name of the new library file
      * @param filePath the file path of the new library file
      */
-    public void changeActiveLibrary(String fileName, String filePath){
-        this.activeLibraryName = fileName;
+    public void changeActiveLibraryFile(String filePath){
         this.activeLibraryFilePath = filePath;
+        this.activeLibraryTableName = AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS;
 
-        SqlWriter.createNewLibraryTable(fileName);
+        SqlWriter.createNewLibraryDatabase();
+        SqlWriter.createNewLibraryTableSqlite(this.activeLibraryTableName);
     }
 
     /**
@@ -222,21 +222,11 @@ public class GuiController {
      *
      * @param chosenLibraryFilePath the file path of the library file to import from
      */
-    public void openLibraryFile(String chosenLibraryFilePath, String chosenLibraryName){
+    public void openLibraryFile(String chosenLibraryFilePath){
         this.activeLibraryFilePath = chosenLibraryFilePath;
-        this.activeLibraryName = chosenLibraryName;
+        this.activeLibraryTableName = AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS;
 
-        if (SqlReader.checkIfLibraryTableExist(chosenLibraryName)){
-
-            this.library.refreshLibraryFromDatabase(chosenLibraryName);
-
-        } else {
-            this.library.importLibraryFromFile(chosenLibraryFilePath);
-
-            SqlWriter.createNewLibraryTable(chosenLibraryName);
-
-            SqlWriter.addCitationListToLibraryTable(chosenLibraryName, this.library.getCitations());
-        }
+        this.library.refreshLibraryFromDatabase(this.activeLibraryTableName);
     }
 
     /**
@@ -244,9 +234,9 @@ public class GuiController {
      * Deletes the currently selected {@link Citation} from the active {@link CitationLibrary}.
      */
     public void deleteSelectedCitation() {
-        SqlWriter.deleteCitationFromLibrary(this.activeLibraryName, this.selectedCitation);
+        SqlWriter.deleteCitationFromLibrary(this.activeLibraryTableName, this.selectedCitation);
 
-        this.library.refreshLibraryFromDatabase(this.activeLibraryName);
+        this.library.refreshLibraryFromDatabase(this.activeLibraryTableName);
         saveActiveLibraryToCml();
     }
 
@@ -258,7 +248,7 @@ public class GuiController {
     public void addNewAttachmentToCitationReference(String newAttachment) {
         this.selectedCitation.addNewAttachment(newAttachment);
 
-        SqlWriter.updateCitationInLibrary(this.activeLibraryName, this.selectedCitation);
+        SqlWriter.updateCitationInLibrary(this.activeLibraryTableName, this.selectedCitation);
         saveActiveLibraryToCml();
     }
 
@@ -268,18 +258,18 @@ public class GuiController {
      * @param editedCitation the edited {@link Citation} to update in the library
      */
     public void updateLibraryWithEditedCitation(Citation editedCitation) {
-        SqlWriter.updateCitationInLibrary(this.activeLibraryName, editedCitation);
+        SqlWriter.updateCitationInLibrary(this.activeLibraryTableName, editedCitation);
 
-        this.library.refreshLibraryFromDatabase(this.activeLibraryName);
+        this.library.refreshLibraryFromDatabase(this.activeLibraryTableName);
         saveActiveLibraryToCml();
 
         setSelectedCitation(editedCitation);
     }
 
     public void addCitationToLibrary(Citation newCitation) {
-        SqlWriter.addNewCitationToLibraryTable(this.activeLibraryName, newCitation);
+        SqlWriter.addNewCitationToLibraryTable(this.activeLibraryTableName, newCitation);
 
-        this.library.refreshLibraryFromDatabase(this.activeLibraryName);
+        this.library.refreshLibraryFromDatabase(this.activeLibraryTableName);
         saveActiveLibraryToCml();
     }
 }
