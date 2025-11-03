@@ -54,6 +54,39 @@ public class SqlReader {
         return importedCitations;
     }
 
+    public static List<Citation> importCitationsFromLibraryTableSqlite(String tableName){
+        String importCitationsFromTableQuery = String.format(ALL_CITATIONS_FROM_TABLE_QUERY_TEMPLATE, tableName);
+
+        List<Citation> importedCitations = new ArrayList<>();
+
+        try(Connection connection = SqlManager.getInstance().getSqliteDatabaseConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(importCitationsFromTableQuery);
+            ResultSet resultSet = preparedStatement.executeQuery()){
+
+            while(resultSet.next()){
+                StringBuilder importedCitationDataAsCsvString = new StringBuilder();
+                int columnCount = resultSet.getMetaData().getColumnCount();
+
+                for(int index = 1; index <= columnCount; index++){
+                    if (resultSet.getString(index).equals("NULL")){
+                        importedCitationDataAsCsvString.append(AppTexts.PLACEHOLDER);
+                    } else {
+                        importedCitationDataAsCsvString.append(resultSet.getString(index));
+                    }
+                    if(index < columnCount){
+                        importedCitationDataAsCsvString.append(";");
+                    }
+                }
+
+                importedCitations.add(CitationFactory.createCitationFromCsvLine(importedCitationDataAsCsvString.toString()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return importedCitations;
+    }
+
     /**
      * <h2>checkIfLibraryTableExist</h2>
      * <li>Checks if a library table with the given name exists in the database.</li>

@@ -145,6 +145,43 @@ public class SqlWriter {
     }
 
     /**
+     * <h2>addNewCitationToLibraryTable</h2>
+     * <li>Adds a new citation to the specified library table in the database.</li>
+     *
+     * @param tableName      the name of the library table
+     * @param citationToAdd  the citation to be added
+     */
+    public static void addNewCitationToLibraryTableSqlite(String tableName, Citation citationToAdd){
+        String addNewCitationToLibraryStatement = String.format(ADD_NEW_CITATION_TO_LIBRARY_TABLE_PROMPT, tableName);
+        String[] citationDataInArray = citationToAdd.toCsvString()
+                .replaceAll(AppTexts.PLACEHOLDER,"NULL")
+                .split(";");
+
+        try(Connection connection = SqlManager.getInstance().getSqliteDatabaseConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(addNewCitationToLibraryStatement)){
+
+            preparedStatement.setString(1, citationDataInArray[1]); // CitationType
+            preparedStatement.setString(2, citationDataInArray[2]); // Title
+            preparedStatement.setString(3, citationDataInArray[3]); // Author
+            preparedStatement.setString(4, citationDataInArray[4]); // Journal/Publisher
+            preparedStatement.setString(5, citationDataInArray[5]); // Year
+            preparedStatement.setString(6, citationDataInArray[6]); // DOI
+            preparedStatement.setString(7, citationDataInArray[7]); // PDF
+            preparedStatement.setString(8, citationDataInArray[8]); // Journal
+            preparedStatement.setString(9, citationDataInArray[9]); // Volume
+            preparedStatement.setString(10, citationDataInArray[10]); // Issue
+            preparedStatement.setString(11, citationDataInArray[11]); // Pages
+            preparedStatement.setString(12, citationDataInArray[12]); // Book Title
+            preparedStatement.setString(13, citationDataInArray[13]); // Editor
+
+            preparedStatement.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println("Hello world");
+        }
+    }
+
+    /**
      * <h2>deleteCitationFromLibrary</h2>
      * <li>Deletes a citation from the specified library table in the database.</li>
      *
