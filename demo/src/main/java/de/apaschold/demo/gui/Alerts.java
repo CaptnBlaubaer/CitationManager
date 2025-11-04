@@ -27,6 +27,8 @@ public class Alerts {
     public static final String INFORMATION_RECORD_NOT_FOUND_HEADER = "The record wasn't found in the PubMed database.";
     public static final String INFORMATION_FILE_NOT_FOUND_TITLE = "Attachment not found";
     public static final String INFORMATION_FILE_NOT_FOUND_HEADER = "The attachment doesn't exist.";
+    public static final String INFORMATION_SEARCHING_FOR_PDF_TITLE = "Searching for PDF";
+    public static final String INFORMATION_SEARCHING_FOR_PDF_HEADER = "Searching for PDF... Please wait";
 
     public static final String CONFIRMATION_DELETE_CITATION_TITLE = "Delete selected article";
     public static final String CONFIRMATION_DELETE_CITATION_CONTENT = "Do you want to delete selected article?\nOK to confirm";
@@ -93,6 +95,14 @@ public class Alerts {
         alert.show();
     }
 
+    public static Alert showInformationPdfSearch(){
+        Alert alert= new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(INFORMATION_SEARCHING_FOR_PDF_TITLE);
+        alert.setHeaderText(INFORMATION_SEARCHING_FOR_PDF_HEADER);
+        alert.show();
+        return alert;
+    }
+
     //5. conformation
     public static Optional<ButtonType> showConfirmationDeleteCitation() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -107,5 +117,12 @@ public class Alerts {
         alert.setTitle(ERROR_TIMEOUT_DOWNLOADING_PDF_TITLE);
         alert.setHeaderText(ERROR_TIMEOUT_DOWNLOADING_PDF_HEADER);
         alert.show();
+    }
+
+    //7. close method
+    public static void closeAlert(Alert alert){
+        if(alert != null){
+            alert.close();
+        }
     }
 }

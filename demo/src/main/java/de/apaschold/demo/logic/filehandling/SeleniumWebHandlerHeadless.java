@@ -71,7 +71,6 @@ public class SeleniumWebHandlerHeadless {
      */
 
     public void downloadPdfFrom(String articleURL) throws TimeoutException {
-        System.out.println("Downloading pdf from: " + articleURL);
 
         setDownloadPath();
 
@@ -87,8 +86,6 @@ public class SeleniumWebHandlerHeadless {
             getPdfDownloadLink(articleURL);
             getPdf();
         }
-
-        System.out.println("finished downloading pdf!");
     }
 
     /** <h2>startWebDriver</h2>
