@@ -247,8 +247,11 @@ public class GuiController {
     public void addNewAttachmentToCitationReference(String newAttachment) {
         this.selectedCitation.addNewAttachment(newAttachment);
 
-        SqlWriter.updateCitationInLibrary(this.activeLibraryTableName, this.selectedCitation);
-        saveActiveLibraryToCml();
+        SqlWriter.updateCitationInLibrarySqlite(this.activeLibraryTableName, this.selectedCitation);
+    }
+
+    public void removeAttachementFromCitation(Citation citationToRemoveAttachment) {
+        SqlWriter.updateCitationInLibrarySqlite(this.activeLibraryTableName, citationToRemoveAttachment);
     }
 
     /** <h2>updateLibraryWithEditedCitation</h2>
@@ -269,4 +272,6 @@ public class GuiController {
 
         this.library.refreshLibraryFromDatabase(this.activeLibraryTableName);
     }
+
+
 }

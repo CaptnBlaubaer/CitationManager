@@ -70,7 +70,7 @@ public class SeleniumWebHandlerHeadless {
      * @param articleURL the URL of the article to download the PDF from
      */
 
-    public void downloadPdfFrom(String articleURL){
+    public void downloadPdfFrom(String articleURL) throws TimeoutException {
         System.out.println("Downloading pdf from: " + articleURL);
 
         setDownloadPath();

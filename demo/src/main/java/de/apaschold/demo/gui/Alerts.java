@@ -31,6 +31,9 @@ public class Alerts {
     public static final String CONFIRMATION_DELETE_CITATION_TITLE = "Delete selected article";
     public static final String CONFIRMATION_DELETE_CITATION_CONTENT = "Do you want to delete selected article?\nOK to confirm";
 
+    public static final String ERROR_TIMEOUT_DOWNLOADING_PDF_TITLE = "Timeout downloading PDF";
+    public static final String ERROR_TIMEOUT_DOWNLOADING_PDF_HEADER = "Downloading the PDF took too long and was aborted. Probably bad connection";
+
 
 
     //1. attributes
@@ -98,4 +101,11 @@ public class Alerts {
         return alert.showAndWait();
     }
 
+    //6. error messages
+    public static void showErrorMessageTimeoutDownloadingPdf() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(ERROR_TIMEOUT_DOWNLOADING_PDF_TITLE);
+        alert.setHeaderText(ERROR_TIMEOUT_DOWNLOADING_PDF_HEADER);
+        alert.show();
+    }
 }
