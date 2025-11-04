@@ -4,7 +4,7 @@
 _Project Description_
 
 The Citation Manager application is used to manage citations for scientific publications written in LaTeX. 
-It is written in Java and possesses basic functionalities to add/update/delete citations to an existing library, whereby the data is stored in a textdocument. 
+It is written in Java and possesses basic functionalities to add/update/delete citations to an existing library, whereby the data is stored in a sqlite file. 
 
 _What it does?_
 
@@ -12,7 +12,7 @@ It is possible to create a new libraries, open old libraries, and delete librari
 Publications can be added by creating a new entry manually, whereby different formats (journal publication, book, book chapter, patent, thesis, unpublished work) are possible,
 or by importing citation in bibtex-format for on or more entries, form e.g. google scholar.
 
-The library data is stored in a textdocument of type .cml (citation manager library) and can be exported to the bibtex format .bib to use it in LaTeX documents or export it to other systems e.g. Endnote or Citavi. 
+The library data is stored in a sqlite database file and can be exported to the bibtex format .bib to use it in LaTeX documents or export it to other systems e.g. Endnote or Citavi. 
 
 The entries are listed in a table view, with main parameters: title, author, journal, year. 
 If selected the detailed informations are shown in a adjacent pane and can be modified and saved.
