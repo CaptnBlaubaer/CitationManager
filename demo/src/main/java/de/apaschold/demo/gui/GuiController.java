@@ -3,7 +3,6 @@ package de.apaschold.demo.gui;
 import de.apaschold.demo.HelloApplication;
 import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.logic.CitationLibrary;
-import de.apaschold.demo.logic.databasehandling.SqlReader;
 import de.apaschold.demo.logic.databasehandling.SqlWriter;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import de.apaschold.demo.model.Citation;
@@ -184,7 +183,7 @@ public class GuiController {
         this.activeLibraryTableName = AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS;
 
         SqlWriter.createNewLibraryDatabase();
-        SqlWriter.createNewLibraryTableSqlite(this.activeLibraryTableName);
+        SqlWriter.createNewLibraryTable(this.activeLibraryTableName);
     }
 
     /**
@@ -234,7 +233,7 @@ public class GuiController {
      * Deletes the currently selected {@link Citation} from the active {@link CitationLibrary}.
      */
     public void deleteSelectedCitation() {
-        SqlWriter.deleteCitationFromLibrarySqlite(this.activeLibraryTableName, this.selectedCitation);
+        SqlWriter.deleteCitationFromLibrary(this.activeLibraryTableName, this.selectedCitation);
 
         this.library.refreshLibraryFromDatabase(this.activeLibraryTableName);
     }
@@ -247,11 +246,16 @@ public class GuiController {
     public void addNewAttachmentToCitationReference(String newAttachment) {
         this.selectedCitation.addNewAttachment(newAttachment);
 
-        SqlWriter.updateCitationInLibrarySqlite(this.activeLibraryTableName, this.selectedCitation);
+        SqlWriter.updateCitationInLibrary(this.activeLibraryTableName, this.selectedCitation);
     }
 
+    /** <h2>removeAttachementFromCitation</h2>
+     * <li>Removes an attachment from the specified {@link Citation}.</li>
+     *
+     * @param citationToRemoveAttachment the {@link Citation} from which to remove the attachment
+     */
     public void removeAttachementFromCitation(Citation citationToRemoveAttachment) {
-        SqlWriter.updateCitationInLibrarySqlite(this.activeLibraryTableName, citationToRemoveAttachment);
+        SqlWriter.updateCitationInLibrary(this.activeLibraryTableName, citationToRemoveAttachment);
     }
 
     /** <h2>updateLibraryWithEditedCitation</h2>
@@ -260,15 +264,20 @@ public class GuiController {
      * @param editedCitation the edited {@link Citation} to update in the library
      */
     public void updateLibraryWithEditedCitation(Citation editedCitation) {
-        SqlWriter.updateCitationInLibrarySqlite(this.activeLibraryTableName, editedCitation);
+        SqlWriter.updateCitationInLibrary(this.activeLibraryTableName, editedCitation);
 
         this.library.refreshLibraryFromDatabase(this.activeLibraryTableName);
 
         setSelectedCitation(editedCitation);
     }
 
+    /** <h2>addCitationToLibrary</h2>
+     * <li>Adds a new {@link Citation} to the active {@link CitationLibrary}.</li>
+     *
+     * @param newCitation the new {@link Citation} to add to the library
+     */
     public void addCitationToLibrary(Citation newCitation) {
-        SqlWriter.addNewCitationToLibraryTableSqlite(this.activeLibraryTableName, newCitation);
+        SqlWriter.addNewCitationToLibraryTable(this.activeLibraryTableName, newCitation);
 
         this.library.refreshLibraryFromDatabase(this.activeLibraryTableName);
     }
