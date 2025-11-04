@@ -2,6 +2,10 @@ package de.apaschold.demo.additionals;
 
 import de.apaschold.demo.logic.databasehandling.SqlManager;
 import de.apaschold.demo.logic.databasehandling.SqlReader;
+import de.apaschold.demo.logic.databasehandling.SqlWriter;
+import de.apaschold.demo.model.Citation;
+import de.apaschold.demo.model.JournalArticle;
+import de.apaschold.demo.model.Unpublished;
 
 import java.sql.Connection;
 
@@ -10,12 +14,17 @@ public class TestStuff {
 
 
     public static void main(String[] args) throws Exception {
-        Connection connection = SqlManager.getInstance().getSqliteDatabaseConnection("testdb");
+        //SqlWriter.createNewLibraryDatabase();
 
-        if (connection != null) {
-            System.out.println("Connection to SQLite database established successfully.");
-        } else {
-            System.out.println("Failed to establish connection to SQLite database.");
-        }
+        //SqlWriter.createNewLibraryTableSqlite(AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS);
+
+        //Citation newCit = new Unpublished();
+        //Citation newJour = new JournalArticle();
+
+        //SqlWriter.addNewCitationToLibraryTableSqlite(AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS, newCit);
+
+        //SqlWriter.addNewCitationToLibraryTableSqlite(AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS, newJour);
+
+        System.out.println(SqlReader.importCitationsFromLibraryTableSqlite(AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS));
     }
 }

@@ -1,6 +1,5 @@
 package de.apaschold.demo.logic;
 
-import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.logic.databasehandling.SqlReader;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import de.apaschold.demo.model.Citation;
@@ -21,7 +20,7 @@ public class CitationLibrary {
      * @param activeLibraryName name of the active library
      */
     public CitationLibrary(String activeLibraryName) {
-        importLibraryFromSql(activeLibraryName);
+        refreshLibraryFromDatabase(activeLibraryName);
     }
 
     //3. getter and setter methods
@@ -41,10 +40,6 @@ public class CitationLibrary {
     public void deleteCitation(Citation citation){ this.citations.remove(citation);}
 
     //5. export/import methods
-
-    private void importLibraryFromSql(String activeLibraryName) {
-        this.citations = SqlReader.importCitationsFromLibraryTable(activeLibraryName);
-    }
 
     /**
      * <h2>generateStringForBibTex</h2>
@@ -69,7 +64,7 @@ public class CitationLibrary {
      * @param activeLibraryName name of the active library
      */
     public void refreshLibraryFromDatabase(String activeLibraryName) {
-        this.citations = SqlReader.importCitationsFromLibraryTable(activeLibraryName);
+        this.citations = SqlReader.importCitationsFromLibraryTableSqlite(activeLibraryName);
     }
 
     /**

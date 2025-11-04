@@ -1,6 +1,7 @@
 package de.apaschold.demo.logic.databasehandling;
 
 import de.apaschold.demo.additionals.AppTexts;
+import de.apaschold.demo.gui.GuiController;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,17 +10,8 @@ import java.sql.SQLNonTransientConnectionException;
 
 public class SqlManager {
     //0. constants
-    private static final String DB_LOCAL_SERVER_IP_ADDRESS = "localhost/";
-    private static final String DB_LOCAL_NAME = "citation_manager";
-
     private static final String SQLITE_DB_LOCAL_CONNECTION_URL_TEMPLATE =
-            "jdbc:sqlite:%s.db";
-
-    private static final String DB_LOCAL_CONNECTION_URL =
-            "jdbc:mysql://" + DB_LOCAL_SERVER_IP_ADDRESS + DB_LOCAL_NAME;
-
-    private static final String DB_LOCAL_USER_NAME = "java";
-    private static final String DB_LOCAL_USER_PW = "password";
+            "jdbc:sqlite:%s";
     //endregion
 
     //1. attributes
@@ -48,23 +40,9 @@ public class SqlManager {
      * @return a Connection object to the database
      * @throws SQLException if a database access error occurs
      */
-    public Connection getDatabaseConnection() throws SQLException {
-        Connection connection = null;
+    public Connection getSqliteDatabaseConnection() throws SQLException {
+        String dbFilePath = GuiController.getInstance().getActiveLibraryFilePath();
 
-        try {
-            connection = DriverManager.getConnection(DB_LOCAL_CONNECTION_URL, DB_LOCAL_USER_NAME, DB_LOCAL_USER_PW);
-            connection.close();
-
-            connection = DriverManager.getConnection(DB_LOCAL_CONNECTION_URL, DB_LOCAL_USER_NAME, DB_LOCAL_USER_PW);
-        } catch (SQLNonTransientConnectionException e) {
-            System.err.println(AppTexts.ERROR_CONNECTING_TO_DATABASE + DB_LOCAL_CONNECTION_URL);
-            e.printStackTrace();
-        }
-
-        return connection;
-    }
-
-    public Connection getSqliteDatabaseConnection(String dbFilePath) throws SQLException {
         String sqliteConnectionUrl = String.format(SQLITE_DB_LOCAL_CONNECTION_URL_TEMPLATE, dbFilePath);
         Connection connection = null;
 

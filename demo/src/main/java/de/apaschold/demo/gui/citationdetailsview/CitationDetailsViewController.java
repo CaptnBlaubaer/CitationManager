@@ -23,6 +23,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.json.JSONObject;
+import org.openqa.selenium.TimeoutException;
 
 import java.io.File;
 import java.io.IOException;
@@ -148,7 +149,7 @@ public class CitationDetailsViewController implements Initializable {
     private void addNewAttachmentToArticleReference(){
         Stage stage = (Stage) this.pdfViewer.getScene().getWindow();
 
-        String folderPath = GuiController.getInstance().getActiveLibraryFilePath().replaceAll(AppTexts.REGEX_REPLACE_CML_FILENAME,"");
+        String folderPath = GuiController.getInstance().getActiveLibraryFilePath().replaceAll(AppTexts.REGEX_REPLACE_DB_FILENAME,"");
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(folderPath));
@@ -177,6 +178,8 @@ public class CitationDetailsViewController implements Initializable {
         if (chosenAttachment != null){
             this.citation.removeAttachment(chosenAttachment);
 
+            GuiController.getInstance().removeAttachementFromCitation(this.citation);
+
             populatePDFViewerTab();
 
             FileHandler.getInstance().deleteSelectedAttachmentFromFolder(chosenAttachment);
@@ -201,8 +204,11 @@ public class CitationDetailsViewController implements Initializable {
             GuiController.getInstance().addNewAttachmentToCitationReference(latestAddedFile);
 
             populatePDFViewerTab();
+        } catch (TimeoutException e) {
+            Alerts.showErrorMessageTimeoutDownloadingPdf();
         } catch (Exception e){
             System.err.println("Pdf not found!");
+            e.printStackTrace();
         }
     }
 

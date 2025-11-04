@@ -6,7 +6,7 @@ import de.apaschold.demo.model.Citation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.List;
+import java.sql.SQLException;
 
 //TODO add alerts for catch Blocks
 /**
@@ -18,7 +18,7 @@ public class SqlWriter {
     //0. constants
     private static final String CREATE_NEW_LIBRARY_TABLE_PROMPT =
             "CREATE TABLE IF NOT EXISTS %s (" +
-                    "id INT AUTO_INCREMENT PRIMARY KEY," +
+                    "id INT AUTOINCREMENT PRIMARY KEY," +
                     "citation_type VARCHAR(255) NOT NULL," +
                     "title TEXT," +
                     "author TEXT," +
@@ -32,6 +32,24 @@ public class SqlWriter {
                     "pages TEXT," +
                     "book_title TEXT," +
                     "editor TEXT" +
+                    ");";
+
+    private static final String CREATE_NEW_LIBRARY_TABLE_PROMPT_SQLITE =
+            "CREATE TABLE IF NOT EXISTS %s (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                    "citation_type text NOT NULL," +
+                    "title text," +
+                    "author text," +
+                    "journal text," +
+                    "year text," +
+                    "doi text," +
+                    "pdf_file_path text," +
+                    "journal_abbreviation text," +
+                    "volume text," +
+                    "issue text," +
+                    "pages text," +
+                    "book_title text," +
+                    "editor text" +
                     ");";
 
     private static final String ADD_NEW_CITATION_TO_LIBRARY_TABLE_PROMPT =
@@ -49,18 +67,30 @@ public class SqlWriter {
 
     //3. write methods
     /**
+     * <h2>createNewLibraryDatabase</h2>
+     * <li>Creates a new library database if it does not already exist.</li>
+     */
+    public static void createNewLibraryDatabase(){
+        try {
+            SqlManager.getInstance().getSqliteDatabaseConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * <h2>createNewLibraryTable</h2>
      * <li>Creates a new library table in the database with the specified name.</li>
      *
      * @param tableName the name of the new library table
      */
     public static void createNewLibraryTable(String tableName){
-        String createNewLibraryTableStatement = String.format(CREATE_NEW_LIBRARY_TABLE_PROMPT, tableName);
+        String createNewLibraryTableStatement = String.format(CREATE_NEW_LIBRARY_TABLE_PROMPT_SQLITE, tableName);
 
-        try(Connection connection = SqlManager.getInstance().getDatabaseConnection();
+        try(Connection connection = SqlManager.getInstance().getSqliteDatabaseConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(createNewLibraryTableStatement)){
 
-                preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
 
         } catch (Exception ee){
             ee.printStackTrace();
@@ -80,7 +110,7 @@ public class SqlWriter {
                 .replaceAll(AppTexts.PLACEHOLDER,"NULL")
                 .split(";");
 
-        try(Connection connection = SqlManager.getInstance().getDatabaseConnection();
+        try(Connection connection = SqlManager.getInstance().getSqliteDatabaseConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(addNewCitationToLibraryStatement)){
 
             preparedStatement.setString(1, citationDataInArray[1]); // CitationType
@@ -100,7 +130,7 @@ public class SqlWriter {
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            System.out.println("Hello world");
+            e.printStackTrace();
         }
     }
 
@@ -114,7 +144,7 @@ public class SqlWriter {
     public static void deleteCitationFromLibrary(String tableName, Citation citationToDelete){
         String deleteCitationFromLibraryStatement = String.format("DELETE FROM %s WHERE id = ?;",tableName);
 
-        try(Connection connection = SqlManager.getInstance().getDatabaseConnection();
+        try(Connection connection = SqlManager.getInstance().getSqliteDatabaseConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(deleteCitationFromLibraryStatement)){
 
             preparedStatement.setInt(1, citationToDelete.getId());
@@ -139,7 +169,7 @@ public class SqlWriter {
                 .replaceAll(AppTexts.PLACEHOLDER,"NULL")
                 .split(";");
 
-        try(Connection connection = SqlManager.getInstance().getDatabaseConnection();
+        try(Connection connection = SqlManager.getInstance().getSqliteDatabaseConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(updateCitationInLibraryStatement)){
 
             preparedStatement.setString(1, citationDataInArray[1]); // CitationType
@@ -157,24 +187,11 @@ public class SqlWriter {
             preparedStatement.setString(13, citationDataInArray[13]); // Editor
 
             preparedStatement.setInt(14,
-                        MyLittleHelpers.convertStringInputToInteger(citationDataInArray[0])); //id
+                    MyLittleHelpers.convertStringInputToInteger(citationDataInArray[0])); //id
             preparedStatement.executeUpdate();
 
         } catch (Exception e) {
-            System.out.println("Hello world");
-        }
-    }
-
-    /**
-     * <h2>addCitationLibraryToTable</h2>
-     * <li>Adds a list of {@link Citation} to the specified library table in the database.</li>
-     *
-     * @param tableName       the name of the library table
-     * @param citationsToAdd  the list of citations to be added
-     */
-    public static void addCitationListToLibraryTable(String tableName, List<Citation> citationsToAdd){
-        for(Citation citation : citationsToAdd){
-            addNewCitationToLibraryTable(tableName, citation);
+            e.printStackTrace();
         }
     }
 }

@@ -47,7 +47,11 @@ public abstract class Citation {
         this.journal = journal;
         this.year = year;
         this.doi = doi;
-        this.pdfFilePaths = pdfFilePaths.split(",");
+        if (!pdfFilePaths.isEmpty()) {
+            this.pdfFilePaths = pdfFilePaths.split(",");
+        } else {
+            this.pdfFilePaths = AppTexts.PLACEHOLDER.split(",");
+        }
     }
 
     //3. getter and setter methods
