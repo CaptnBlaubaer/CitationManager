@@ -70,7 +70,7 @@ public class CreateNewLibraryViewController implements Initializable {
 
                 TextFileHandler.getInstance().saveNewActiveLibraryPath(filePath);
 
-                GuiController.getInstance().changeActiveLibraryFile(filePath);
+                GuiController.getInstance().createNewLibrary(filePath);
             } else {
                 Alerts.showAlertFileNameAlreadyExists();
             }

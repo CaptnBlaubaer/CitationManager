@@ -1,1 +1,1 @@
-C:\Users\Hein\Desktop\Programmierstuff\JAva\CitationManager\demo\src\test\resources\de\apaschold\demo\data\testLibraryPaschold.db
+src\test\resources\de\apaschold\demo\data\testLibraryPaschold.db

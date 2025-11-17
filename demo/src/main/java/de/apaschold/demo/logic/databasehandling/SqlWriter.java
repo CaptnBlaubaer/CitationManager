@@ -16,25 +16,7 @@ import java.sql.SQLException;
  */
 public class SqlWriter {
     //0. constants
-    private static final String CREATE_NEW_LIBRARY_TABLE_PROMPT =
-            "CREATE TABLE IF NOT EXISTS %s (" +
-                    "id INT AUTOINCREMENT PRIMARY KEY," +
-                    "citation_type VARCHAR(255) NOT NULL," +
-                    "title TEXT," +
-                    "author TEXT," +
-                    "journal TEXT," +
-                    "year VARCHAR(4)," +
-                    "doi TEXT," +
-                    "pdf_file_path TEXT," +
-                    "journal_abbreviation TEXT," +
-                    "volume TEXT," +
-                    "issue TEXT," +
-                    "pages TEXT," +
-                    "book_title TEXT," +
-                    "editor TEXT" +
-                    ");";
-
-    private static final String CREATE_NEW_LIBRARY_TABLE_PROMPT_SQLITE =
+    private static final String CREATE_NEW_LIBRARY_TABLE_TEMPLATE =
             "CREATE TABLE IF NOT EXISTS %s (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                     "citation_type text NOT NULL," +
@@ -52,11 +34,11 @@ public class SqlWriter {
                     "editor text" +
                     ");";
 
-    private static final String ADD_NEW_CITATION_TO_LIBRARY_TABLE_PROMPT =
+    private static final String ADD_NEW_CITATION_TO_LIBRARY_TABLE_TEMPLATE =
             "INSERT INTO %s (citation_type, title, author, journal, year, doi, pdf_file_path, journal_abbreviation, volume, issue, pages, book_title, editor) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
-    private static final String UPDATE_CITATION_IN_LIBRARY_TABLE_PROMPT =
+    private static final String UPDATE_CITATION_IN_LIBRARY_TABLE_TEMPLATE =
             "UPDATE %s SET citation_type = ?, title = ?, author = ?, journal = ?, year = ?, doi = ?, pdf_file_path = ?, journal_abbreviation = ?, volume = ?, issue = ?, pages = ?, book_title = ?, editor = ? " +
                     "WHERE id = ?;";
 
@@ -72,7 +54,8 @@ public class SqlWriter {
      */
     public static void createNewLibraryDatabase(){
         try {
-            SqlManager.getInstance().getSqliteDatabaseConnection();
+            Connection connection = SqlManager.getInstance().getSqliteDatabaseConnection();
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -85,7 +68,7 @@ public class SqlWriter {
      * @param tableName the name of the new library table
      */
     public static void createNewLibraryTable(String tableName){
-        String createNewLibraryTableStatement = String.format(CREATE_NEW_LIBRARY_TABLE_PROMPT_SQLITE, tableName);
+        String createNewLibraryTableStatement = String.format(CREATE_NEW_LIBRARY_TABLE_TEMPLATE, tableName);
 
         try(Connection connection = SqlManager.getInstance().getSqliteDatabaseConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(createNewLibraryTableStatement)){
@@ -105,7 +88,7 @@ public class SqlWriter {
      * @param citationToAdd  the citation to be added
      */
     public static void addNewCitationToLibraryTable(String tableName, Citation citationToAdd){
-        String addNewCitationToLibraryStatement = String.format(ADD_NEW_CITATION_TO_LIBRARY_TABLE_PROMPT, tableName);
+        String addNewCitationToLibraryStatement = String.format(ADD_NEW_CITATION_TO_LIBRARY_TABLE_TEMPLATE, tableName);
         String[] citationDataInArray = citationToAdd.toCsvString()
                 .replaceAll(AppTexts.PLACEHOLDER,"NULL")
                 .split(";");
@@ -163,7 +146,7 @@ public class SqlWriter {
      * @param citationToUpdate the citation with updated information
      */
     public static void updateCitationInLibrary(String tableName, Citation citationToUpdate){
-        String updateCitationInLibraryStatement = String.format(UPDATE_CITATION_IN_LIBRARY_TABLE_PROMPT, tableName);
+        String updateCitationInLibraryStatement = String.format(UPDATE_CITATION_IN_LIBRARY_TABLE_TEMPLATE, tableName);
 
         String[] citationDataInArray = citationToUpdate.toCsvString()
                 .replaceAll(AppTexts.PLACEHOLDER,"NULL")

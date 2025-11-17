@@ -174,11 +174,11 @@ public class GuiController {
     /**
      * <h2>changeActiveLibrary</h2>
      * <li>Changes the active {@link CitationLibrary} to the specified file.</li>
-     * <li>Creates a new library table in the SQL database if it does not exist.</
+     * <li>Creates a new library database if it does not exist.</
      *
      * @param filePath the file path of the new library file
      */
-    public void changeActiveLibraryFile(String filePath){
+    public void createNewLibrary(String filePath){
         this.activeLibraryFilePath = filePath;
         this.activeLibraryTableName = AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS;
 

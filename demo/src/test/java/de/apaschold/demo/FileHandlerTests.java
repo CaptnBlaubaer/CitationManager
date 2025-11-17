@@ -17,7 +17,7 @@ public class FileHandlerTests {
 
     @Test
     void testCreateEmptyLibrary(){
-        File testFile = new File("C:/Users/Hein/Desktop/Programmierstuff/JAva/CitationManagerTestLibrary/test.cml");
+        File testFile = new File("C:/Users/Hein/Desktop/Programmierstuff/JAva/CitationManagerTestLibrary/test.db");
         File testFilePdfDirectory = new File("C:/Users/Hein/Desktop/Programmierstuff/JAva/CitationManagerTestLibrary/test-pdfs");
 
         CREATED_TEST_FILES.add(testFile);
@@ -26,9 +26,9 @@ public class FileHandlerTests {
         FileHandler.getInstance().createEmptyLibrary(testFile);
 
 
-        assert testFile.exists();
-        assert testFilePdfDirectory.exists();
-        assert testFilePdfDirectory.isDirectory();
+        assert testFile.exists() : "Test file was not created.";
+        assert testFilePdfDirectory.exists() : "Test PDF directory was not created.";
+        assert testFilePdfDirectory.isDirectory() : "Test PDF directory is not a directory.";
     }
 
     @AfterAll
