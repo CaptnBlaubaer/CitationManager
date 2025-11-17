@@ -28,7 +28,7 @@ public class SqlReader {
      * @param tableName name of the library table to import citations from
      * @return list of imported Citation objects
      */
-    public static List<Citation> importCitationsFromLibraryTableSqlite(String tableName){
+    public static List<Citation> importCitationsFromLibraryTable(String tableName){
         String importCitationsFromTableQuery = String.format(ALL_CITATIONS_FROM_TABLE_QUERY_TEMPLATE, tableName);
 
         List<Citation> importedCitations = new ArrayList<>();

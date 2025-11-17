@@ -184,4 +184,15 @@ public abstract class Citation {
             this.pdfFilePaths = attachmentArray;
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Citation citation = (Citation) obj;
+        return year == citation.year &&
+                citationType == citation.citationType &&
+                title.equals(citation.title) &&
+                author.equals(citation.author);
+    }
 }

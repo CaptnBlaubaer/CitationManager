@@ -1,12 +1,7 @@
 package de.apaschold.demo.logic.filehandling;
 
-import de.apaschold.demo.logic.CitationFactory;
-import de.apaschold.demo.model.Citation;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <h2>TextFileHandler</h2>
@@ -15,11 +10,11 @@ import java.util.List;
  */
 public class TextFileHandler {
     //0. constants
-    private static final String DEFAULT_LIBRARY_FILE_PATH = "demo/src/main/resources/de/apaschold/demo/data/default-library.cml";
-    private static final String ACTIVE_LIBRARY_FILE_PATH = "demo/src/main/resources/de/apaschold/demo/data/active-library.txt";
+    private static final String EXAMPLE_LIBRARY_PATH = "demo/src/main/resources/de/apaschold/demo/data/testLibraryPaschold.db";
 
     //1. attributes
     private static TextFileHandler instance;
+    private static String activeLibraryFilePath = "demo/src/main/resources/de/apaschold/demo/data/active-library.txt";
 
     //2. constructors
     private TextFileHandler() {
@@ -32,65 +27,12 @@ public class TextFileHandler {
         return instance;
     }
 
-    //3. read'n'write methods
-    /**
-     * <h2>importLibraryFromCsvFile</h2>
-     * <li>Reads a text file and returns its content as a list of {@link Citation}.</li>
-     * <li>If there isn't an active library (filePath == null), default library is loaded.</li>
-     *
-     * @param filePath of the active library as String
-     * @return a list of articles resembling the lines of the file
-     */
-    public List<Citation> importLibraryFromCmlFile(String filePath) {
-
-        if (filePath == null) {
-            filePath = DEFAULT_LIBRARY_FILE_PATH;
-        }
-
-        List<Citation> citations = new ArrayList<>();
-
-        File file = new File(filePath);
-
-        try(FileReader reader = new FileReader(file);
-            BufferedReader in = new BufferedReader(reader)) {
-
-            String fileLine;
-            boolean eof = false;
-
-            while (!eof) {
-                fileLine = in.readLine();
-                if (fileLine == null) {
-                    eof = true;
-                } else {
-                    Citation citationFromCsv = CitationFactory.createCitationFromCsvLine(fileLine);
-                    citations.add(citationFromCsv);
-                }
-            }
-
-        } catch (IOException e){
-            System.err.println("Error reading file: " + file.getAbsolutePath());
-        }
-
-        return citations;
+    //3. getter and setter methods
+    public static void setActiveLibraryFilePath(String newPath) {
+        activeLibraryFilePath = newPath;
     }
 
-    /**
-     * <h2>exportLibraryToCsv</h2>
-     * Writes a list of {@link Citation} to a CSV file.
-     *
-     * @param citations the list of article information to write to the file
-     */
-    public void exportLibraryToCml(List<Citation> citations, String activeLibraryFilePath) {
-
-        try (FileWriter writer = new FileWriter(activeLibraryFilePath, StandardCharsets.UTF_8)) {
-            for (Citation citation : citations) {
-                writer.write(citation.toCsvString() + "\n");
-            }
-        } catch (IOException e) {
-            System.err.println("Error saving to File: " + activeLibraryFilePath);
-        }
-    }
-
+    //4. read'n'write methods
     /**
      * <h2>loadLibraryFilePath</h2>
      * <li>Reads the directory of the active library from active-library.txt</li>
@@ -100,7 +42,7 @@ public class TextFileHandler {
     public String loadLibraryFilePath(){
         String libraryFilePath = "";
 
-        File file = new File(ACTIVE_LIBRARY_FILE_PATH);
+        File file = new File(activeLibraryFilePath);
 
         try(FileReader reader = new FileReader(file);
             BufferedReader in = new BufferedReader(reader)) {
@@ -109,6 +51,10 @@ public class TextFileHandler {
 
         } catch (IOException e){
             System.err.println("Error reading file: " + file.getAbsolutePath());
+        }
+
+        if (!new File(libraryFilePath).exists()){
+            libraryFilePath = EXAMPLE_LIBRARY_PATH;
         }
 
         return libraryFilePath;
@@ -120,7 +66,7 @@ public class TextFileHandler {
      * @param newFilePath the new file path to save
      */
     public void saveNewActiveLibraryPath (String newFilePath){
-        try (FileWriter writer = new FileWriter(ACTIVE_LIBRARY_FILE_PATH, StandardCharsets.UTF_8)) {
+        try (FileWriter writer = new FileWriter(activeLibraryFilePath, StandardCharsets.UTF_8)) {
             writer.write(newFilePath);
         } catch (IOException e) {
             System.err.println("Error saving to File: " );

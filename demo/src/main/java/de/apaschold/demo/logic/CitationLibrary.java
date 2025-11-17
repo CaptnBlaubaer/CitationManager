@@ -1,7 +1,6 @@
 package de.apaschold.demo.logic;
 
 import de.apaschold.demo.logic.databasehandling.SqlReader;
-import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import de.apaschold.demo.model.Citation;
 
 import java.util.List;
@@ -64,16 +63,7 @@ public class CitationLibrary {
      * @param activeLibraryName name of the active library
      */
     public void refreshLibraryFromDatabase(String activeLibraryName) {
-        this.citations = SqlReader.importCitationsFromLibraryTableSqlite(activeLibraryName);
+        this.citations = SqlReader.importCitationsFromLibraryTable(activeLibraryName);
     }
 
-    /**
-     * <h2>importLibraryFromFile</h2>
-     * <li>Imports citations from a specified library file.</li>
-     *
-     * @param chosenLibraryFilePath path to the chosen library file
-     */
-    public void importLibraryFromFile(String chosenLibraryFilePath) {
-        this.citations = TextFileHandler.getInstance().importLibraryFromCmlFile(chosenLibraryFilePath);
-    }
 }

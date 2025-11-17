@@ -208,14 +208,6 @@ public class GuiController {
     }
 
     /**
-     * <h2>saveActiveLibraryToCml</h2>
-     * Saves the current state of the active {@link CitationLibrary} to the CML file.
-     */
-    public void saveActiveLibraryToCml(){
-        TextFileHandler.getInstance().exportLibraryToCml(this.library.getCitations(), this.activeLibraryFilePath);
-    }
-
-    /**
      * <h2>openLibraryFile</h2>
      * <li>Opens new {@link CitationLibrary} file from selected Path.</li>
      *

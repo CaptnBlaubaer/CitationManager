@@ -108,15 +108,6 @@ public class MainViewController implements Initializable {
     }
 
     /**
-     * <h2>saveLibraryToCml</h2>
-     * <li>Saves the current state of the active library to a .cml file.</li>
-     */
-    @FXML
-    protected void saveLibraryToCml() {
-        GuiController.getInstance().saveActiveLibraryToCml();
-    }
-
-    /**
      * <h2>createNewLibrary</h2>
      * <li>Opens {@link de.apaschold.demo.gui.CreateNewLibraryViewController}</li>
      * <li>Creates a new {@link CitationLibrary} and clears the current {@link TableView}.</li>
