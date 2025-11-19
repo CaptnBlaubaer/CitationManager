@@ -275,4 +275,7 @@ public class GuiController {
     }
 
 
+    public void filterCitationsByKeywords(String[] authorAndTitleKeywordsForDatabaseSearch) {
+        this.library.filterCitationsByKeywords(this.activeLibraryTableName, authorAndTitleKeywordsForDatabaseSearch);
+    }
 }

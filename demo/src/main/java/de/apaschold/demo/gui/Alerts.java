@@ -29,6 +29,8 @@ public class Alerts {
     public static final String INFORMATION_FILE_NOT_FOUND_HEADER = "The attachment doesn't exist.";
     public static final String INFORMATION_SEARCHING_FOR_PDF_TITLE = "Searching for PDF";
     public static final String INFORMATION_SEARCHING_FOR_PDF_HEADER = "Searching for PDF... Please wait";
+    public static final String INFORMATION_NO_FILTER_KEYWORDS_CHOSEN_TITLE = "No filter";
+    public static final String INFORMATION_NO_FILTER_KEYWORDS_CHOSEN_HEADER = "No filter keywords were chosen";
 
     public static final String CONFIRMATION_DELETE_CITATION_TITLE = "Delete selected article";
     public static final String CONFIRMATION_DELETE_CITATION_CONTENT = "Do you want to delete selected article?\nOK to confirm";
@@ -101,6 +103,13 @@ public class Alerts {
         alert.setHeaderText(INFORMATION_SEARCHING_FOR_PDF_HEADER);
         alert.show();
         return alert;
+    }
+
+    public static void showNoFilterKeyWordsChosen() {
+        Alert alert= new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(INFORMATION_NO_FILTER_KEYWORDS_CHOSEN_TITLE);
+        alert.setHeaderText(INFORMATION_NO_FILTER_KEYWORDS_CHOSEN_HEADER);
+        alert.show();
     }
 
     //5. conformation

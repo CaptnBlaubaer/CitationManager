@@ -3,6 +3,7 @@ package de.apaschold.demo.logic;
 import de.apaschold.demo.logic.databasehandling.SqlReader;
 import de.apaschold.demo.model.Citation;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CitationLibrary {
@@ -66,4 +67,7 @@ public class CitationLibrary {
         this.citations = SqlReader.importCitationsFromLibraryTable(activeLibraryName);
     }
 
+    public void filterCitationsByKeywords(String tableName, String[] authorAndTitleKeywordsForDatabaseSearch) {
+        this.citations = SqlReader.filterCitationsByKeywords(tableName, authorAndTitleKeywordsForDatabaseSearch);
+    }
 }

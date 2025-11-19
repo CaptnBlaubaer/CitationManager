@@ -1,6 +1,7 @@
 package de.apaschold.demo.logic.databasehandling;
 
 import de.apaschold.demo.additionals.AppTexts;
+import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.logic.CitationFactory;
 import de.apaschold.demo.model.Citation;
 
@@ -14,6 +15,9 @@ public class SqlReader {
     //0. constants
     private static final String ALL_CITATIONS_FROM_TABLE_QUERY_TEMPLATE = "SELECT * FROM %s;";
     private static final String CHECK_TABLE_EXISTS_QUERY_TEMPLATE = "SHOW TABLES LIKE '%s';";
+
+    private static final String FILTER_CITATIONS_FROM_TABLE_QUERY_TEMPLATE = "SELECT * FROM %s WHERE ";
+    private static final String CONTAINS_KEYWORD_TEMPLATE = "%s LIKE '%s'";
 
     //1. attributes
 
@@ -84,5 +88,60 @@ public class SqlReader {
         }
 
         return tableExists;
+    }
+
+    public static List<Citation> filterCitationsByKeywords(String tableName, String[] authorAndTitleKeywordsForDatabaseSearch) {
+        List<Citation> filteredCitations = new ArrayList<>();
+
+        String filterCitationsQuery = createFilterCitationsQuery(tableName, authorAndTitleKeywordsForDatabaseSearch);
+
+        try(Connection connection = SqlManager.getInstance().getSqliteDatabaseConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(filterCitationsQuery);
+            ResultSet resultSet = preparedStatement.executeQuery()){
+
+            while(resultSet.next()){
+                StringBuilder importedCitationDataAsCsvString = new StringBuilder();
+                int columnCount = resultSet.getMetaData().getColumnCount();
+
+                for(int index = 1; index <= columnCount; index++){
+                    if (resultSet.getString(index).equals("NULL")){
+                        importedCitationDataAsCsvString.append(AppTexts.PLACEHOLDER);
+                    } else {
+                        importedCitationDataAsCsvString.append(resultSet.getString(index));
+                    }
+                    if(index < columnCount){
+                        importedCitationDataAsCsvString.append(";");
+                    }
+                }
+
+                filteredCitations.add(CitationFactory.createCitationFromCsvLine(importedCitationDataAsCsvString.toString()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return filteredCitations;
+    }
+
+    private static String createFilterCitationsQuery(String tableName, String[] authorAndTitleKeywordsForDatabaseSearch) {
+        String filterCitationsQuery = String.format(FILTER_CITATIONS_FROM_TABLE_QUERY_TEMPLATE, tableName);
+
+        String authorKeyword = authorAndTitleKeywordsForDatabaseSearch[0];
+        String titleKeyword = authorAndTitleKeywordsForDatabaseSearch[1];
+
+        if (!authorKeyword.isEmpty()) {
+            filterCitationsQuery += String.format(CONTAINS_KEYWORD_TEMPLATE, "author", "%" + authorKeyword + "%");
+            if (!titleKeyword.isEmpty()) {
+                filterCitationsQuery += " AND ";
+            }
+        }
+
+        if (!titleKeyword.isEmpty()) {
+            filterCitationsQuery += String.format(CONTAINS_KEYWORD_TEMPLATE, "title", "%" + titleKeyword +"%");
+        }
+
+        filterCitationsQuery += ";";
+
+        return filterCitationsQuery;
     }
 }

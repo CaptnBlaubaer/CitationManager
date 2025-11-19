@@ -3,17 +3,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.apaschold.demo.gui.MainViewController">
    <top>
       <HBox prefHeight="20.0" prefWidth="200.0" style="-fx-background-color: #E0E0E0" BorderPane.alignment="CENTER_LEFT">
-          <Button text="New library" prefHeight="20.0" prefWidth="100.0" onAction="#createNewLibrary"/>
-          <Button text="Open library" prefHeight="20.0" prefWidth="100.0" onAction="#openLibrary"/>
-          <Label fx:id="activeLibraryPath" textAlignment="CENTER"/>
+          <Button onAction="#createNewLibrary" prefHeight="20.0" prefWidth="100.0" text="New library" />
+          <Button onAction="#openLibrary" prefHeight="20.0" prefWidth="100.0" text="Open library" />
+
+          <Label fx:id="activeLibraryPath" textAlignment="CENTER" />
       </HBox>
    </top>
    <left>
-      <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="20.0" style="-fx-background-color: #FFA770" BorderPane.alignment="CENTER" >
-          <Button onAction="#addNewCitation" prefHeight="20.0" text="Add new article"/>
+      <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="20.0" style="-fx-background-color: #FFA770" BorderPane.alignment="CENTER">
+          <Button onAction="#addNewCitation" prefHeight="20.0" text="Add new article" />
           <Button onAction="#deleteSelectedCitation" prefHeight="20.0" text="Delete article" />
 
           <Button onAction="#importFromBibTex" prefHeight="20.0" text="Import BibTex" />
@@ -27,21 +30,32 @@
        </HBox>
    </bottom>
    <center>
-      <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER" style="-fx-background-color: #FFDFCC">
+      <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" style="-fx-background-color: #FFDFCC" BorderPane.alignment="CENTER">
         <items>
-            <TableView fx:id="citationTable" prefHeight="200.0" prefWidth="750.0" style="-fx-background-color: #FFDFCC">
-                <columns>
-                    <TableColumn fx:id="titleColumn" prefWidth="300.0" text="Title" />
-                    <TableColumn fx:id="authorsColumn" prefWidth="200.0" text="Author" />
-                    <TableColumn fx:id="journalColumn" prefWidth="200.0" text="Journal/Publisher" />
-                    <TableColumn fx:id="yearColumn" text="Year" />
-                </columns>
-            </TableView>
+            <VBox prefHeight="2000.0">
+                <GridPane prefWidth="750.0" vgap="10.0" hgap="10.0" style="-fx-padding: 10px;">
+                    <children>
+                        <Label text="Author:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="authorFilter" promptText="Filter by author names" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label text="Title:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="keywordFilter" promptText="Filter by keywords" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Button text="Filter" onAction="#filterCitations" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    </children>
+                </GridPane>
+                <TableView fx:id="citationTable" prefWidth="750.0" style="-fx-background-color: #FFDFCC">
+                    <columns>
+                        <TableColumn fx:id="titleColumn" prefWidth="300.0" text="Title" />
+                        <TableColumn fx:id="authorsColumn" prefWidth="200.0" text="Author" />
+                        <TableColumn fx:id="journalColumn" prefWidth="200.0" text="Journal/Publisher" />
+                        <TableColumn fx:id="yearColumn" prefWidth="75.0" text="Year" />
+                    </columns>
+                </TableView>
+            </VBox>
             <BorderPane fx:id="citationView" />
         </items>
       </SplitPane>
    </center>
    <right>
-      <VBox prefHeight="200.0" prefWidth="20.0" BorderPane.alignment="CENTER" style="-fx-background-color: #FFA770"/>
+      <VBox prefHeight="200.0" prefWidth="20.0" style="-fx-background-color: #FFA770" BorderPane.alignment="CENTER" />
    </right>
 </BorderPane>

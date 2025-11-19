@@ -35,6 +35,11 @@ public class MainViewController implements Initializable {
 
     //2. FXML elements
     @FXML
+    private TextField authorFilter;
+    @FXML
+    private TextField keywordFilter;
+
+    @FXML
     private TableView<Citation> citationTable;
     @FXML
     private TableColumn<Citation, String> titleColumn;
@@ -176,6 +181,20 @@ public class MainViewController implements Initializable {
             GuiController.getInstance().exportActiveLibraryToBibTex();
         } catch (NullPointerException e) {
             Alerts.showAlertMessageEmptyLibrary();
+        }
+    }
+
+    @FXML
+    protected void filterCitations(){
+        String authorKeyword = this.authorFilter.getText().trim();
+        String titleKeyword = this.keywordFilter.getText().trim();
+
+        String[] authorAndTitleKeywordsForDatabaseSearch = {authorKeyword, titleKeyword};
+        if (!authorKeyword.isEmpty() || !titleKeyword.isEmpty()) {
+            GuiController.getInstance().filterCitationsByKeywords(authorAndTitleKeywordsForDatabaseSearch);
+            populateTable();
+        } else {
+            Alerts.showNoFilterKeyWordsChosen();
         }
     }
 
