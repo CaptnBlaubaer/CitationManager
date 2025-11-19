@@ -25,9 +25,9 @@ public class SeleniumWebHandlerHeadless {
     private static final String FIREFOX_DRIVER_PATH = System.getProperty("user.dir") + "\\geckodriver.exe";
     private static final String START_PAGE = "https://www.google.com";
 
-    private static final String USER_AGENT_OPERA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36 OPR/120.0.0.0";
-    private static final String USER_AGENT_FIREFOX = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:142.0) Gecko/20100101 Firefox/142.0";
-    private static final String USER_AGENT_EDGE = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0";
+    private static final String USER_AGENT_OPERA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/120.0.0.0";
+    private static final String USER_AGENT_FIREFOX = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:142.0) Gecko/20100101 Firefox/145.0";
+    private static final String USER_AGENT_EDGE = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.3595.90";
 
     private static final String[] USER_AGENTS = {USER_AGENT_OPERA, USER_AGENT_FIREFOX, USER_AGENT_EDGE};
 
@@ -96,8 +96,8 @@ public class SeleniumWebHandlerHeadless {
     private void startWebDriver() {
         this.driver = createFirefoxDriver();
 
-        this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        this.driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
+        this.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        this.driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(10));
 
         this.driver.get(START_PAGE);
         this.driver.manage().window().maximize();
