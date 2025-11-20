@@ -246,7 +246,7 @@ public class GuiController {
      *
      * @param citationToRemoveAttachment the {@link Citation} from which to remove the attachment
      */
-    public void removeAttachementFromCitation(Citation citationToRemoveAttachment) {
+    public void removeAttachmentFromCitation(Citation citationToRemoveAttachment) {
         SqlWriter.updateCitationInLibrary(this.activeLibraryTableName, citationToRemoveAttachment);
     }
 

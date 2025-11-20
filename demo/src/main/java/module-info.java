@@ -16,9 +16,11 @@ module de.apaschold.demo {
     opens de.apaschold.demo to javafx.fxml;
     exports de.apaschold.demo;
     exports de.apaschold.demo.gui;
+    exports de.apaschold.demo.model;
     opens de.apaschold.demo.gui to javafx.fxml;
     exports de.apaschold.demo.additionals;
     opens de.apaschold.demo.additionals to javafx.fxml;
     exports de.apaschold.demo.gui.citationdetailsview;
     opens de.apaschold.demo.gui.citationdetailsview to javafx.fxml;
+
 }

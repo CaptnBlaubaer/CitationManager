@@ -28,22 +28,15 @@ public enum CitationType {
      * @return Corresponding CitationType enum value, or null if no match is found
      */
     public static CitationType getCitationTypeFromBibTexImport(String bibTexArticleType){
-        CitationType returnType = null;
 
-        if (bibTexArticleType.equals("@article")){
-            returnType = JOURNAL_ARTICLE;
-        } else if (bibTexArticleType.equals("@book")){
-            returnType = BOOK;
-        } else if (bibTexArticleType.equals("@inbook")){
-            returnType = BOOK_SECTION;
-        } else if (bibTexArticleType.equals("@phdthesis")){
-            returnType = THESIS;
-        } else if (bibTexArticleType.equals("@misc")){
-            returnType = PATENT;
-        } else if (bibTexArticleType.equals("@unpublished")){
-            returnType = UNPUBLISHED;
-        }
-
-        return returnType;
+        return switch (bibTexArticleType) {
+            case "@article" -> JOURNAL_ARTICLE;
+            case "@book" -> BOOK;
+            case "@inbook" -> BOOK_SECTION;
+            case "@phdthesis" -> THESIS;
+            case "@misc" -> PATENT;
+            case "@unpublished" -> UNPUBLISHED;
+            default -> null;
+        };
     }
 }

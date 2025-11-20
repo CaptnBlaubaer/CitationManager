@@ -12,6 +12,7 @@ import de.apaschold.demo.logic.filehandling.WebHandler;
 import de.apaschold.demo.model.Citation;
 import de.apaschold.demo.model.CitationType;
 import de.apaschold.demo.model.JournalArticle;
+import de.apaschold.demo.model.StringConverterForCitationType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -179,7 +180,7 @@ public class CitationDetailsViewController implements Initializable {
         if (chosenAttachment != null){
             this.citation.removeAttachment(chosenAttachment);
 
-            GuiController.getInstance().removeAttachementFromCitation(this.citation);
+            GuiController.getInstance().removeAttachmentFromCitation(this.citation);
 
             populatePDFViewerTab();
 
@@ -253,6 +254,7 @@ public class CitationDetailsViewController implements Initializable {
         //populate the article edit view
         this.editCitationType.getItems().setAll(CitationType.values());
         this.editCitationType.setValue(GuiController.getInstance().getDummyCitationToEdit().getCitationType());
+        this.editCitationType.setConverter(new StringConverterForCitationType());
         populateCitationEditTab();
 
 

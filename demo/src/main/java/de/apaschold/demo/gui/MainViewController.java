@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -240,7 +241,7 @@ public class MainViewController implements Initializable {
         if (GuiController.getInstance().getSelectedCitation() != null) {
 
             try {
-                Parent citationDetailsView = FXMLLoader.load(HelloApplication.class.getResource("main-citation-details-view.fxml"));
+                Parent citationDetailsView = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("main-citation-details-view.fxml")));
                 this.citationView.setCenter(citationDetailsView);
             } catch (IOException e) {
                 e.printStackTrace();

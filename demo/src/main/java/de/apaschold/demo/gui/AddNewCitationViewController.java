@@ -4,13 +4,17 @@ import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.logic.CitationFactory;
 import de.apaschold.demo.model.Citation;
 import de.apaschold.demo.model.CitationType;
+import de.apaschold.demo.model.StringConverterForCitationType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
+
+import java.util.Arrays;
 
 import static de.apaschold.demo.additionals.MyLittleHelpers.*;
 
@@ -41,6 +45,8 @@ public class AddNewCitationViewController implements Initializable {
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         this.newCitationType.getItems().addAll(CitationType.values());
+
+        this.newCitationType.setConverter(new StringConverterForCitationType());
     }
 
     //4. FXML methods

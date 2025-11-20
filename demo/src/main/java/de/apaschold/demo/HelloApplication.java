@@ -7,12 +7,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
-/*TODO create model website
-  TODO obtain String representation of article types in add-new-article-view
-  TODO import of empty fields cause problems
+/*
   TODO delete pdf file, when citation is deleted
-
-  TODO add Junit Methods SQL
+  TODO add grouping functionality
  */
 
 
