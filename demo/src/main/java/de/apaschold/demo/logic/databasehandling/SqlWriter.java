@@ -2,7 +2,7 @@ package de.apaschold.demo.logic.databasehandling;
 
 import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.additionals.MyLittleHelpers;
-import de.apaschold.demo.model.Citation;
+import de.apaschold.demo.model.AbstractCitation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -87,7 +87,7 @@ public class SqlWriter {
      * @param tableName      the name of the library table
      * @param citationToAdd  the citation to be added
      */
-    public static void addNewCitationToLibraryTable(String tableName, Citation citationToAdd){
+    public static void addNewCitationToLibraryTable(String tableName, AbstractCitation citationToAdd){
         String addNewCitationToLibraryStatement = String.format(ADD_NEW_CITATION_TO_LIBRARY_TABLE_TEMPLATE, tableName);
         String[] citationDataInArray = citationToAdd.toCsvString()
                 .replaceAll(AppTexts.PLACEHOLDER,"NULL")
@@ -124,7 +124,7 @@ public class SqlWriter {
      * @param tableName        the name of the library table
      * @param citationToDelete the citation to be deleted
      */
-    public static void deleteCitationFromLibrary(String tableName, Citation citationToDelete){
+    public static void deleteCitationFromLibrary(String tableName, AbstractCitation citationToDelete){
         String deleteCitationFromLibraryStatement = String.format("DELETE FROM %s WHERE id = ?;",tableName);
 
         try(Connection connection = SqlManager.getInstance().getSqliteDatabaseConnection();
@@ -145,7 +145,7 @@ public class SqlWriter {
      * @param tableName        the name of the library table
      * @param citationToUpdate the citation with updated information
      */
-    public static void updateCitationInLibrary(String tableName, Citation citationToUpdate){
+    public static void updateCitationInLibrary(String tableName, AbstractCitation citationToUpdate){
         String updateCitationInLibraryStatement = String.format(UPDATE_CITATION_IN_LIBRARY_TABLE_TEMPLATE, tableName);
 
         String[] citationDataInArray = citationToUpdate.toCsvString()

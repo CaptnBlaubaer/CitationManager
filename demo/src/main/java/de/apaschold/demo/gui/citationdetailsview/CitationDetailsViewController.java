@@ -9,7 +9,7 @@ import de.apaschold.demo.logic.CitationFactory;
 import de.apaschold.demo.logic.filehandling.FileHandler;
 import de.apaschold.demo.logic.filehandling.SeleniumWebHandlerHeadless;
 import de.apaschold.demo.logic.filehandling.WebHandler;
-import de.apaschold.demo.model.Citation;
+import de.apaschold.demo.model.AbstractCitation;
 import de.apaschold.demo.model.CitationType;
 import de.apaschold.demo.model.JournalArticle;
 import de.apaschold.demo.model.StringConverterForCitationType;
@@ -42,7 +42,7 @@ public class CitationDetailsViewController implements Initializable {
     //0. constants
 
     //1. attributes
-    private Citation citation;
+    private AbstractCitation citation;
     private PDFDisplayer displayer;
 
     //2. FXML elements
@@ -219,20 +219,20 @@ public class CitationDetailsViewController implements Initializable {
     }
 
     /** <h2>changeCitationType</h2>
-     * <li>Changes the {@link CitationType} of the dummy {@link Citation} to edit.</li>
+     * <li>Changes the {@link CitationType} of the dummy {@link AbstractCitation} to edit.</li>
      * <li>Recreates the dummy citation with the new citation type and updates the GUI accordingly.</li>
      * <li>Linked to the {@link ComboBox} in "Edit"-Tab</li>
      */
     @FXML
     protected void changeCitationType(){
-        Citation dummyCitation = GuiController.getInstance().getDummyCitationToEdit();
+        AbstractCitation dummyCitation = GuiController.getInstance().getDummyCitationToEdit();
 
         CitationType newType = this.editCitationType.getValue();
 
         if (dummyCitation.getCitationType() != newType){
             dummyCitation.setCitationType(newType);
 
-            Citation dummyCitationWithNewCitationType = CitationFactory
+            AbstractCitation dummyCitationWithNewCitationType = CitationFactory
                     .createCitationFromCsvLine(dummyCitation.toCsvString());
             GuiController.getInstance().setDummyCitationToEdit(dummyCitationWithNewCitationType);
 
@@ -242,7 +242,7 @@ public class CitationDetailsViewController implements Initializable {
 
     //5. other methods
     /** <h2>populateCitationDetailsView</h2>
-     * <li>Populates the citation details view with the details of the selected {@link Citation}.</li>
+     * <li>Populates the citation details view with the details of the selected {@link AbstractCitation}.</li>
      * <li>Calls methods for each Tab</li>
      * <li>Activates/Hide buttons</li>
      */
@@ -296,20 +296,20 @@ public class CitationDetailsViewController implements Initializable {
     }
 
     /** <h2>createDummyCitationToEdit</h2>
-     * <li>Creates a dummy {@link Citation} to edit by converting the selected citation to a CSV string
+     * <li>Creates a dummy {@link AbstractCitation} to edit by converting the selected citation to a CSV string
      * and then creating a new citation from that string.</li>
      * <li>Sets the dummy citation as the citation to edit in the {@link GuiController}.</li>
      */
     private void createDummyCitationToEdit() {
         String csvStringOfSelectedCitation = this.citation.toCsvString();
 
-        Citation dummyCitationToEdit = CitationFactory.createCitationFromCsvLine(csvStringOfSelectedCitation);
+        AbstractCitation dummyCitationToEdit = CitationFactory.createCitationFromCsvLine(csvStringOfSelectedCitation);
 
         GuiController.getInstance().setDummyCitationToEdit(dummyCitationToEdit);
     }
 
     /** <h2>populatePDFViewerTab</h2>
-     * <li>Populates the {@link ComboBox} PDF viewer tab with the attached PDF files of the {@link Citation}.</li>
+     * <li>Populates the {@link ComboBox} PDF viewer tab with the attached PDF files of the {@link AbstractCitation}.</li>
      */
     private void populatePDFViewerTab(){
         this.attachedFiles.getItems().setAll(this.citation.getPdfFilePaths());

@@ -22,7 +22,8 @@ import java.util.Random;
 
 public class SeleniumWebHandlerHeadless {
     //0. constants for Selenium pdf download
-    private static final String FIREFOX_DRIVER_PATH = System.getProperty("user.dir") + "\\geckodriver.exe";
+    private static final String FIREFOX_DRIVER_PATH = System.getProperty("user.dir") + "\\src\\main\\resources\\driver\\geckodriver.exe";
+    private static final String EDGE_DRIVER_PATH = System.getProperty("user.dir") + "\\src\\main\\resources\\driver\\msedgedriver.exe";
     private static final String START_PAGE = "https://www.google.com";
 
     private static final String USER_AGENT_OPERA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/120.0.0.0";

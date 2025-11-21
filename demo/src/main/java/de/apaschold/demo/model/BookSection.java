@@ -4,9 +4,9 @@ import de.apaschold.demo.additionals.AppTexts;
 
 /**
  * <h2>BookSection</h2>
- * <li>Represents a book section (chapter) citation, extending the {@link Citation} class.</li>
+ * <li>Represents a book section (chapter) citation, extending the {@link AbstractCitation} class.</li>
  */
-public class BookSection extends Citation {
+public class BookSection extends AbstractCitation {
     //0. constants
 
     //1. attributes

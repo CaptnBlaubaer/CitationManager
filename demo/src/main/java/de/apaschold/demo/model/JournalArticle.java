@@ -4,10 +4,10 @@ import de.apaschold.demo.additionals.AppTexts;
 
 /**
  * <h2>JournalArticle</h2>
- * <li>Represents a journal article citation, extending the {@link Citation} class.</li>
+ * <li>Represents a journal article citation, extending the {@link AbstractCitation} class.</li>
  */
 
-public class JournalArticle extends Citation {
+public class JournalArticle extends AbstractCitation {
     //0. constants
 
     //1. attributes

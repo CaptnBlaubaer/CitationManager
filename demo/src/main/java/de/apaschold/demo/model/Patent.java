@@ -4,10 +4,10 @@ import de.apaschold.demo.additionals.AppTexts;
 
 /**
  * <h2>Patent</h2>
- * <li>Represents a patent citation, extending the {@link Citation} class.</li>
+ * <li>Represents a patent citation, extending the {@link AbstractCitation} class.</li>
  */
 
-public class Patent extends Citation {
+public class Patent extends AbstractCitation {
     //0. constants
 
     //1. attributes

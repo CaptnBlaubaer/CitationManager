@@ -6,7 +6,7 @@ import de.apaschold.demo.model.*;
 
 /**
  * <h2>CitationFactory</h2>
- * <p>Factory class for creating {@link Citation} objects from different input formats.</p>
+ * <p>Factory class for creating {@link AbstractCitation} objects from different input formats.</p>
  */
 
 public class CitationFactory {
@@ -35,18 +35,18 @@ public class CitationFactory {
     //methods for csv
     /**
      * <h2>createCitationFromCsvLine</h2>
-     * <li>Creates an {@link Citation} object from a CSV line.</li>
+     * <li>Creates an {@link AbstractCitation} object from a CSV line.</li>
      * <li>Chooses dynamically method for the respective {@link CitationType}</li>
      *
      * @param csvLine the CSV line containing citation details
-     * @return the created {@link Citation} object
+     * @return the created {@link AbstractCitation} object
      */
-    public static Citation createCitationFromCsvLine(String csvLine){
+    public static AbstractCitation createCitationFromCsvLine(String csvLine){
         String[] separatedCsvLine = csvLine.split(";");
 
         CitationType type = CitationType.valueOf(separatedCsvLine[1]);
 
-        Citation newCitation = switch (type) {
+        AbstractCitation newCitation = switch (type) {
             case JOURNAL_ARTICLE -> createJournalArticleFromCsvLine(separatedCsvLine);
             case BOOK -> createBookFromCsvLine(separatedCsvLine);
             case BOOK_SECTION ->  createBookSectionFromCsvLine(separatedCsvLine);
@@ -131,7 +131,7 @@ public class CitationFactory {
      * @param separatedCsvLine the CSV line containing citation details, already split into an array
      * @return the created {@link PhdThesis} object
      */
-    private static Citation createPhdThesisFromCsvLine(String[] separatedCsvLine) {
+    private static AbstractCitation createPhdThesisFromCsvLine(String[] separatedCsvLine) {
         int id = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[0]);
         String title = separatedCsvLine[2];
         String authors = separatedCsvLine[3].replace(" and ", "; ");
@@ -148,7 +148,7 @@ public class CitationFactory {
      * @param separatedCsvLine the CSV line containing citation details, already split into an array
      * @return the created {@link Patent} object
      */
-    private static Citation createPatentFromCsvLine(String[] separatedCsvLine) {
+    private static AbstractCitation createPatentFromCsvLine(String[] separatedCsvLine) {
         int id = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[0]);
         String title = separatedCsvLine[2];
         String authors = separatedCsvLine[3].replace(" and ", "; ");
@@ -165,7 +165,7 @@ public class CitationFactory {
      * @param separatedCsvLine the CSV line containing citation details, already split into an array
      * @return the created {@link Unpublished} object
      */
-    private static Citation createUnpublishedFromCsvLine(String[] separatedCsvLine) {
+    private static AbstractCitation createUnpublishedFromCsvLine(String[] separatedCsvLine) {
         int id = MyLittleHelpers.convertStringInputToInteger(separatedCsvLine[0]);
         String title = separatedCsvLine[2];
         String authors = separatedCsvLine[3].replace(" and ", "; ");
@@ -177,13 +177,13 @@ public class CitationFactory {
     //methods for BibTex
     /**
      * <h2>createCitationFromBibTex</h2>
-     * <li>Creates an {@link Citation} object from a BibTex text.</li>
+     * <li>Creates an {@link AbstractCitation} object from a BibTex text.</li>
      * <li>Chooses dynamically method for the respective {@link CitationType}</li>
      *
      * @param bibTexText the BibTex text containing citaion details
-     * @return the created {@link Citation} object
+     * @return the created {@link AbstractCitation} object
      */
-    public static Citation createCitationFromBibTex(String bibTexText){
+    public static AbstractCitation createCitationFromBibTex(String bibTexText){
         String[] citationTypeAndDetails = bibTexText.split("\\{", 2); //
 
         CitationType importedCitationType = CitationType.getCitationTypeFromBibTexImport(citationTypeAndDetails[0]);
@@ -208,7 +208,7 @@ public class CitationFactory {
      * @param citationDetails the BibTex text containing citation details, already split into an array
      * @return the created {@link JournalArticle} object
      */
-    private static Citation createJournalArticleFromBibTex(String[] citationDetails) {
+    private static AbstractCitation createJournalArticleFromBibTex(String[] citationDetails) {
         JournalArticle importedJournalArticle = new JournalArticle();
 
         for (String rawDetail : citationDetails){
@@ -253,7 +253,7 @@ public class CitationFactory {
      * @param citationDetails the BibTex text containing citation details, already split into an array
      * @return the created {@link Book} object
      */
-    private static Citation createBookFromBibTex(String[] citationDetails) {
+    private static AbstractCitation createBookFromBibTex(String[] citationDetails) {
         Book importedBook = new Book();
 
         for (String rawDetail : citationDetails){
@@ -292,7 +292,7 @@ public class CitationFactory {
      * @param citationDetails the BibTex text containing citation details, already split into an array
      * @return the created {@link BookSection} object
      */
-    private static Citation createBookSectionFromBibTex(String[] citationDetails) {
+    private static AbstractCitation createBookSectionFromBibTex(String[] citationDetails) {
         BookSection importedBookSection = new BookSection();
 
         for (String rawDetail : citationDetails){
@@ -340,7 +340,7 @@ public class CitationFactory {
      * @param citationDetails the BibTex text containing citation details, already split into an array
      * @return the created {@link PhdThesis} object
      */
-    private static Citation createPhdThesisFromBibTex(String[] citationDetails) {
+    private static AbstractCitation createPhdThesisFromBibTex(String[] citationDetails) {
         PhdThesis importedPhdThesis = new PhdThesis();
 
         for (String rawDetail : citationDetails){
@@ -373,7 +373,7 @@ public class CitationFactory {
      * @param citationDetails the BibTex text containing citation details, already split into an array
      * @return the created {@link Patent} object
      */
-    private static Citation createPatentFromBibTex(String[] citationDetails) {
+    private static AbstractCitation createPatentFromBibTex(String[] citationDetails) {
         Patent importedPatent = new Patent();
 
         for (String rawDetail : citationDetails){
@@ -406,7 +406,7 @@ public class CitationFactory {
      * @param citationDetails the BibTex text containing citation details, already split into an array
      * @return the created {@link Unpublished} object
      */
-    private static Citation createUnpublishedFromBibTex(String[] citationDetails) {
+    private static AbstractCitation createUnpublishedFromBibTex(String[] citationDetails) {
         Unpublished importedUnpublished = new Unpublished();
 
         for (String rawDetail : citationDetails){
@@ -431,13 +431,13 @@ public class CitationFactory {
 
     /**
      * <h2>createCitationFromManualDataInput</h2>
-     * <li>Creates an {@link Citation} object from a manually entered data string.</li>
+     * <li>Creates an {@link AbstractCitation} object from a manually entered data string.</li>
      * <li>Chooses dynamically method for the respective {@link CitationType}</li>
      *
      * @param citationDetailsAsString the string containing citation details separated by semicolons
-     * @return the created {@link Citation} object
+     * @return the created {@link AbstractCitation} object
      */
-    public static Citation createCitationFromManualDataInput(String citationDetailsAsString) {
+    public static AbstractCitation createCitationFromManualDataInput(String citationDetailsAsString) {
         String[] citationDetailsAsArray = citationDetailsAsString.split(";");
 
         CitationType citationType = CitationType.valueOf(citationDetailsAsArray[0]);
@@ -460,7 +460,7 @@ public class CitationFactory {
      * @param citationDetails the array containing citation details
      * @return the created {@link JournalArticle} object
      */
-    private static Citation createJournalArticleFromManualDataInput(String[] citationDetails) {
+    private static AbstractCitation createJournalArticleFromManualDataInput(String[] citationDetails) {
         return new JournalArticle(
                 -1,
                 citationDetails[1], //title
@@ -483,7 +483,7 @@ public class CitationFactory {
      * @param citationDetails the array containing citation details
      * @return the created {@link Book} object
      */
-    private static Citation createBookFromManualDataInput(String[] citationDetails) {
+    private static AbstractCitation createBookFromManualDataInput(String[] citationDetails) {
         return new Book(
                 -1,
                 citationDetails[1], //title
@@ -503,7 +503,7 @@ public class CitationFactory {
      * @param citationDetails the array containing citation details
      * @return the created {@link BookSection} object
      */
-    private static Citation createBookSectionFromManualDataInput(String[] citationDetails) {
+    private static AbstractCitation createBookSectionFromManualDataInput(String[] citationDetails) {
         return new BookSection(
                 -1,
                 citationDetails[1], //title
@@ -526,7 +526,7 @@ public class CitationFactory {
      * @param citationDetails the array containing citation details
      * @return the created {@link PhdThesis} object
      */
-    private static Citation createPhdThesisFromManualDataInput(String[] citationDetails) {
+    private static AbstractCitation createPhdThesisFromManualDataInput(String[] citationDetails) {
         return new PhdThesis(
                 -1,
                 citationDetails[1], //title
@@ -544,7 +544,7 @@ public class CitationFactory {
      * @param citationDetails the array containing citation details
      * @return the created {@link Patent} object
      */
-    private static Citation createPatentFromManualDataInput(String[] citationDetails) {
+    private static AbstractCitation createPatentFromManualDataInput(String[] citationDetails) {
         return new Patent(
                 -1,
                 citationDetails[1], //title
@@ -562,7 +562,7 @@ public class CitationFactory {
      * @param citationDetails the array containing citation details
      * @return the created {@link Unpublished} object
      */
-    private static Citation createUnpublishedFromManualDataInput(String[] citationDetails) {
+    private static AbstractCitation createUnpublishedFromManualDataInput(String[] citationDetails) {
         return new Unpublished(
                 -1,
                 citationDetails[1], //title

@@ -10,7 +10,7 @@ public enum CitationType {
     BOOK ("Book"),
     BOOK_SECTION("Book Chapter"),
     WEBSITE ("Website"),
-    THESIS ("Thesis"),
+    THESIS ("Phd Thesis"),
     PATENT ("Patent"),
     UNPUBLISHED ("Unpublished");
 

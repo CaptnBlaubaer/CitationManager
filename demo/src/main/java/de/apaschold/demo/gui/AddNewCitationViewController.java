@@ -2,7 +2,8 @@ package de.apaschold.demo.gui;
 
 import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.logic.CitationFactory;
-import de.apaschold.demo.model.Citation;
+import de.apaschold.demo.logic.CitationManager;
+import de.apaschold.demo.model.AbstractCitation;
 import de.apaschold.demo.model.CitationType;
 import de.apaschold.demo.model.StringConverterForCitationType;
 import javafx.fxml.FXML;
@@ -11,17 +12,14 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 
-
-import java.util.Arrays;
 
 import static de.apaschold.demo.additionals.MyLittleHelpers.*;
 
 /**
  * <h2>AddNewCitationViewController</h2>
  * <li>Controller for the add new citation view.</li>
- * <li>Handles adding a new {@link Citation} to the {@link de.apaschold.demo.logic.CitationLibrary}</li>
+ * <li>Handles adding a new {@link AbstractCitation} to the {@link CitationManager}</li>
  */
 
 public class AddNewCitationViewController implements Initializable {
@@ -139,8 +137,8 @@ public class AddNewCitationViewController implements Initializable {
     }
 
     /** <h2>saveNewArticle</h2>
-     * <li>Collects data from the citation form and creates a new {@link Citation}e.</li>
-     * <li>Adds the new {@link Citation} to the {@link de.apaschold.demo.logic.CitationLibrary} and closes the add new citation view.</li>
+     * <li>Collects data from the citation form and creates a new {@link AbstractCitation}e.</li>
+     * <li>Adds the new {@link AbstractCitation} to the {@link CitationManager} and closes the add new citation view.</li>
      */
     @FXML
     protected void saveNewCitation() {
@@ -171,7 +169,7 @@ public class AddNewCitationViewController implements Initializable {
             }
         }
 
-        Citation newArticle = CitationFactory.createCitationFromManualDataInput(citationDetailsFromManualInputAsString.toString());
+        AbstractCitation newArticle = CitationFactory.createCitationFromManualDataInput(citationDetailsFromManualInputAsString.toString());
 
         GuiController.getInstance().addCitationToLibrary(newArticle);
 

@@ -1,7 +1,8 @@
 package de.apaschold.demo.gui;
 
 import de.apaschold.demo.logic.CitationFactory;
-import de.apaschold.demo.model.Citation;
+import de.apaschold.demo.logic.CitationManager;
+import de.apaschold.demo.model.AbstractCitation;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
@@ -9,7 +10,7 @@ import javafx.stage.Stage;
 /**
  * <h2>ImportFromBibTexViewController</h2>
  * <li>Controller for the import from BibTex view.</li>
- * <li>Handles importing {@link Citation} from BibTex formatted text input.</li>
+ * <li>Handles importing {@link AbstractCitation} from BibTex formatted text input.</li>
  */
 
 public class ImportFromBibTexViewController {
@@ -25,7 +26,7 @@ public class ImportFromBibTexViewController {
 
     //4.FXML methods
     /** <h2>importButtonClick</h2>
-     * <li>Imports {@link Citation} from the BibTex text input and closes the window.</li>
+     * <li>Imports {@link AbstractCitation} from the BibTex text input and closes the window.</li>
      */
     @FXML
     protected void importButtonClick() {
@@ -41,8 +42,8 @@ public class ImportFromBibTexViewController {
 
     //5. other methods
     /** <h2>importBibTex</h2>
-     * <li>Parses the BibTex formatted text and adds the corresponding {@link Citation} to the {@link de.apaschold.demo.logic.CitationLibrary}.</li>
-     * <li>Creates {@link Citation} through {@link CitationFactory}</li>
+     * <li>Parses the BibTex formatted text and adds the corresponding {@link AbstractCitation} to the {@link CitationManager}.</li>
+     * <li>Creates {@link AbstractCitation} through {@link CitationFactory}</li>
      * @param bibTexText The BibTex formatted text input.
      */
     private void importBibTex(String bibTexText) {
@@ -50,7 +51,7 @@ public class ImportFromBibTexViewController {
 
         for (String singleImport : separatedImports) {
             if (!singleImport.isEmpty()) {
-                Citation importedCitation = CitationFactory.createCitationFromBibTex(singleImport);
+                AbstractCitation importedCitation = CitationFactory.createCitationFromBibTex(singleImport);
                 GuiController.getInstance().addCitationToLibrary(importedCitation);
             }
         }

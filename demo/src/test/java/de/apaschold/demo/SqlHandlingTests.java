@@ -7,7 +7,7 @@ import de.apaschold.demo.logic.databasehandling.SqlManager;
 import de.apaschold.demo.logic.databasehandling.SqlReader;
 import de.apaschold.demo.logic.databasehandling.SqlWriter;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
-import de.apaschold.demo.model.Citation;
+import de.apaschold.demo.model.AbstractCitation;
 import de.apaschold.demo.model.PhdThesis;
 import org.junit.jupiter.api.*;
 
@@ -58,7 +58,7 @@ public class SqlHandlingTests {
     @Test
     @Order(2)
     void testImportCitationsFromDatabase(){
-        List<Citation> importedCitations = SqlReader.importCitationsFromLibraryTable("all_citations");
+        List<AbstractCitation> importedCitations = SqlReader.importCitationsFromLibraryTable("all_citations");
 
         assert importedCitations.size() == EXPECTED_CITATION_COUNT : "Expected 6 citations, but got " + importedCitations.size();
         assert importedCitations.getFirst().equals(CITATION_EXAMPLE);
@@ -79,7 +79,7 @@ public class SqlHandlingTests {
     @Order(4)
     void testAddNewCitationToLibraryTable(){
         //checks wether citation only exists once before adding
-        List<Citation> importedCitations = SqlReader.importCitationsFromLibraryTable(AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS);
+        List<AbstractCitation> importedCitations = SqlReader.importCitationsFromLibraryTable(AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS);
 
         assertEquals(0, Collections.frequency(importedCitations, CITATION_EXAMPLE));
 
@@ -96,8 +96,8 @@ public class SqlHandlingTests {
     @Order(5)
     void testUpdateCitationInLibrary(){
         //updates the citation
-        List<Citation> importedCitations = SqlReader.importCitationsFromLibraryTable(AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS);
-        Citation citationToUpdate = importedCitations.getFirst();
+        List<AbstractCitation> importedCitations = SqlReader.importCitationsFromLibraryTable(AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS);
+        AbstractCitation citationToUpdate = importedCitations.getFirst();
         PhdThesis updatedCitation = new PhdThesis(
                 citationToUpdate.getId(),
                 "Photocontrol and Structural Analysis of Amyloid Fibril Formation"+
@@ -111,7 +111,7 @@ public class SqlHandlingTests {
 
         //checks wether citation was updated
         importedCitations = SqlReader.importCitationsFromLibraryTable(AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS);
-        Citation fetchedUpdatedCitation = importedCitations.getFirst();
+        AbstractCitation fetchedUpdatedCitation = importedCitations.getFirst();
 
         assertEquals(fetchedUpdatedCitation, updatedCitation);
     }
@@ -120,8 +120,8 @@ public class SqlHandlingTests {
     @Order(6)
     void testDeleteCitationFromLibrary(){
         //deletes the citation
-        List<Citation> importedCitations = SqlReader.importCitationsFromLibraryTable(AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS);
-        Citation citationToDelete = importedCitations.getFirst();
+        List<AbstractCitation> importedCitations = SqlReader.importCitationsFromLibraryTable(AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS);
+        AbstractCitation citationToDelete = importedCitations.getFirst();
         SqlWriter.deleteCitationFromLibrary(AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS, citationToDelete);
 
         //checks wether citation no longer exists

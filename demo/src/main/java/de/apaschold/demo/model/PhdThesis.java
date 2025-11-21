@@ -4,10 +4,10 @@ import de.apaschold.demo.additionals.AppTexts;
 
 /**
  * <h2>PhdThesis</h2>
- * <li>Represents a PhD thesis citation, extending the {@link Citation} class.</li>
+ * <li>Represents a PhD thesis citation, extending the {@link AbstractCitation} class.</li>
  */
 
-public class PhdThesis extends Citation {
+public class PhdThesis extends AbstractCitation {
     //0. constants
 
     //1. attributes

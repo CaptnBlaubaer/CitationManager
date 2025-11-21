@@ -1,9 +1,8 @@
 package de.apaschold.demo.logic.databasehandling;
 
 import de.apaschold.demo.additionals.AppTexts;
-import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.logic.CitationFactory;
-import de.apaschold.demo.model.Citation;
+import de.apaschold.demo.model.AbstractCitation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,10 +31,10 @@ public class SqlReader {
      * @param tableName name of the library table to import citations from
      * @return list of imported Citation objects
      */
-    public static List<Citation> importCitationsFromLibraryTable(String tableName){
+    public static List<AbstractCitation> importCitationsFromLibraryTable(String tableName){
         String importCitationsFromTableQuery = String.format(ALL_CITATIONS_FROM_TABLE_QUERY_TEMPLATE, tableName);
 
-        List<Citation> importedCitations = new ArrayList<>();
+        List<AbstractCitation> importedCitations = new ArrayList<>();
 
         try(Connection connection = SqlManager.getInstance().getSqliteDatabaseConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(importCitationsFromTableQuery);
@@ -90,8 +89,8 @@ public class SqlReader {
         return tableExists;
     }
 
-    public static List<Citation> filterCitationsByKeywords(String tableName, String[] authorAndTitleKeywordsForDatabaseSearch) {
-        List<Citation> filteredCitations = new ArrayList<>();
+    public static List<AbstractCitation> filterCitationsByKeywords(String tableName, String[] authorAndTitleKeywordsForDatabaseSearch) {
+        List<AbstractCitation> filteredCitations = new ArrayList<>();
 
         String filterCitationsQuery = createFilterCitationsQuery(tableName, authorAndTitleKeywordsForDatabaseSearch);
 

@@ -3,8 +3,8 @@ package de.apaschold.demo.gui;
 import de.apaschold.demo.HelloApplication;
 import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
-import de.apaschold.demo.logic.CitationLibrary;
-import de.apaschold.demo.model.Citation;
+import de.apaschold.demo.logic.CitationManager;
+import de.apaschold.demo.model.AbstractCitation;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +26,7 @@ import java.util.Optional;
  * <li>Represents the Main User Interface</li>
  * <li>Offers basic functionalities, e.g. CRUD methods for library, adding and deleting new reference entries</li>
  * <li>Manages the display and interaction with the {@link TableView} of citations
- * and the detailed view of the selected {@link Citation}.</li>
+ * and the detailed view of the selected {@link AbstractCitation}.</li>
  */
 
 public class MainViewController implements Initializable {
@@ -41,15 +41,15 @@ public class MainViewController implements Initializable {
     private TextField keywordFilter;
 
     @FXML
-    private TableView<Citation> citationTable;
+    private TableView<AbstractCitation> citationTable;
     @FXML
-    private TableColumn<Citation, String> titleColumn;
+    private TableColumn<AbstractCitation, String> titleColumn;
     @FXML
-    private TableColumn<Citation, String> authorsColumn;
+    private TableColumn<AbstractCitation, String> authorsColumn;
     @FXML
-    private TableColumn<Citation, String> journalColumn;
+    private TableColumn<AbstractCitation, String> journalColumn;
     @FXML
-    private TableColumn<Citation, Integer> yearColumn;
+    private TableColumn<AbstractCitation, Integer> yearColumn;
 
     @FXML
     private BorderPane citationView;
@@ -61,7 +61,7 @@ public class MainViewController implements Initializable {
     /**
      * <h2>initialize</h2>
      * <li>Sets up {@link TableView}</li>
-     * <li>Sets up {@link Citation} view</li>
+     * <li>Sets up {@link AbstractCitation} view</li>
      * <li>Displays the active library file path in the upper </li>
      */
     @Override
@@ -82,7 +82,7 @@ public class MainViewController implements Initializable {
     /**
      * <h2>openLibrary</h2>
      * <li>Opens a file chooser dialog to select a new library file.</li>
-     * <li>Updates the active library path and populates the table with {@link Citation} from the selected {@link CitationLibrary}.</li>
+     * <li>Updates the active library path and populates the table with {@link AbstractCitation} from the selected {@link CitationManager}.</li>
      * <li>Calls {@link Alert} if no valid library was chosen</li>
      */
     @FXML
@@ -116,7 +116,7 @@ public class MainViewController implements Initializable {
     /**
      * <h2>createNewLibrary</h2>
      * <li>Opens {@link de.apaschold.demo.gui.CreateNewLibraryViewController}</li>
-     * <li>Creates a new {@link CitationLibrary} and clears the current {@link TableView}.</li>
+     * <li>Creates a new {@link CitationManager} and clears the current {@link TableView}.</li>
      * <li>Updates the active library path display.</li>
      */
     @FXML
@@ -131,7 +131,7 @@ public class MainViewController implements Initializable {
     /**
      * <h2>addNewCitation</h2>
      * <li>Opens {@link AddNewCitationViewController}</li>
-     * <li>Adds a new {@link Citation} to the active {@link CitationLibrary} and refreshes the {@link TableView}.</li>
+     * <li>Adds a new {@link AbstractCitation} to the active {@link CitationManager} and refreshes the {@link TableView}.</li>
      */
     @FXML
     protected void addNewCitation() {
@@ -143,7 +143,7 @@ public class MainViewController implements Initializable {
 
     /**
      * <h2>deleteSelectedCitation</h2>
-     * <li>Deletes the currently selected {@link Citation} from the active  {@link CitationLibrary} after user confirmation.</li>
+     * <li>Deletes the currently selected {@link AbstractCitation} from the active  {@link CitationManager} after user confirmation.</li>
      * <li>Refreshes the {@link TableView} to reflect the deletion.</li>
      */
     @FXML
@@ -160,7 +160,7 @@ public class MainViewController implements Initializable {
     /**
      * <h2>importFromBibTex</h2>
      * <li>Opens {@link de.apaschold.demo.gui.ImportFromBibTexViewController}</li>
-     * <li>Imports {@link Citation} from a BibTeX file and add them to the active {@link CitationLibrary}</li>
+     * <li>Imports {@link AbstractCitation} from a BibTeX file and add them to the active {@link CitationManager}</li>
      * <li>Refreshes the {@link TableView}.</li>
      */
     @FXML
@@ -173,7 +173,7 @@ public class MainViewController implements Initializable {
 
     /**
      * <h2>exportToBibTex</h2>
-     * <li>Exports the current active {@link CitationLibrary} to a BibTeX file.</li>
+     * <li>Exports the current active {@link CitationManager} to a BibTeX file.</li>
      * <li>Shows an alert if the library is empty.</li>
      */
     @FXML
@@ -202,12 +202,12 @@ public class MainViewController implements Initializable {
     //5. other methods
     /**
      * <h2>populateTable</h2>
-     * <li>Populates the {@link TableView} with {@link Citation} from the active {@link CitationLibrary}.</li>
+     * <li>Populates the {@link TableView} with {@link AbstractCitation} from the active {@link CitationManager}.</li>
      * <li>Sets up cell value factories for table columns.</li>
      * <li>Adds a selection listener to update the {@link de.apaschold.demo.gui.citationdetailsview.CitationDetailsViewController} when a citation is selected.</li>
      */
     protected void populateTable(){
-        List<Citation> citations = GuiController.getInstance().getCitationList();
+        List<AbstractCitation> citations = GuiController.getInstance().getCitationList();
 
         this.citationTable.getItems().clear();
 
@@ -225,7 +225,7 @@ public class MainViewController implements Initializable {
         this.citationTable.getSelectionModel().selectedItemProperty().addListener(getSelectionListener());
     }
 
-    private ChangeListener<Citation> getSelectionListener(){
+    private ChangeListener<AbstractCitation> getSelectionListener(){
         return (observable, oldCitation, newCitation) -> {
             GuiController.getInstance().setSelectedCitation(newCitation);
 
@@ -235,7 +235,7 @@ public class MainViewController implements Initializable {
 
     /**
      * <h2>populateCitationView</h2>
-     * <li>Loads and displays the detailed view of the selected {@link Citation} based on its type.</li>
+     * <li>Loads and displays the detailed view of the selected {@link AbstractCitation} based on its type.</li>
      */
     public void populateCitationView(){
         if (GuiController.getInstance().getSelectedCitation() != null) {

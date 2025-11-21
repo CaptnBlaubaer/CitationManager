@@ -4,10 +4,10 @@ import de.apaschold.demo.additionals.AppTexts;
 
 /**
  * <h2>Unpublished</h2>
- * <li>Represents an unpublished citation, extending the {@link Citation} class.</li>
+ * <li>Represents an unpublished citation, extending the {@link AbstractCitation} class.</li>
  */
 
-public class Unpublished extends Citation {
+public class Unpublished extends AbstractCitation {
     //0. constants
 
     //1. attributes

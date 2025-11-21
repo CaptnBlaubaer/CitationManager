@@ -2,7 +2,7 @@ package de.apaschold.demo.gui.citationdetailsview;
 
 import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.GuiController;
-import de.apaschold.demo.model.Citation;
+import de.apaschold.demo.model.AbstractCitation;
 import de.apaschold.demo.model.Unpublished;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -49,7 +49,7 @@ public class UnpublishedSubViewController implements Initializable {
 
     //4. FXML methods
     /** <h2>saveChanges</h2>
-     * <li>Saves changes made to the book section details back to the dummy {@link Citation}</li>
+     * <li>Saves changes made to the book section details back to the dummy {@link AbstractCitation}</li>
      * <li>Sets the updated citation as the selected citation in the {@link GuiController}.</li>
      * <li>Updates the main menu view.</li>
      * @throws IOException if an I/O error occurs while loading the main menu.
