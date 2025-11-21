@@ -220,10 +220,7 @@ public class GuiController {
         this.library.refreshLibraryFromDatabase(this.activeLibraryTableName);
     }
 
-    /**
-     * <h2>deleteSelectedCitation</h2>
-     * Deletes the currently selected {@link AbstractCitation} from the active {@link CitationManager}.
-     */
+
     public void deleteSelectedCitation() {
         SqlWriter.deleteCitationFromLibrary(this.activeLibraryTableName, this.selectedCitation);
 

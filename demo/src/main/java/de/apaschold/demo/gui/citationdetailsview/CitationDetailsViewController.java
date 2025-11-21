@@ -6,6 +6,7 @@ import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.gui.Alerts;
 import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.logic.CitationFactory;
+import de.apaschold.demo.logic.MainViewModel;
 import de.apaschold.demo.logic.filehandling.FileHandler;
 import de.apaschold.demo.logic.filehandling.SeleniumWebHandlerHeadless;
 import de.apaschold.demo.logic.filehandling.WebHandler;
@@ -74,7 +75,7 @@ public class CitationDetailsViewController implements Initializable {
      */
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
-        this.citation = GuiController.getInstance().getSelectedCitation();
+        this.citation = MainViewModel.getInstance().getSelectedCitation();
 
         createDummyCitationToEdit();
 

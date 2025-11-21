@@ -2,6 +2,8 @@ package de.apaschold.demo.gui;
 
 import de.apaschold.demo.HelloApplication;
 import de.apaschold.demo.additionals.AppTexts;
+import de.apaschold.demo.logic.CitationService;
+import de.apaschold.demo.logic.MainViewModel;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import de.apaschold.demo.logic.CitationManager;
 import de.apaschold.demo.model.AbstractCitation;
@@ -33,6 +35,7 @@ public class MainViewController implements Initializable {
     //0. constants
 
     //1. attributes
+    private final MainViewModel viewModel = MainViewModel.getInstance();
 
     //2. FXML elements
     @FXML
@@ -69,11 +72,9 @@ public class MainViewController implements Initializable {
 
         populateTable();
 
-        if(GuiController.getInstance().getSelectedCitation() != null){
-            populateCitationView();
-        }
+        populateCitationView();
 
-        this.activeLibraryPath.setText(GuiController.getInstance().getActiveLibraryFilePath());
+        this.activeLibraryPath.setText(CitationService.getActiveLibraryFilePath());
     }
 
     //4. FXML methods
@@ -149,7 +150,7 @@ public class MainViewController implements Initializable {
         Optional<ButtonType> confirmDeletion = Alerts.showConfirmationDeleteCitation();
 
         if (confirmDeletion.get() == ButtonType.OK){
-            GuiController.getInstance().deleteSelectedCitation();
+            viewModel.deleteSelectedCitation();
 
             populateTable();
         }
@@ -205,7 +206,7 @@ public class MainViewController implements Initializable {
      * <li>Adds a selection listener to update the {@link de.apaschold.demo.gui.citationdetailsview.CitationDetailsViewController} when a citation is selected.</li>
      */
     protected void populateTable(){
-        List<AbstractCitation> citations = GuiController.getInstance().getCitationList();
+        List<AbstractCitation> citations = viewModel.loadCitations();
 
         this.citationTable.getItems().clear();
 
@@ -225,7 +226,7 @@ public class MainViewController implements Initializable {
 
     private ChangeListener<AbstractCitation> getSelectionListener(){
         return (observable, oldCitation, newCitation) -> {
-            GuiController.getInstance().setSelectedCitation(newCitation);
+            viewModel.setSelectedCitation(newCitation);
 
             populateCitationView();
         };
@@ -236,8 +237,8 @@ public class MainViewController implements Initializable {
      * <li>Loads and displays the detailed view of the selected {@link AbstractCitation} based on its type.</li>
      */
     public void populateCitationView(){
-        if (GuiController.getInstance().getSelectedCitation() != null) {
 
+        if (viewModel.getSelectedCitation() != null) {
             try {
                 Parent citationDetailsView = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("main-citation-details-view.fxml")));
                 this.citationView.setCenter(citationDetailsView);

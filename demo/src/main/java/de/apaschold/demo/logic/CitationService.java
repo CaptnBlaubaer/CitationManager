@@ -2,6 +2,7 @@ package de.apaschold.demo.logic;
 
 import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.logic.databasehandling.SqlReader;
+import de.apaschold.demo.logic.databasehandling.SqlWriter;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import de.apaschold.demo.model.AbstractCitation;
 
@@ -26,9 +27,15 @@ public class CitationService {
     public static String getActiveLibraryFilePath() { return activeLibraryFilePath;}
 
     //4. CRUD methods
-    public List<AbstractCitation> findAll(){ return SqlReader.importCitationsFromLibraryTable(this.activeTableName);}
+    public List<AbstractCitation> findAllCitations(){ return SqlReader.importCitationsFromLibraryTable(this.activeTableName);}
 
+    public void addCitation(AbstractCitation newCitation) {
+        SqlWriter.addNewCitationToLibraryTable(this.activeTableName, newCitation);
+    }
 
+    public void deleteCitation(AbstractCitation selectedCitation) {
+        SqlWriter.deleteCitationFromLibrary(this.activeTableName, selectedCitation);
+    }
 
 
     //5. methods

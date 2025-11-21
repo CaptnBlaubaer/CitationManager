@@ -2,6 +2,7 @@ package de.apaschold.demo.gui;
 
 import de.apaschold.demo.logic.CitationFactory;
 import de.apaschold.demo.logic.CitationManager;
+import de.apaschold.demo.logic.MainViewModel;
 import de.apaschold.demo.model.AbstractCitation;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -33,27 +34,10 @@ public class ImportFromBibTexViewController {
         String bibTexText = bibTexInput.getText();
 
         if (!bibTexText.isEmpty()) {
-            importBibTex(bibTexText);
+            MainViewModel.getInstance().importBibTex(bibTexText);
         }
 
         Stage stage = (Stage) bibTexInput.getScene().getWindow();
         stage.close();
-    }
-
-    //5. other methods
-    /** <h2>importBibTex</h2>
-     * <li>Parses the BibTex formatted text and adds the corresponding {@link AbstractCitation} to the {@link CitationManager}.</li>
-     * <li>Creates {@link AbstractCitation} through {@link CitationFactory}</li>
-     * @param bibTexText The BibTex formatted text input.
-     */
-    private void importBibTex(String bibTexText) {
-        String[] separatedImports = bibTexText.replace("@", "!!!!!@").split("!!!!!");
-
-        for (String singleImport : separatedImports) {
-            if (!singleImport.isEmpty()) {
-                AbstractCitation importedCitation = CitationFactory.createCitationFromBibTex(singleImport);
-                GuiController.getInstance().addCitationToLibrary(importedCitation);
-            }
-        }
     }
 }
