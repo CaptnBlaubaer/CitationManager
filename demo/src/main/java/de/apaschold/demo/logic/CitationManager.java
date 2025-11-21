@@ -49,8 +49,8 @@ public class CitationManager {
     public String generateStringForBibTex (){
         StringBuilder libraryAsBibTex = new StringBuilder();
 
-        for(AbstractCitation reference : this.citations) {
-            libraryAsBibTex.append(reference.exportAsBibTexString()).append("\n\n");
+        for(AbstractCitation citation : this.citations) {
+            libraryAsBibTex.append(citation.exportAsBibTexString()).append("\n\n");
         }
 
         return libraryAsBibTex.toString();

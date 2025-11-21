@@ -74,8 +74,6 @@ public class MainViewController implements Initializable {
         }
 
         this.activeLibraryPath.setText(GuiController.getInstance().getActiveLibraryFilePath());
-
-
     }
 
     //4. FXML methods

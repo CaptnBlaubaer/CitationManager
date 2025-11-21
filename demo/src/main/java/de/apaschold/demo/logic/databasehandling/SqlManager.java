@@ -2,6 +2,7 @@ package de.apaschold.demo.logic.databasehandling;
 
 import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.gui.GuiController;
+import de.apaschold.demo.logic.CitationService;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -41,7 +42,7 @@ public class SqlManager {
      * @throws SQLException if a database access error occurs
      */
     public Connection getSqliteDatabaseConnection() throws SQLException {
-        String dbFilePath = GuiController.getInstance().getActiveLibraryFilePath();
+        String dbFilePath = CitationService.getActiveLibraryFilePath();
 
         String sqliteConnectionUrl = String.format(SQLITE_DB_LOCAL_CONNECTION_URL_TEMPLATE, dbFilePath);
         Connection connection = null;
