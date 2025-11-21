@@ -1,4 +1,4 @@
-**Citation Management System v0.1**
+**Citation Management System v0.2**
 ==============================
 
 _Project Description_
@@ -21,11 +21,11 @@ Via PdfDisplayer package (com.github.Dansoftowner) the attached .pdf files can b
 
 The application is able to update existing journal publications meta data from the PubMed database, whereby it's possible to choose between all infromations or between selected informations.
 If a DOI is deposited for a journal publication, it is further possible to download the .pdf automatically from the publisher if the user has the respective rights. 
-Therefore, it uses Selenium in headless mode with Firefox Driver and several work arounds to circumvent bot tracking like Cloudflare non the publishers site.
-In v0.1 it is only possible to access data from Nature, ACS and RSC. 
+Therefore, it uses Selenium in headless mode with Firefox Driver and several work arounds to circumvent bot tracking like Cloudflare on the publishers site.
+In v0.2 it is only possible to access data from Nature, ACS and RSC. 
 
 _Further Ideas_
 
-Next step will be to add a filter function for the entries by title, author, publisher and year.
-Further, the list of publishers shall be extended.
+Further, the list of publishers available to obtain .pdfs shall be extended.
+Add grouping of citations.
 Pretty up the GUI. 
