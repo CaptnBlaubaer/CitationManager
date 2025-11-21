@@ -37,20 +37,16 @@ public class CitationService {
         SqlWriter.deleteCitationFromLibrary(this.activeTableName, selectedCitation);
     }
 
-
     //5. methods
-    /**
-     * <h2>changeActiveLibrary</h2>
-     * <li>Changes the active {@link CitationManager} to the specified file.</li>
-     * <li>Creates a new library database if it does not exist.</
-     *
-     * @param filePath the file path of the new library file
-     */
-    public void createNewLibrary(String filePath){
-        activeLibraryFilePath = filePath;
-        this.activeTableName = AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS;
+    public String citationsAsBibTexString() {
+        List<AbstractCitation> citations = findAllCitations();
 
-        SqlWriter.createNewLibraryDatabase();
-        SqlWriter.createNewLibraryTable(this.activeTableName);
+        StringBuilder bibTexString = new StringBuilder();
+
+        for(AbstractCitation citation : citations) {
+            bibTexString.append(citation.exportAsBibTexString()).append("\n\n");
+        }
+
+        return bibTexString.toString();
     }
 }

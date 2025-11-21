@@ -40,17 +40,17 @@ public class FileHandler {
      */
 
     public void createEmptyLibrary(File newLibraryFile){
+        String pdfDirectoryPath = newLibraryFile.getAbsolutePath().replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.PDF_FOLDER_EXTENSION);
+
         try (FileWriter writer = new FileWriter(newLibraryFile , StandardCharsets.UTF_8)) {
             writer.write("");
-
-            String pdfDirectoryPath = newLibraryFile.getAbsolutePath().replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.PDF_FOLDER_EXTENSION);
 
             File theDir = new File(pdfDirectoryPath);
             if (!theDir.exists()){
                 theDir.mkdirs();
             }
         } catch (IOException e) {
-            System.err.println("Error saving to File: " );
+            System.err.println("Error saving to File: " + pdfDirectoryPath);
         }
     }
 

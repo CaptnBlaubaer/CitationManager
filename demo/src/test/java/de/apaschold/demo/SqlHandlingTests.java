@@ -3,7 +3,9 @@ package de.apaschold.demo;
 
 import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.gui.GuiController;
+import de.apaschold.demo.gui.MainViewController;
 import de.apaschold.demo.logic.CitationService;
+import de.apaschold.demo.logic.MainViewModel;
 import de.apaschold.demo.logic.databasehandling.SqlManager;
 import de.apaschold.demo.logic.databasehandling.SqlReader;
 import de.apaschold.demo.logic.databasehandling.SqlWriter;
@@ -69,7 +71,7 @@ public class SqlHandlingTests {
     @Order(3)
     void testCreateNewLibraryDatabase(){
         String testLibraryDbPath = "src/test/resources/de/apaschold/demo/data/test-library.db";
-        new CitationService().createNewLibrary(testLibraryDbPath);
+        MainViewModel.getInstance().createNewLibrary(testLibraryDbPath);
 
         //verify that the database file was created
         testLibraryDbFile = new File(testLibraryDbPath);

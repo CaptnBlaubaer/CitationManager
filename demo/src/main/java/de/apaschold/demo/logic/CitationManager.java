@@ -39,23 +39,6 @@ public class CitationManager {
     public void deleteCitation(AbstractCitation citation){ this.citations.remove(citation);}
 
     //5. export/import methods
-
-    /**
-     * <h2>generateStringForBibTex</h2>
-     * <li>Generates a BibTex representation of the citation library as a String.</li>
-     *
-     * @return the citation library as BibTex String
-     */
-    public String generateStringForBibTex (){
-        StringBuilder libraryAsBibTex = new StringBuilder();
-
-        for(AbstractCitation citation : this.citations) {
-            libraryAsBibTex.append(citation.exportAsBibTexString()).append("\n\n");
-        }
-
-        return libraryAsBibTex.toString();
-    }
-
     /**
      * <h2>refreshLibraryFromDatabase</h2>
      * <li>Refreshes the citation library by re-importing citations from the database.</li>

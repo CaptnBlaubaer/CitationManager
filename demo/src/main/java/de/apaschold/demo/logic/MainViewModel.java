@@ -1,7 +1,9 @@
 package de.apaschold.demo.logic;
 
+import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.gui.Alerts;
 import de.apaschold.demo.gui.GuiController;
+import de.apaschold.demo.logic.databasehandling.SqlWriter;
 import de.apaschold.demo.logic.filehandling.FileHandler;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import de.apaschold.demo.model.AbstractCitation;
@@ -20,7 +22,7 @@ public class MainViewModel {
     //1. attributes
     private static MainViewModel instance;
 
-    private final CitationService citationService;
+    private CitationService citationService;
     private AbstractCitation selectedCitation;
 
     private final ObservableList<CitationViewModel> citations = FXCollections.observableArrayList();
@@ -83,8 +85,9 @@ public class MainViewModel {
 
     /** <h2>createNewLibrary</h2>
      * <li>Creates a new {@link CitationManager} file and a folder for the pdfs with the specified name in the selected folder path.</li>
-     * <li>Updates the active library file path in the GuiController and saves it to a .txt file.</li>
-     * <li>Closes the create new library view.</li>
+     * <li>Saves the active library file path in a .txt file.</li>
+     * <li>Initializes a new {@link CitationService} for the new library.</li>
+     * <li>Creates a new database and a new table for the citations.</li>
      */
     public void createNewLibrary(String filePath){
         File newLibraryFile = new File(filePath);
@@ -94,9 +97,44 @@ public class MainViewModel {
 
             TextFileHandler.getInstance().saveNewActiveLibraryPath(filePath);
 
-            this.citationService.createNewLibrary(filePath);
+            this.citationService = new CitationService();
+
+            SqlWriter.createNewLibraryDatabase();
+            SqlWriter.createNewLibraryTable(AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS);
         } else {
             Alerts.showAlertFileNameAlreadyExists();
+        }
+    }
+
+    /**
+     * <h2>openLibraryFile</h2>
+     * <li>Opens new {@link CitationManager} file from selected Path.</li>
+     *
+     * @param chosenLibraryPath the file path of the library file to import from
+     */
+    public void openLibrary(String chosenLibraryPath) {
+        TextFileHandler.getInstance().saveNewActiveLibraryPath(chosenLibraryPath);
+
+        this.citationService = new CitationService();
+    }
+
+    /**
+     * <h2>exportActiveLibraryToBibTex</h2>
+     * Exports the active {@link CitationManager} to a BibTex file.
+     * The BibTex file is created in the same directory as the active library file,
+     * with the same name but with a .bib extension.
+     *
+     * @throws NullPointerException if the library is empty and there is nothing to export
+     */
+    public void exportActiveLibraryToBibTex() {
+        String bibTexString = this.citationService.citationsAsBibTexString();
+
+        if(!bibTexString.isEmpty()) {
+            String bibTexFilePath = CitationService.getActiveLibraryFilePath().replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.BIBTEX_FILE_FORMAT);
+
+            TextFileHandler.getInstance().exportLibraryToBibTex(bibTexString.toString(), bibTexFilePath);
+        } else {
+            throw new NullPointerException();
         }
     }
 }

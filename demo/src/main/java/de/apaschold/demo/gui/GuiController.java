@@ -171,39 +171,6 @@ public class GuiController {
     }
 
     //5. other
-    /**
-     * <h2>exportActiveLibraryToBibTex</h2>
-     * Exports the active {@link CitationManager} to a BibTex file.
-     * The BibTex file is created in the same directory as the active library file,
-     * with the same name but with a .bib extension.
-     *
-     * @throws NullPointerException if the library is empty and there is nothing to export
-     */
-    public void exportActiveLibraryToBibTex(){
-
-        String bibTexString = this.library.generateStringForBibTex();
-
-        if(!bibTexString.isEmpty()) {
-            String bibTexFilePath = this.activeLibraryFilePath.replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.BIBTEX_FILE_FORMAT);
-
-            TextFileHandler.getInstance().exportLibraryToBibTex(bibTexString, bibTexFilePath);
-        } else {
-            throw new NullPointerException();
-        }
-    }
-
-    /**
-     * <h2>openLibraryFile</h2>
-     * <li>Opens new {@link CitationManager} file from selected Path.</li>
-     *
-     * @param chosenLibraryFilePath the file path of the library file to import from
-     */
-    public void openLibraryFile(String chosenLibraryFilePath){
-        this.activeLibraryFilePath = chosenLibraryFilePath;
-        this.activeLibraryTableName = AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS;
-
-        this.library.refreshLibraryFromDatabase(this.activeLibraryTableName);
-    }
 
     /** <h2>addNewAttachmentToCitationReference</h2>
      * <li>Adds a new attachment to the currently selected {@link AbstractCitation}.</li>

@@ -88,7 +88,7 @@ public class MainViewController implements Initializable {
     protected void openLibrary(){
         Stage stage = (Stage) this.citationView.getScene().getWindow();
 
-        String folderPath = GuiController.getInstance().getActiveLibraryFilePath().replaceAll(AppTexts.REGEX_REPLACE_DB_FILENAME,"");
+        String folderPath = CitationService.getActiveLibraryFilePath().replaceAll(AppTexts.REGEX_REPLACE_DB_FILENAME,"");
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(folderPath));
@@ -100,9 +100,7 @@ public class MainViewController implements Initializable {
         if (chosenFile != null) {
             String chosenLibraryPath = chosenFile.getAbsolutePath();
 
-                GuiController.getInstance().openLibraryFile(chosenLibraryPath);
-
-                TextFileHandler.getInstance().saveNewActiveLibraryPath(chosenLibraryPath);
+                viewModel.openLibrary(chosenLibraryPath);
 
                 populateTable();
 
@@ -124,7 +122,7 @@ public class MainViewController implements Initializable {
 
         this.citationTable.getItems().clear();
 
-        this.activeLibraryPath.setText(GuiController.getInstance().getActiveLibraryFilePath());
+        this.activeLibraryPath.setText(CitationService.getActiveLibraryFilePath());
     }
 
     /**
@@ -178,7 +176,7 @@ public class MainViewController implements Initializable {
     @FXML
     protected void exportToBibTex(){
         try {
-            GuiController.getInstance().exportActiveLibraryToBibTex();
+            viewModel.exportActiveLibraryToBibTex();
         } catch (NullPointerException e) {
             Alerts.showAlertMessageEmptyLibrary();
         }
@@ -189,8 +187,8 @@ public class MainViewController implements Initializable {
         String authorKeyword = this.authorFilter.getText().trim();
         String titleKeyword = this.keywordFilter.getText().trim();
 
-        String[] authorAndTitleKeywordsForDatabaseSearch = {authorKeyword, titleKeyword};
         if (!authorKeyword.isEmpty() || !titleKeyword.isEmpty()) {
+            String[] authorAndTitleKeywordsForDatabaseSearch = {authorKeyword, titleKeyword};
             GuiController.getInstance().filterCitationsByKeywords(authorAndTitleKeywordsForDatabaseSearch);
             populateTable();
         } else {

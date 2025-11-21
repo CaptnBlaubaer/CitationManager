@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class TextFileHandler {
     //0. constants
-    private static final String EXAMPLE_LIBRARY_PATH = "demo/src/main/resources/de/apaschold/demo/data/testLibraryPaschold.db";
+    private static final String EXAMPLE_LIBRARY_PATH = "demo\\src\\main\\resources\\de\\apaschold\\demo\\data\\testLibraryPaschold.db";
 
     //1. attributes
     private static TextFileHandler instance;
