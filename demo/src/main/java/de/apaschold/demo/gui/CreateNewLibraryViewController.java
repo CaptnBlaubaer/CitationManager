@@ -2,6 +2,8 @@ package de.apaschold.demo.gui;
 
 import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.logic.CitationManager;
+import de.apaschold.demo.logic.CitationService;
+import de.apaschold.demo.logic.MainViewModel;
 import de.apaschold.demo.logic.filehandling.FileHandler;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import javafx.fxml.FXML;
@@ -41,53 +43,16 @@ public class CreateNewLibraryViewController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle){
-        this.folderPath = GuiController.getInstance().getActiveLibraryFilePath().replaceAll(AppTexts.REGEX_REPLACE_DB_FILENAME,"");
-
-        System.out.println(this.folderPath);
-
-        this.folderPath = "C:\\Users\\Hein\\Desktop\\Programmierstuff\\JAva\\CitationManager";
+        this.folderPath = CitationService.getActiveLibraryFilePath().replaceAll(AppTexts.REGEX_REPLACE_DB_FILENAME,"");
 
         this.folderPathLabel.setText(this.folderPath);
     }
 
     //4. FXML methods
-    /** <h2>createNewLibrary</h2>
-     * <li>Creates a new {@link CitationManager} file and a folder for the pdfs with the specified name in the selected folder path.</li>
-     * <li>Updates the active library file path in the GuiController and saves it to a .txt file.</li>
-     * <li>Closes the create new library view.</li>
-     */
-
-    @FXML
-    protected void createNewLibrary(){
-        String fileName = this.newLibraryName.getText();
-
-        String filePath = folderPath + "\\" + fileName + AppTexts.LIBRARY_FILE_FORMAT;
-
-        if (!fileName.contains(" ") && !fileName.isEmpty()){
-            File newLibraryFile = new File(filePath);
-
-            if (!newLibraryFile.exists()) {
-                FileHandler.getInstance().createEmptyLibrary(newLibraryFile);
-
-                TextFileHandler.getInstance().saveNewActiveLibraryPath(filePath);
-
-                GuiController.getInstance().createNewLibrary(filePath);
-            } else {
-                Alerts.showAlertFileNameAlreadyExists();
-            }
-        } else {
-            Alerts.showAlertInvalidFileName();
-        }
-
-        Stage stage = (Stage) this.newLibraryName.getScene().getWindow();
-        stage.close();
-    }
-
     /** <h2>changeFolderPath</h2>
      * <li>Opens a directory chooser dialog to select a new folder path for the new library.</li>
      * <li>Updates the folder path label with the selected folder path.</li>
      */
-
     @FXML
     protected void changeFolderPath() {
         Stage stage = (Stage) this.newLibraryName.getScene().getWindow();
@@ -98,13 +63,34 @@ public class CreateNewLibraryViewController implements Initializable {
 
         File selectedDirectory = directoryChooser.showDialog(stage);
 
-        if (selectedDirectory.exists()) {
+        try{
             this.folderPath = selectedDirectory.getAbsolutePath();
             this.folderPathLabel.setText(selectedDirectory.getAbsolutePath());
-        } else {
+        } catch (NullPointerException e) {
             Alerts.showInformationNoFolderChosen();
         }
     }
+
+    /** <h2>createNewLibrary</h2>
+     * <li>Creates a filePath for the new Library.</li>
+     */
+    @FXML
+    protected void createNewLibrary(){
+        String fileName = this.newLibraryName.getText();
+
+        String filePath = folderPath + "\\" + fileName + AppTexts.LIBRARY_FILE_FORMAT;
+
+        if (!fileName.contains(" ") && !fileName.isEmpty()){
+            MainViewModel.getInstance().createNewLibrary(filePath);
+        } else {
+            Alerts.showAlertInvalidFileName();
+        }
+
+        Stage stage = (Stage) this.newLibraryName.getScene().getWindow();
+        stage.close();
+    }
+
+
     //5. other Methods
 
 }

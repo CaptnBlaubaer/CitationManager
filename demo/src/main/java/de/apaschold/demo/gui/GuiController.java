@@ -172,21 +172,6 @@ public class GuiController {
 
     //5. other
     /**
-     * <h2>changeActiveLibrary</h2>
-     * <li>Changes the active {@link CitationManager} to the specified file.</li>
-     * <li>Creates a new library database if it does not exist.</
-     *
-     * @param filePath the file path of the new library file
-     */
-    public void createNewLibrary(String filePath){
-        this.activeLibraryFilePath = filePath;
-        this.activeLibraryTableName = AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS;
-
-        SqlWriter.createNewLibraryDatabase();
-        SqlWriter.createNewLibraryTable(this.activeLibraryTableName);
-    }
-
-    /**
      * <h2>exportActiveLibraryToBibTex</h2>
      * Exports the active {@link CitationManager} to a BibTex file.
      * The BibTex file is created in the same directory as the active library file,
@@ -216,13 +201,6 @@ public class GuiController {
     public void openLibraryFile(String chosenLibraryFilePath){
         this.activeLibraryFilePath = chosenLibraryFilePath;
         this.activeLibraryTableName = AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS;
-
-        this.library.refreshLibraryFromDatabase(this.activeLibraryTableName);
-    }
-
-
-    public void deleteSelectedCitation() {
-        SqlWriter.deleteCitationFromLibrary(this.activeLibraryTableName, this.selectedCitation);
 
         this.library.refreshLibraryFromDatabase(this.activeLibraryTableName);
     }
@@ -259,18 +237,6 @@ public class GuiController {
 
         setSelectedCitation(editedCitation);
     }
-
-    /** <h2>addCitationToLibrary</h2>
-     * <li>Adds a new {@link AbstractCitation} to the active {@link CitationManager}.</li>
-     *
-     * @param newCitation the new {@link AbstractCitation} to add to the library
-     */
-    public void addCitationToLibrary(AbstractCitation newCitation) {
-        SqlWriter.addNewCitationToLibraryTable(this.activeLibraryTableName, newCitation);
-
-        this.library.refreshLibraryFromDatabase(this.activeLibraryTableName);
-    }
-
 
     public void filterCitationsByKeywords(String[] authorAndTitleKeywordsForDatabaseSearch) {
         this.library.filterCitationsByKeywords(this.activeLibraryTableName, authorAndTitleKeywordsForDatabaseSearch);

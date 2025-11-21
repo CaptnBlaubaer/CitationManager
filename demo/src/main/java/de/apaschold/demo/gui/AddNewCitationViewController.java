@@ -1,8 +1,8 @@
 package de.apaschold.demo.gui;
 
 import de.apaschold.demo.additionals.AppTexts;
-import de.apaschold.demo.logic.CitationFactory;
 import de.apaschold.demo.logic.CitationManager;
+import de.apaschold.demo.logic.MainViewModel;
 import de.apaschold.demo.model.AbstractCitation;
 import de.apaschold.demo.model.CitationType;
 import de.apaschold.demo.model.StringConverterForCitationType;
@@ -137,8 +137,7 @@ public class AddNewCitationViewController implements Initializable {
     }
 
     /** <h2>saveNewArticle</h2>
-     * <li>Collects data from the citation form and creates a new {@link AbstractCitation}e.</li>
-     * <li>Adds the new {@link AbstractCitation} to the {@link CitationManager} and closes the add new citation view.</li>
+     * <li>Collects data from the citation form and forwards it to the MainViewModel</li>
      */
     @FXML
     protected void saveNewCitation() {
@@ -169,9 +168,7 @@ public class AddNewCitationViewController implements Initializable {
             }
         }
 
-        AbstractCitation newArticle = CitationFactory.createCitationFromManualDataInput(citationDetailsFromManualInputAsString.toString());
-
-        GuiController.getInstance().addCitationToLibrary(newArticle);
+        MainViewModel.getInstance().addNewCitation(citationDetailsFromManualInputAsString.toString());
 
         Stage stage = (Stage) newCitationType.getScene().getWindow();
         stage.close();

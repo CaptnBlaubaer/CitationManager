@@ -4,7 +4,7 @@ public class AppTexts {
     //0. constants
     public static final String PLACEHOLDER = " - ";
     public static final int NUMBER_PLACEHOLDER = 0;
-    public static final String REGEX_REPLACE_DB_FILENAME = "\\\\[a-zA-Z0-9-_]+\\.db";
+    public static final String REGEX_REPLACE_DB_FILENAME = "/[a-zA-Z0-9-_]+\\.db";
     public static final String LIBRARY_FILE_FORMAT = ".db";
     public static final String BIBTEX_FILE_FORMAT = ".bib";
     public static final String PDF_FOLDER_EXTENSION = "-pdfs\\";

@@ -1,6 +1,9 @@
 package de.apaschold.demo.logic;
 
+import de.apaschold.demo.gui.Alerts;
 import de.apaschold.demo.gui.GuiController;
+import de.apaschold.demo.logic.filehandling.FileHandler;
+import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import de.apaschold.demo.model.AbstractCitation;
 import de.apaschold.demo.model.CitationViewModel;
 import javafx.beans.property.ObjectProperty;
@@ -8,6 +11,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.File;
 import java.util.List;
 
 public class MainViewModel {
@@ -36,9 +40,6 @@ public class MainViewModel {
         return instance;
     }
 
-    /*private void loadCitations(){
-        citationService.findAllCitations().stream().forEach(item -> System.out.println(item));
-    }*/
     //3. getter and setter methods
     public List<AbstractCitation> loadCitations() { return this.citationService.findAllCitations();}
 
@@ -68,5 +69,34 @@ public class MainViewModel {
      */
     public void deleteSelectedCitation() {
         this.citationService.deleteCitation(this.selectedCitation);
+    }
+
+    /** <h2>add new citation</h2>
+     * <li>Collects data from the citation form and creates a new {@link AbstractCitation}e.</li>
+     * <li>Adds the new {@link AbstractCitation} to the {@link CitationManager} and closes the add new citation view.</li>
+     */
+    public void addNewCitation(String citationAsString) {
+        AbstractCitation newCitation = CitationFactory.createCitationFromManualDataInput(citationAsString);
+
+        this.citationService.addCitation(newCitation);
+    }
+
+    /** <h2>createNewLibrary</h2>
+     * <li>Creates a new {@link CitationManager} file and a folder for the pdfs with the specified name in the selected folder path.</li>
+     * <li>Updates the active library file path in the GuiController and saves it to a .txt file.</li>
+     * <li>Closes the create new library view.</li>
+     */
+    public void createNewLibrary(String filePath){
+        File newLibraryFile = new File(filePath);
+
+        if (!newLibraryFile.exists()) {
+            FileHandler.getInstance().createEmptyLibrary(newLibraryFile);
+
+            TextFileHandler.getInstance().saveNewActiveLibraryPath(filePath);
+
+            this.citationService.createNewLibrary(filePath);
+        } else {
+            Alerts.showAlertFileNameAlreadyExists();
+        }
     }
 }
