@@ -27,12 +27,6 @@ public class GuiController {
     //1. attributes
     private static GuiController instance;
     private Stage mainStage;
-    private CitationManager library;
-    private AbstractCitation selectedCitation;
-    private AbstractCitation dummyCitationToEdit;
-    private String activeLibraryTableName;
-    private String activeLibraryFilePath;
-    private JSONObject referenceChanges;
 
     //2. constructors
 
@@ -41,11 +35,7 @@ public class GuiController {
      * Loads the last used library file path from a .txt and initializes the {@link CitationManager}.
      * If the library is empty, sets the active library file path to the program directory.
      */
-    private GuiController() {
-        this.activeLibraryFilePath = TextFileHandler.getInstance().loadLibraryFilePath();
-
-        this.activeLibraryTableName = AppTexts.SQLITE_TABLE_NAME_ALL_CITATIONS;
-    }
+    private GuiController() {}
 
     public static synchronized GuiController getInstance() {
         if (instance == null) {
@@ -57,43 +47,21 @@ public class GuiController {
     //3. getter and setter methods
     public void setMainStage(Stage mainStage) { this.mainStage = mainStage;}
 
-    public List<AbstractCitation> getCitationList() { return this.library.getCitations();}
-
-    public AbstractCitation getSelectedCitation() { return this.selectedCitation;}
-
-    public void setSelectedCitation(AbstractCitation selectedCitation) { this.selectedCitation = selectedCitation;}
-
-    public AbstractCitation getDummyCitationToEdit() { return this.dummyCitationToEdit;}
-
-    public void setDummyCitationToEdit(AbstractCitation dummyCitationToEdit) { this.dummyCitationToEdit = dummyCitationToEdit;}
-
-    public String getActiveLibraryFilePath() { return this.activeLibraryFilePath;}
-
-    public void setActiveLibraryFilePath(String activeLibraryFilePath) { this.activeLibraryFilePath = activeLibraryFilePath;}
-
-    public JSONObject getReferenceChangesAsJsonObject(){ return this.referenceChanges;}
-
-    public void setReferenceChanges(JSONObject referenceChanges){ this.referenceChanges = referenceChanges;}
-
     //4. open view methods
-    public void initializeLibrary(){
-        this.library = new CitationManager(this.activeLibraryTableName);
-
-        this.selectedCitation = this.library.getFirstCitation();
-    }
-
     /**
      * <h2>loadMainMenu</h2>
      * Loads the main menu view of the application.
-     *
-     * @throws IOException if the FXML file cannot be loaded
      */
-    public void loadMainMenu() throws IOException {
+    public void loadMainMenu() {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1680, 960);
-        this.mainStage.setTitle("Citation Manager");
-        this.mainStage.setScene(scene);
-        this.mainStage.show();
+        try {
+            Scene scene = new Scene(fxmlLoader.load(), 1680, 960);
+            this.mainStage.setTitle("Citation Manager");
+            this.mainStage.setScene(scene);
+            this.mainStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -163,49 +131,8 @@ public class GuiController {
             newCitationLibraryStage.setScene(scene);
             newCitationLibraryStage.showAndWait();
 
-            this.library.clear();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    //5. other
-
-    /** <h2>addNewAttachmentToCitationReference</h2>
-     * <li>Adds a new attachment to the currently selected {@link AbstractCitation}.</li>
-     *
-     * @param newAttachment the file path of the new attachment to add
-     */
-    public void addNewAttachmentToCitationReference(String newAttachment) {
-        this.selectedCitation.addNewAttachment(newAttachment);
-
-        SqlWriter.updateCitationInLibrary(this.activeLibraryTableName, this.selectedCitation);
-    }
-
-    /** <h2>removeAttachementFromCitation</h2>
-     * <li>Removes an attachment from the specified {@link AbstractCitation}.</li>
-     *
-     * @param citationToRemoveAttachment the {@link AbstractCitation} from which to remove the attachment
-     */
-    public void removeAttachmentFromCitation(AbstractCitation citationToRemoveAttachment) {
-        SqlWriter.updateCitationInLibrary(this.activeLibraryTableName, citationToRemoveAttachment);
-    }
-
-    /** <h2>updateLibraryWithEditedCitation</h2>
-     * <li>Updates the active {@link CitationManager} with the changes made to the selected {@link AbstractCitation}.</li>
-     *
-     * @param editedCitation the edited {@link AbstractCitation} to update in the library
-     */
-    public void updateLibraryWithEditedCitation(AbstractCitation editedCitation) {
-        SqlWriter.updateCitationInLibrary(this.activeLibraryTableName, editedCitation);
-
-        this.library.refreshLibraryFromDatabase(this.activeLibraryTableName);
-
-        setSelectedCitation(editedCitation);
-    }
-
-    public void filterCitationsByKeywords(String[] authorAndTitleKeywordsForDatabaseSearch) {
-        this.library.filterCitationsByKeywords(this.activeLibraryTableName, authorAndTitleKeywordsForDatabaseSearch);
     }
 }

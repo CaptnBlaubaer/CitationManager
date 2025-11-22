@@ -1,6 +1,7 @@
 package de.apaschold.demo;
 
 import de.apaschold.demo.gui.GuiController;
+import de.apaschold.demo.logic.CitationService;
 import de.apaschold.demo.logic.filehandling.SeleniumWebHandlerHeadless;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
 import org.junit.jupiter.api.*;
@@ -34,7 +35,7 @@ public class SeleniumWebHandlerHeadlessTest {
     @BeforeAll
     static void setup(){
         TextFileHandler.setActiveLibraryFilePath(TEST_LIBRARY_PATH);
-        GuiController.getInstance().setActiveLibraryFilePath(System.getProperty("user.dir"));
+        CitationService.setActiveLibraryFilePath(System.getProperty("user.dir"));
     }
 
     @Test

@@ -6,12 +6,14 @@ import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.logic.databasehandling.SqlWriter;
 import de.apaschold.demo.logic.filehandling.FileHandler;
 import de.apaschold.demo.logic.filehandling.TextFileHandler;
+import de.apaschold.demo.logic.filehandling.WebHandler;
 import de.apaschold.demo.model.AbstractCitation;
 import de.apaschold.demo.model.CitationViewModel;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.List;
@@ -24,6 +26,8 @@ public class MainViewModel {
 
     private CitationService citationService;
     private AbstractCitation selectedCitation;
+    private AbstractCitation dummyCitationToEdit;
+    private JSONObject citationUpdatesFromPubMed;
 
     private final ObservableList<CitationViewModel> citations = FXCollections.observableArrayList();
     private final ObjectProperty<CitationViewModel> selected = new SimpleObjectProperty<>();
@@ -43,26 +47,19 @@ public class MainViewModel {
     }
 
     //3. getter and setter methods
-    public List<AbstractCitation> loadCitations() { return this.citationService.findAllCitations();}
-
     public void setSelectedCitation(AbstractCitation citation) { this.selectedCitation = citation;}
     public AbstractCitation getSelectedCitation() { return selectedCitation;}
 
-    //4. other methods
-    /** <h2>importBibTex</h2>
-     * <li>Parses the BibTex formatted text and adds the corresponding {@link AbstractCitation} to the {@link CitationManager}.</li>
-     * <li>Creates {@link AbstractCitation} through {@link CitationFactory}</li>
-     * @param bibTexText The BibTex formatted text input.
-     */
-    public void importBibTex (String bibTexText){
-        String[] separatedImports = bibTexText.replace("@", "!!!!!@").split("!!!!!");
+    public void setDummyCitation(AbstractCitation dummyCitation){ this.dummyCitationToEdit = dummyCitation;}
+    public AbstractCitation getDummyCitation(){ return this.dummyCitationToEdit;}
 
-        for (String singleImport : separatedImports) {
-            if (!singleImport.isEmpty()) {
-                AbstractCitation importedCitation = CitationFactory.createCitationFromBibTex(singleImport);
-                this.citationService.addCitation(importedCitation);
-            }
-        }
+    public JSONObject getCitationUpdatesFromPubMed(){ return this.citationUpdatesFromPubMed;}
+
+    //4. CRUD operations on Database via CitationService
+    public List<AbstractCitation> loadCitations() { return this.citationService.findAllCitations();}
+
+    public List<AbstractCitation> loadFilteredCitations(String authorKeyword, String titleKeyword) {
+        return this.citationService.filteredCitationsByKeywords(authorKeyword, titleKeyword);
     }
 
     /**
@@ -83,6 +80,12 @@ public class MainViewModel {
         this.citationService.addCitation(newCitation);
     }
 
+    public void updateCitationInDatabase(AbstractCitation citation) {
+        this.citationService.updateCitationInDatabase(citation);
+    }
+
+
+    //5. other methods
     /** <h2>createNewLibrary</h2>
      * <li>Creates a new {@link CitationManager} file and a folder for the pdfs with the specified name in the selected folder path.</li>
      * <li>Saves the active library file path in a .txt file.</li>
@@ -118,6 +121,22 @@ public class MainViewModel {
         this.citationService = new CitationService();
     }
 
+    /** <h2>importBibTex</h2>
+     * <li>Parses the BibTex formatted text and adds the corresponding {@link AbstractCitation} to the {@link CitationManager}.</li>
+     * <li>Creates {@link AbstractCitation} through {@link CitationFactory}</li>
+     * @param bibTexText The BibTex formatted text input.
+     */
+    public void importBibTex (String bibTexText){
+        String[] separatedImports = bibTexText.replace("@", "!!!!!@").split("!!!!!");
+
+        for (String singleImport : separatedImports) {
+            if (!singleImport.isEmpty()) {
+                AbstractCitation importedCitation = CitationFactory.createCitationFromBibTex(singleImport);
+                this.citationService.addCitation(importedCitation);
+            }
+        }
+    }
+
     /**
      * <h2>exportActiveLibraryToBibTex</h2>
      * Exports the active {@link CitationManager} to a BibTex file.
@@ -137,4 +156,33 @@ public class MainViewModel {
             throw new NullPointerException();
         }
     }
+
+    /** <h2>createDummyCitationToEdit</h2>
+     * <li>Creates a dummy {@link AbstractCitation} to edit by converting the selected citation to a CSV string
+     * and then creating a new citation from that string.</li>
+     * <li>Sets the dummy citation as the citation to edit.</li>
+     * <li>Dummy citation is necessary to not change the original data before saving</li>
+     */
+    public void createDummyCitationToEdit(){
+        String csvRepresentation = this.selectedCitation.toCsvString();
+
+        this.dummyCitationToEdit = CitationFactory.createCitationFromCsvLine(csvRepresentation);
+    }
+
+    public void checkForCitationUpdates(String pubMedString){
+        //returned String is %journal_title|year|||author_last_name|Art1|pub_med_id
+        String pubMedId = WebHandler.getInstance().getPubMedId(pubMedString).split("Art1\\|")[1];
+
+        if(!pubMedId.contains("NOT_FOUND")) {
+            citationUpdatesFromPubMed = WebHandler.getInstance().getRecordsFromPubMedId(pubMedId);
+
+            GuiController.getInstance().loadReferenceUpdateView();
+
+            GuiController.getInstance().loadMainMenu();
+        } else {
+            Alerts.showInformationRecordNotFound();
+        }
+    }
+
+
 }

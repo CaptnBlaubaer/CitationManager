@@ -1,6 +1,7 @@
 package de.apaschold.demo.gui;
 
 import de.apaschold.demo.additionals.MyLittleHelpers;
+import de.apaschold.demo.logic.MainViewModel;
 import de.apaschold.demo.model.JournalArticle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -100,9 +101,9 @@ public class ReferenceUpdateViewController implements Initializable {
     @Override
     public void initialize (URL location, ResourceBundle resourceBundle){
         this.referenceChanges =
-                getValuesFromJson(GuiController.getInstance().getReferenceChangesAsJsonObject());
+                getValuesFromJson(MainViewModel.getInstance().getCitationUpdatesFromPubMed());
 
-        this.journalArticle = (JournalArticle) GuiController.getInstance().getSelectedCitation();
+        this.journalArticle = (JournalArticle) MainViewModel.getInstance().getSelectedCitation();
 
         populateOldValues();
 
@@ -118,7 +119,7 @@ public class ReferenceUpdateViewController implements Initializable {
     @FXML
     protected void confirmChanges() {
         updateReference();
-        GuiController.getInstance().updateLibraryWithEditedCitation(this.journalArticle);
+        MainViewModel.getInstance().updateCitationInDatabase(this.journalArticle);
 
         Stage stage = (Stage) this.checkAuthors.getScene().getWindow();
 

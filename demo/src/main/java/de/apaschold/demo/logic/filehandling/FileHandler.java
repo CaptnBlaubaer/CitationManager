@@ -1,7 +1,7 @@
 package de.apaschold.demo.logic.filehandling;
 
 import de.apaschold.demo.additionals.AppTexts;
-import de.apaschold.demo.gui.GuiController;
+import de.apaschold.demo.logic.CitationService;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -61,7 +61,7 @@ public class FileHandler {
      * @param chosenAttachment the name of the attachment file to be deleted
      */
     public void deleteSelectedAttachmentFromFolder(String chosenAttachment) {
-        String activeLibraryFilePath = GuiController.getInstance().getActiveLibraryFilePath();
+        String activeLibraryFilePath = CitationService.getActiveLibraryFilePath();
         String pdfFolderPath = activeLibraryFilePath.replace(AppTexts.LIBRARY_FILE_FORMAT,AppTexts.PDF_FOLDER_EXTENSION);
 
         File attachmentToDelete = new File(pdfFolderPath + chosenAttachment);
@@ -78,7 +78,7 @@ public class FileHandler {
      */
 
     public void copySelectedAttachmentToPdfFolder(File chosenFile) {
-        String activeLibraryFilePath = GuiController.getInstance().getActiveLibraryFilePath();
+        String activeLibraryFilePath = CitationService.getActiveLibraryFilePath();
         String pdfFolderPath = activeLibraryFilePath.replace(AppTexts.LIBRARY_FILE_FORMAT,AppTexts.PDF_FOLDER_EXTENSION);
 
         String chosenFileName = chosenFile.getName();
@@ -97,7 +97,7 @@ public class FileHandler {
      * @return the name of the latest added file, or an empty string if the folder is empty
      */
     public String determineLatestAddedFile(){
-        String activeLibraryFilePath = GuiController.getInstance().getActiveLibraryFilePath();
+        String activeLibraryFilePath = CitationService.getActiveLibraryFilePath();
         String pdfFolderPath = activeLibraryFilePath.replace(AppTexts.LIBRARY_FILE_FORMAT,AppTexts.PDF_FOLDER_EXTENSION);
 
         File pdfFolder = new File(pdfFolderPath);

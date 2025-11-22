@@ -26,11 +26,21 @@ public class CitationService {
     //3. getter and setter methods
     public static String getActiveLibraryFilePath() { return activeLibraryFilePath;}
 
+    public static void setActiveLibraryFilePath(String newFilePath) { activeLibraryFilePath = newFilePath;}
+
     //4. CRUD methods
     public List<AbstractCitation> findAllCitations(){ return SqlReader.importCitationsFromLibraryTable(this.activeTableName);}
 
+    public List<AbstractCitation> filteredCitationsByKeywords(String authorKeyWord, String titleKeyword){
+        return SqlReader.filterCitationsByKeywords(this.activeTableName, authorKeyWord, titleKeyword);
+    }
+
     public void addCitation(AbstractCitation newCitation) {
         SqlWriter.addNewCitationToLibraryTable(this.activeTableName, newCitation);
+    }
+
+    public void updateCitationInDatabase(AbstractCitation citationToUpdate) {
+        SqlWriter.updateCitationInLibrary(this.activeTableName, citationToUpdate);
     }
 
     public void deleteCitation(AbstractCitation selectedCitation) {

@@ -2,6 +2,7 @@ package de.apaschold.demo.gui.citationdetailsview;
 
 import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.GuiController;
+import de.apaschold.demo.logic.MainViewModel;
 import de.apaschold.demo.model.BookSection;
 import de.apaschold.demo.model.AbstractCitation;
 import javafx.fxml.FXML;
@@ -53,7 +54,7 @@ public class BookSectionSubViewController implements Initializable {
 
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
-        this.bookSection = (BookSection) GuiController.getInstance().getDummyCitationToEdit();
+        this.bookSection = (BookSection) MainViewModel.getInstance().getDummyCitation();
 
         populateBookSectionView();
     }
@@ -81,7 +82,7 @@ public class BookSectionSubViewController implements Initializable {
             this.bookSection.setPages(this.pagesChange.getText());
             this.bookSection.setDoi(this.doiChange.getText());
 
-            GuiController.getInstance().updateLibraryWithEditedCitation(this.bookSection);
+            MainViewModel.getInstance().updateCitationInDatabase(this.bookSection);
 
             //update the labels in the article overview
             GuiController.getInstance().loadMainMenu();

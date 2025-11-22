@@ -2,6 +2,7 @@ package de.apaschold.demo.gui.citationdetailsview;
 
 import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.GuiController;
+import de.apaschold.demo.logic.MainViewModel;
 import de.apaschold.demo.model.AbstractCitation;
 import de.apaschold.demo.model.Unpublished;
 import javafx.fxml.FXML;
@@ -42,7 +43,7 @@ public class UnpublishedSubViewController implements Initializable {
 
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
-        this.unpublished = (Unpublished) GuiController.getInstance().getDummyCitationToEdit();
+        this.unpublished = (Unpublished) MainViewModel.getInstance().getDummyCitation();
 
         populateEditView();
     }
@@ -63,7 +64,7 @@ public class UnpublishedSubViewController implements Initializable {
 
             this.unpublished.setYear( MyLittleHelpers.convertStringInputToInteger(this.yearChange.getText()));
 
-            GuiController.getInstance().updateLibraryWithEditedCitation(this.unpublished);
+            MainViewModel.getInstance().updateCitationInDatabase(this.unpublished);
 
             //update the labels in the article overview
             GuiController.getInstance().loadMainMenu();

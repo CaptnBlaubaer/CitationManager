@@ -2,6 +2,7 @@ package de.apaschold.demo.gui.citationdetailsview;
 
 import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.GuiController;
+import de.apaschold.demo.logic.MainViewModel;
 import de.apaschold.demo.model.AbstractCitation;
 import de.apaschold.demo.model.Patent;
 import javafx.fxml.FXML;
@@ -41,7 +42,7 @@ public class PatentSubViewController implements Initializable {
      */
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
-        this.patent = (Patent) GuiController.getInstance().getDummyCitationToEdit();
+        this.patent = (Patent) MainViewModel.getInstance().getDummyCitation();
 
         populateEditSubView();
     }
@@ -63,7 +64,7 @@ public class PatentSubViewController implements Initializable {
 
             this.patent.setDoi(this.urlChange.getText());
 
-            GuiController.getInstance().updateLibraryWithEditedCitation(this.patent);
+            MainViewModel.getInstance().updateCitationInDatabase(this.patent);
 
             //update the labels in the article overview
             GuiController.getInstance().loadMainMenu();

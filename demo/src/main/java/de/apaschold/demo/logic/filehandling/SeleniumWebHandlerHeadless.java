@@ -2,6 +2,7 @@ package de.apaschold.demo.logic.filehandling;
 
 import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.gui.GuiController;
+import de.apaschold.demo.logic.CitationService;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -22,7 +23,7 @@ import java.util.Random;
 
 public class SeleniumWebHandlerHeadless {
     //0. constants for Selenium pdf download
-    private static final String FIREFOX_DRIVER_PATH = System.getProperty("user.dir") + "\\src\\main\\resources\\driver\\geckodriver.exe";
+    private static final String FIREFOX_DRIVER_PATH = System.getProperty("user.dir") + "\\demo\\src\\main\\resources\\driver\\geckodriver.exe";
     private static final String EDGE_DRIVER_PATH = System.getProperty("user.dir") + "\\src\\main\\resources\\driver\\msedgedriver.exe";
     private static final String START_PAGE = "https://www.google.com";
 
@@ -58,7 +59,7 @@ public class SeleniumWebHandlerHeadless {
      * <li>Sets the download path for PDFs based on the active library file path.</li>
      */
     private void setDownloadPath() {
-        this.downloadPath = GuiController.getInstance().getActiveLibraryFilePath().replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.PDF_FOLDER_EXTENSION);
+        this.downloadPath = CitationService.getActiveLibraryFilePath().replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.PDF_FOLDER_EXTENSION);
     }
 
     //4. methods for Browser Control

@@ -6,6 +6,7 @@ import de.apaschold.demo.additionals.AppTexts;
 import de.apaschold.demo.gui.Alerts;
 import de.apaschold.demo.gui.GuiController;
 import de.apaschold.demo.logic.CitationFactory;
+import de.apaschold.demo.logic.CitationService;
 import de.apaschold.demo.logic.MainViewModel;
 import de.apaschold.demo.logic.filehandling.FileHandler;
 import de.apaschold.demo.logic.filehandling.SeleniumWebHandlerHeadless;
@@ -77,7 +78,7 @@ public class CitationDetailsViewController implements Initializable {
     public void initialize(URL location, java.util.ResourceBundle resources) {
         this.citation = MainViewModel.getInstance().getSelectedCitation();
 
-        createDummyCitationToEdit();
+        MainViewModel.getInstance().createDummyCitationToEdit();
 
         populateCitationDetailsView();
 
@@ -95,22 +96,10 @@ public class CitationDetailsViewController implements Initializable {
      */
 
     @FXML
-    private void checkForUpdates() throws IOException {
+    private void checkForUpdates() {
         String pubMedString = this.citation.createPubMedSearchTerm();
 
-        //returned String is %journal_title|year|||author_last_name|Art1|pub_med_id
-        String pubMedId = WebHandler.getInstance().getPubMedId(pubMedString).split("Art1\\|")[1];
-
-        if(!pubMedId.contains("NOT_FOUND")) {
-            JSONObject recordsFromPubMedId = WebHandler.getInstance().getRecordsFromPubMedId(pubMedId);
-
-            GuiController.getInstance().setReferenceChanges(recordsFromPubMedId);
-            GuiController.getInstance().loadReferenceUpdateView();
-
-            GuiController.getInstance().loadMainMenu();
-        } else {
-            Alerts.showInformationRecordNotFound();
-        }
+        MainViewModel.getInstance().checkForCitationUpdates(pubMedString);
     }
 
     /** <h2>selectAttachedFile</h2>
@@ -126,7 +115,7 @@ public class CitationDetailsViewController implements Initializable {
 
         if (!fileName.equals(AppTexts.PLACEHOLDER)) {
             //replace file format by the folder extension
-            String folderPath = GuiController.getInstance().getActiveLibraryFilePath()
+            String folderPath = CitationService.getActiveLibraryFilePath()
                     .replace(AppTexts.LIBRARY_FILE_FORMAT, AppTexts.PDF_FOLDER_EXTENSION);
 
             String filePath = folderPath + fileName;
@@ -152,7 +141,7 @@ public class CitationDetailsViewController implements Initializable {
     private void addNewAttachmentToArticleReference(){
         Stage stage = (Stage) this.pdfViewer.getScene().getWindow();
 
-        String folderPath = GuiController.getInstance().getActiveLibraryFilePath().replaceAll(AppTexts.REGEX_REPLACE_DB_FILENAME,"");
+        String folderPath = CitationService.getActiveLibraryFilePath().replaceAll(AppTexts.REGEX_REPLACE_DB_FILENAME,"");
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(folderPath));
@@ -160,11 +149,15 @@ public class CitationDetailsViewController implements Initializable {
         File chosenFile = fileChooser.showOpenDialog(stage);
 
         if (chosenFile != null) {
-            GuiController.getInstance().addNewAttachmentToCitationReference(chosenFile.getName());
+            String fileName = chosenFile.getName();
 
-            populatePDFViewerTab();
+            this.citation.addNewAttachment(fileName);
+
+            MainViewModel.getInstance().updateCitationInDatabase(this.citation);
 
             FileHandler.getInstance().copySelectedAttachmentToPdfFolder(chosenFile);
+
+            populatePDFViewerTab();
         } else {
             Alerts.showInformationNoFileChosen();
         }
@@ -181,11 +174,11 @@ public class CitationDetailsViewController implements Initializable {
         if (chosenAttachment != null){
             this.citation.removeAttachment(chosenAttachment);
 
-            GuiController.getInstance().removeAttachmentFromCitation(this.citation);
-
-            populatePDFViewerTab();
+            MainViewModel.getInstance().updateCitationInDatabase(this.citation);
 
             FileHandler.getInstance().deleteSelectedAttachmentFromFolder(chosenAttachment);
+
+            populatePDFViewerTab();
         } else {
             Alerts.showInformationNoFileChosen();
         }
@@ -208,7 +201,10 @@ public class CitationDetailsViewController implements Initializable {
             informationPdfSearch.close();
 
             String latestAddedFile = FileHandler.getInstance().determineLatestAddedFile();
-            GuiController.getInstance().addNewAttachmentToCitationReference(latestAddedFile);
+
+            this.citation.addNewAttachment(latestAddedFile);
+
+            MainViewModel.getInstance().updateCitationInDatabase(this.citation);
 
             populatePDFViewerTab();
         } catch (TimeoutException e) {
@@ -226,18 +222,24 @@ public class CitationDetailsViewController implements Initializable {
      */
     @FXML
     protected void changeCitationType(){
-        AbstractCitation dummyCitation = GuiController.getInstance().getDummyCitationToEdit();
+        AbstractCitation dummyCitation = MainViewModel.getInstance().getDummyCitation();
 
         CitationType newType = this.editCitationType.getValue();
 
         if (dummyCitation.getCitationType() != newType){
             dummyCitation.setCitationType(newType);
 
-            AbstractCitation dummyCitationWithNewCitationType = CitationFactory
+            dummyCitation = CitationFactory
                     .createCitationFromCsvLine(dummyCitation.toCsvString());
-            GuiController.getInstance().setDummyCitationToEdit(dummyCitationWithNewCitationType);
+            MainViewModel.getInstance().setDummyCitation(dummyCitation);
 
-            populateCitationEditTab();
+            System.out.println(MainViewModel.getInstance().getSelectedCitation().toCsvString());
+            System.out.println(MainViewModel.getInstance().getSelectedCitation().getClass());
+            System.out.println(dummyCitation.toCsvString());
+            System.out.println(dummyCitation.getClass());
+            System.out.println("==========================");
+
+            populateCitationEditTab(dummyCitation.getCitationType());
         }
     }
 
@@ -254,9 +256,9 @@ public class CitationDetailsViewController implements Initializable {
 
         //populate the article edit view
         this.editCitationType.getItems().setAll(CitationType.values());
-        this.editCitationType.setValue(GuiController.getInstance().getDummyCitationToEdit().getCitationType());
+        this.editCitationType.setValue(MainViewModel.getInstance().getDummyCitation().getCitationType());
         this.editCitationType.setConverter(new StringConverterForCitationType());
-        populateCitationEditTab();
+        populateCitationEditTab(this.citation.getCitationType());
 
 
         populatePDFViewerTab();
@@ -275,8 +277,8 @@ public class CitationDetailsViewController implements Initializable {
      * <li>Populates the citation edit tab with the appropriate subview based on the citation type.</li>
      */
 
-    private void populateCitationEditTab() {
-        String fxmlFile = switch (GuiController.getInstance().getDummyCitationToEdit().getCitationType()) {
+    private void populateCitationEditTab(CitationType citationType) {
+        String fxmlFile = switch (citationType) {
                 case JOURNAL_ARTICLE -> "journal-article-subview.fxml";
                 case BOOK_SECTION -> "book-section-subview.fxml";
                 case BOOK -> "book-subview.fxml";
@@ -294,19 +296,6 @@ public class CitationDetailsViewController implements Initializable {
                 e.printStackTrace();
             }
         }
-    }
-
-    /** <h2>createDummyCitationToEdit</h2>
-     * <li>Creates a dummy {@link AbstractCitation} to edit by converting the selected citation to a CSV string
-     * and then creating a new citation from that string.</li>
-     * <li>Sets the dummy citation as the citation to edit in the {@link GuiController}.</li>
-     */
-    private void createDummyCitationToEdit() {
-        String csvStringOfSelectedCitation = this.citation.toCsvString();
-
-        AbstractCitation dummyCitationToEdit = CitationFactory.createCitationFromCsvLine(csvStringOfSelectedCitation);
-
-        GuiController.getInstance().setDummyCitationToEdit(dummyCitationToEdit);
     }
 
     /** <h2>populatePDFViewerTab</h2>

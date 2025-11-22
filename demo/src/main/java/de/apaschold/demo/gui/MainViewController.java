@@ -69,8 +69,8 @@ public class MainViewController implements Initializable {
      */
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
-
-        populateTable();
+        List<AbstractCitation> citations = viewModel.loadCitations();
+        populateTable(citations);
 
         populateCitationView();
 
@@ -102,7 +102,8 @@ public class MainViewController implements Initializable {
 
                 viewModel.openLibrary(chosenLibraryPath);
 
-                populateTable();
+                List<AbstractCitation> citations = viewModel.loadCitations();
+                populateTable(citations);
 
                 this.activeLibraryPath.setText(chosenLibraryPath);
         } else {
@@ -135,7 +136,8 @@ public class MainViewController implements Initializable {
         GuiController.getInstance().loadAddNewCitationView();
 
         // Refresh the table to show the newly added citation
-        populateTable();
+        List<AbstractCitation> citations = viewModel.loadCitations();
+        populateTable(citations);
     }
 
     /**
@@ -150,7 +152,8 @@ public class MainViewController implements Initializable {
         if (confirmDeletion.get() == ButtonType.OK){
             viewModel.deleteSelectedCitation();
 
-            populateTable();
+            List<AbstractCitation> citations = viewModel.loadCitations();
+            populateTable(citations);
         }
     }
 
@@ -165,7 +168,8 @@ public class MainViewController implements Initializable {
         GuiController.getInstance().loadImportFromBibTexView();
 
         // Refresh the table to show the newly imported citation(s)
-        populateTable();
+        List<AbstractCitation> citations = viewModel.loadCitations();
+        populateTable(citations);
     }
 
     /**
@@ -188,9 +192,9 @@ public class MainViewController implements Initializable {
         String titleKeyword = this.keywordFilter.getText().trim();
 
         if (!authorKeyword.isEmpty() || !titleKeyword.isEmpty()) {
-            String[] authorAndTitleKeywordsForDatabaseSearch = {authorKeyword, titleKeyword};
-            GuiController.getInstance().filterCitationsByKeywords(authorAndTitleKeywordsForDatabaseSearch);
-            populateTable();
+
+            List<AbstractCitation> filteredCitations = viewModel.loadFilteredCitations(authorKeyword, titleKeyword);
+            populateTable(filteredCitations);
         } else {
             Alerts.showNoFilterKeyWordsChosen();
         }
@@ -203,8 +207,7 @@ public class MainViewController implements Initializable {
      * <li>Sets up cell value factories for table columns.</li>
      * <li>Adds a selection listener to update the {@link de.apaschold.demo.gui.citationdetailsview.CitationDetailsViewController} when a citation is selected.</li>
      */
-    protected void populateTable(){
-        List<AbstractCitation> citations = viewModel.loadCitations();
+    protected void populateTable(List<AbstractCitation> citations){
 
         this.citationTable.getItems().clear();
 

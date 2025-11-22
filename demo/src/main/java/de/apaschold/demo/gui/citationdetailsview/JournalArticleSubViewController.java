@@ -2,6 +2,7 @@ package de.apaschold.demo.gui.citationdetailsview;
 
 import de.apaschold.demo.additionals.MyLittleHelpers;
 import de.apaschold.demo.gui.GuiController;
+import de.apaschold.demo.logic.MainViewModel;
 import de.apaschold.demo.model.JournalArticle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -55,7 +56,7 @@ public class JournalArticleSubViewController implements Initializable {
      */
     @Override
     public void initialize(URL location, java.util.ResourceBundle resources) {
-        this.journalArticle = (JournalArticle) GuiController.getInstance().getDummyCitationToEdit();
+        this.journalArticle = (JournalArticle) MainViewModel.getInstance().getDummyCitation();
 
         populateEditView();
     }
@@ -84,7 +85,7 @@ public class JournalArticleSubViewController implements Initializable {
             this.journalArticle.setPages(this.pagesChange.getText());
             this.journalArticle.setDoi(this.doiChange.getText());
 
-            GuiController.getInstance().updateLibraryWithEditedCitation(this.journalArticle);
+            MainViewModel.getInstance().updateCitationInDatabase(this.journalArticle);
 
             //update the labels in the article overview
             GuiController.getInstance().loadMainMenu();

@@ -89,10 +89,10 @@ public class SqlReader {
         return tableExists;
     }
 
-    public static List<AbstractCitation> filterCitationsByKeywords(String tableName, String[] authorAndTitleKeywordsForDatabaseSearch) {
+    public static List<AbstractCitation> filterCitationsByKeywords(String tableName, String authorKeyword, String titleKeyword) {
         List<AbstractCitation> filteredCitations = new ArrayList<>();
 
-        String filterCitationsQuery = createFilterCitationsQuery(tableName, authorAndTitleKeywordsForDatabaseSearch);
+        String filterCitationsQuery = createFilterCitationsQuery(tableName, authorKeyword, titleKeyword);
 
         try(Connection connection = SqlManager.getInstance().getSqliteDatabaseConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(filterCitationsQuery);
@@ -122,11 +122,8 @@ public class SqlReader {
         return filteredCitations;
     }
 
-    private static String createFilterCitationsQuery(String tableName, String[] authorAndTitleKeywordsForDatabaseSearch) {
+    private static String createFilterCitationsQuery(String tableName, String authorKeyword, String titleKeyword) {
         String filterCitationsQuery = String.format(FILTER_CITATIONS_FROM_TABLE_QUERY_TEMPLATE, tableName);
-
-        String authorKeyword = authorAndTitleKeywordsForDatabaseSearch[0];
-        String titleKeyword = authorAndTitleKeywordsForDatabaseSearch[1];
 
         if (!authorKeyword.isEmpty()) {
             filterCitationsQuery += String.format(CONTAINS_KEYWORD_TEMPLATE, "author", "%" + authorKeyword + "%");
